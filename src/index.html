@@ -8,5 +8,11 @@
   <body>
     <h1>💖Y💖A💖Y💖</h1>
     <p>You loaded the page correctly!!!.</p>
+    <button onClick="redirect()">LOGIN WITH GITHUB</button>
   </body>
+  <script>
+    function redirect(){
+      window.location.replace("http://localhost:3000/auth/github/callback")
+    }
+  </script>
 </html>
