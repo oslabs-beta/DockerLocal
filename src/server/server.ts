@@ -12,7 +12,7 @@ const app = express();
 
 console.log('inside of server.ts')
 // Bring in routes
-// const authRoute = require('./routes/auth-route');
+const authRoute = require(path.resolve(__dirname,'../../src/server/routes/auth-route'));
 // const apiRoute = require('./routes/api-route');
 
 // Body Parsing Middleware
@@ -22,7 +22,7 @@ app.use(passport.initialize());
 app.use(cookieParser());
 
 // Use routes
-// app.use('/auth', authRoute);
+app.use('/auth', authRoute);
 // app.use('/api', apiRoute);
 
 
