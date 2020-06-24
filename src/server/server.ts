@@ -3,7 +3,7 @@ export { };
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 const express = require('express');
 const path = require('path');
-// const passportSetup = require('./config/passport-setup');
+const passportSetup = require('../../src/server/config/passport-setup');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 require('dotenv/config');
@@ -12,7 +12,7 @@ const app = express();
 
 console.log('inside of server.ts')
 // Bring in routes
-const authRoute = require(path.resolve(__dirname,'../../src/server/routes/auth-route'));
+const authRoute = require('../../src/server/routes/auth-route');
 // const apiRoute = require('./routes/api-route');
 
 // Body Parsing Middleware
@@ -32,12 +32,14 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 //Handle redirections
-app.get('*', (req: Request, res: Response) => {
-  console.log('HERE HERE', req.cookies)
-  res.sendFile(path.resolve(__dirname, '../../src/index.html'));
+// app.get('*', (req: Request, res: Response) => {
+//   console.log('HERE HERE', req.cookies)
+//   res.sendFile(path.resolve(__dirname, '../../src/index.html'));
+// });
+
+app.get('/fail', (req: Request, res: Response) => {
+  res.status(200).send('FAILURE TO AUTHENTICATE');
 });
-
-
 
 // Global Error handler
 app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {

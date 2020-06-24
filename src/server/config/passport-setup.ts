@@ -7,10 +7,10 @@ const GithubStrategy = require('passport-github2');
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
 
-const db = require('../db/postgres.js');
+// const db = require('../db/postgres.js');
 
 const fetch = require('node-fetch');
-
+console.log("INSIDE PASSPORTSETUP" , GITHUB_CLIENT_ID)
 // Configure the Github strategy for use by Passport.
 //
 // OAuth 2.0-based strategies require a `verify` function which receives the
@@ -39,25 +39,25 @@ passport.use(
        * done - after getting successully authenticated - run this callback function
        * routes to 'authenticated page' w/ correct user information
        **/
-
+      console.log("INSIDE PASSPORTSETUP FUNCTION")
       const { username } = profile;
       console.log('PASSPORT CALLBACK FIRED FOR USER: ', username);
 
-      const selectQuery = `SELECT * FROM users WHERE githandle='${username}'`;
-      const insertQuery = `INSERT INTO users (id, githandle) VALUES (uuid_generate_v4(), $1) RETURNING *`;
-      db.query(selectQuery)
-        .then(data => {
-          if (data.rows.length > 0) {
-            return done(null, accessToken);
-          } else {
-            db.query(insertQuery, [username])
-              .then(user => {
-                return done(null, accessToken);
-              })
-              .catch(err => console.log('INSERT QUERY', err));
-          }
-        })
-        .catch(err => console.log('SELECT QUERY', err));
+      // const selectQuery = `SELECT * FROM users WHERE githandle='${username}'`;
+      // const insertQuery = `INSERT INTO users (id, githandle) VALUES (uuid_generate_v4(), $1) RETURNING *`;
+      // db.query(selectQuery)
+      //   .then(data => {
+      //     if (data.rows.length > 0) {
+      done();
+      //     } else {
+      //       db.query(insertQuery, [username])
+      //         .then(user => {
+      //           return done(null, accessToken);
+      //         })
+      //         .catch(err => console.log('INSERT QUERY', err));
+      //     }
+      //   })
+      //   .catch(err => console.log('SELECT QUERY', err));
     }
   )
 );
