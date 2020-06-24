@@ -9,7 +9,6 @@ const cookieParser = require('cookie-parser');
 require('dotenv/config');
 const app = express();
 
-
 // Bring in routes
 const authRoute = require('../../src/server/routes/auth-route');
 // const apiRoute = require('./routes/api-route');
@@ -24,22 +23,17 @@ app.use(cookieParser());
 app.use('/auth', authRoute);
 // app.use('/api', apiRoute);
 
+// Serve static files
 app.use(express.static('assets'));
 
 // Home endpoint
-app.get('/', (req: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, '../../src/index.html'));
-});
+app.get('/', (req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/index.html')));
 
-//Handle redirections
-app.get('*', (req: Request, res: Response) => {
-  // console.log('HERE HERE', req.cookies)
-  res.sendStatus(200);
-});
+// Handle redirections
+app.get('*', (req: Request, res: Response) => res.sendStatus(200));
 
-app.get('/fail', (req: Request, res: Response) => {
-  res.status(200).send('❌ FAILURE TO AUTHENTICATE ❌');
-});
+// Failed auth redirect
+app.get('/fail', (req: Request, res: Response) => res.status(200).send('❌ FAILURE TO AUTHENTICATE ❌'));
 
 // Global Error handler
 app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
@@ -54,7 +48,6 @@ app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFuncti
 
   // Update default error message with provided error if there is one
   const output = Object.assign(defaultError, err);
-
   res.send(output);
 });
 
