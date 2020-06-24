@@ -4,10 +4,8 @@ require('dotenv').config();
 const passport = require('passport');
 const GithubStrategy = require('passport-github2');
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
-
-console.log("INSIDE PASSPORTSETUP", GITHUB_CLIENT_ID)
 // Configure the Github strategy for use by Passport.
-//
+
 // OAuth 2.0-based strategies require a `verify` function which receives the
 // credential (`accessToken`) for accessing the Github API on the user's
 // behalf, along with the user's profile.  The function must invoke callback
