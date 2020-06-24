@@ -1,6 +1,13 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
-console.log('**********running app.tsx**** ')
- 
-ReactDOM.render(<div>React is rendering this! </div>, document.getElementById('root'));
+import Home from "./client/components/home/home";
+
+console.log("**********running app.tsx**** ");
+
+ReactDOM.render(
+  <div>
+    <Home />
+  </div>,
+  document.getElementById("root")
+);
