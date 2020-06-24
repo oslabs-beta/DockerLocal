@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>DockerLocal</title>
 
-  </head>
-  <body>
-    <h1>💖Y💖A💖Y💖</h1>
-    <div id="root"></div>
-    <p>You loaded the page correctly!!!.</p>
-    <button onClick="redirect()">LOGIN WITH GITHUB</button>
-  </body>
-  <script>
-    function redirect(){
-      window.location.replace("http://localhost:3001/auth/github")
-    }
-  </script>
+<head>
+  <meta charset="UTF-8">
+  <title>DockerLocal</title>
+
+</head>
+
+<body>
+  <h1 class='dockerlocal'>🐳DockerLocal🏠</h1>
+  <div id="root"></div>
+  <div class='imgWrap'>
+    <img src="https://www.freeiconspng.com/uploads/github-logo-icon-24.png" alt="Png Vector Github Logo"
+      onClick="redirect()" class='githublogo' width='100' style='cursor: pointer'/>
+  </div>
+</body>
+<script>
+  const redirect = () => window.location.replace("http://localhost:3001/auth/github");
+</script>
+
 </html>
