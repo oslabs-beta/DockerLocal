@@ -1,4 +1,6 @@
 import { app, BrowserWindow } from 'electron';
+const express = require('./server/server.ts');
+const path = require('path');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -7,17 +9,24 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const createWindow = () => {
-  // Create the browser window.
+  // // Create the browser window.
+ 
   const mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+    width: 1280,
+    height: 720,
+    autoHideMenuBar: true,
+    useContentSize: true,
+    resizable: false,
+  
   });
-
-  // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  // Open the DevTools.
+  // mainWindow.loadURL('http://localhost:3001/');
   mainWindow.webContents.openDevTools();
+  // mainWindow.loadURL(path.join(`file://${__dirname}`, `../../src/index.html`))
+  // .then(() => mainWindow.loadURL(path.join(`file://${__dirname}`, `../../src/client/app.js`)))
+  
+  mainWindow.focus();
 };
 
 // This method will be called when Electron has finished
