@@ -1,13 +1,11 @@
-export {};
+export { };
 
 require("dotenv").config();
 const passport = require("passport");
 const GithubStrategy = require("passport-github2");
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
-
-console.log("INSIDE PASSPORTSETUP", GITHUB_CLIENT_ID);
 // Configure the Github strategy for use by Passport.
-//
+
 // OAuth 2.0-based strategies require a `verify` function which receives the
 // credential (`accessToken`) for accessing the Github API on the user's
 // behalf, along with the user's profile.  The function must invoke callback
@@ -40,7 +38,6 @@ passport.use(
        * routes to 'authenticated page' w/ correct user information
        **/
       const { username } = profile;
-      console.log("PASSPORT CALLBACK FIRED FOR USER: ", username);
       const payload: object = {
         username,
         accessToken,
@@ -57,12 +54,8 @@ passport.use(
  * supply the user ID when serializing, and query the user record by ID
  * from the database when deserializing.
  **/
-passport.serializeUser(function (payload: object, done: Function) {
-  done(null, payload);
-});
+passport.serializeUser((payload: object, done: Function) => done(null, payload));
 
-passport.deserializeUser(function (obj: object, done: Function) {
-  done(null);
-});
+passport.deserializeUser((obj: object, done: Function) => done(null));
 
-(module.exports = passport.serializeUser), passport.deserializeUser;
+module.exports = passport.serializeUser, passport.deserializeUser;
