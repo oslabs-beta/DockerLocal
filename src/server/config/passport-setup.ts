@@ -1,8 +1,8 @@
 export { };
 
-require('dotenv').config();
-const passport = require('passport');
-const GithubStrategy = require('passport-github2');
+require("dotenv").config();
+const passport = require("passport");
+const GithubStrategy = require("passport-github2");
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
 // Configure the Github strategy for use by Passport.
 
@@ -21,9 +21,14 @@ passport.use(
       //will be given through API. used to identify our app to github
       clientSecret: GITHUB_CLIENT_SECRET,
       //callback url that sends client to github login page
-      callbackURL: '/auth/github/callback',
+      callbackURL: "/auth/github/callback",
     },
-    (accessToken: string, refreshToken: string, profile: any, done: Function) => {
+    (
+      accessToken: string,
+      refreshToken: string,
+      profile: any,
+      done: Function
+    ) => {
       //basic 4 params -> getting github profile information from auth-route
       /** passport callback fn
        * accessToken - is how we will make an API call on behalf of the user. It is sent to us by github in the response.
@@ -35,7 +40,7 @@ passport.use(
       const { username } = profile;
       const payload: object = {
         username,
-        accessToken
+        accessToken,
       };
       done(null, payload);
     }
