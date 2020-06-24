@@ -7,10 +7,9 @@ const passportSetup = require('../../src/server/config/passport-setup');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 require('dotenv/config');
-
 const app = express();
 
-console.log('inside of server.ts')
+
 // Bring in routes
 const authRoute = require('../../src/server/routes/auth-route');
 // const apiRoute = require('./routes/api-route');
@@ -25,6 +24,7 @@ app.use(cookieParser());
 app.use('/auth', authRoute);
 // app.use('/api', apiRoute);
 
+app.use(express.static('assets'));
 
 // Home endpoint
 app.get('/', (req: Request, res: Response) => {
@@ -32,13 +32,13 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 //Handle redirections
-// app.get('*', (req: Request, res: Response) => {
-//   console.log('HERE HERE', req.cookies)
-//   res.sendFile(path.resolve(__dirname, '../../src/index.html'));
-// });
+app.get('*', (req: Request, res: Response) => {
+  // console.log('HERE HERE', req.cookies)
+  res.sendStatus(200);
+});
 
 app.get('/fail', (req: Request, res: Response) => {
-  res.status(200).send('FAILURE TO AUTHENTICATE');
+  res.status(200).send('❌ FAILURE TO AUTHENTICATE ❌');
 });
 
 // Global Error handler
