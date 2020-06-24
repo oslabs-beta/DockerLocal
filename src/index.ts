@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 const express = require('./server/server.ts');
+const path = require('path');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -16,9 +17,15 @@ const createWindow = () => {
     autoHideMenuBar: true,
     useContentSize: true,
     resizable: false,
+  
   });
-  mainWindow.loadURL('http://localhost:3001/');
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+
+  // mainWindow.loadURL('http://localhost:3001/');
   mainWindow.webContents.openDevTools();
+  // mainWindow.loadURL(path.join(`file://${__dirname}`, `../../src/index.html`))
+  // .then(() => mainWindow.loadURL(path.join(`file://${__dirname}`, `../../src/client/app.js`)))
+  
   mainWindow.focus();
 };
 
