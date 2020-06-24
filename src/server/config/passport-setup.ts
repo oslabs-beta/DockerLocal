@@ -1,11 +1,11 @@
 export {};
 
-require('dotenv').config();
-const passport = require('passport');
-const GithubStrategy = require('passport-github2');
+require("dotenv").config();
+const passport = require("passport");
+const GithubStrategy = require("passport-github2");
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
 
-console.log("INSIDE PASSPORTSETUP" , GITHUB_CLIENT_ID)
+console.log("INSIDE PASSPORTSETUP", GITHUB_CLIENT_ID);
 // Configure the Github strategy for use by Passport.
 //
 // OAuth 2.0-based strategies require a `verify` function which receives the
@@ -23,9 +23,14 @@ passport.use(
       //will be given through API. used to identify our app to github
       clientSecret: GITHUB_CLIENT_SECRET,
       //callback url that sends client to github login page
-      callbackURL: '/auth/github/callback',
+      callbackURL: "/auth/github/callback",
     },
-    (accessToken: string, refreshToken: string, profile: any, done: Function) => {
+    (
+      accessToken: string,
+      refreshToken: string,
+      profile: any,
+      done: Function
+    ) => {
       //basic 4 params -> getting github profile information from auth-route
       /** passport callback fn
        * accessToken - is how we will make an API call on behalf of the user. It is sent to us by github in the response.
@@ -35,10 +40,10 @@ passport.use(
        * routes to 'authenticated page' w/ correct user information
        **/
       const { username } = profile;
-      console.log('PASSPORT CALLBACK FIRED FOR USER: ', username);
-      let payload: object = {
+      console.log("PASSPORT CALLBACK FIRED FOR USER: ", username);
+      const payload: object = {
         username,
-        accessToken
+        accessToken,
       };
       done(null, payload);
     }
@@ -57,7 +62,7 @@ passport.serializeUser(function (payload: object, done: Function) {
 });
 
 passport.deserializeUser(function (obj: object, done: Function) {
-    done(null);
+  done(null);
 });
 
-module.exports = passport.serializeUser, passport.deserializeUser ;
+(module.exports = passport.serializeUser), passport.deserializeUser;
