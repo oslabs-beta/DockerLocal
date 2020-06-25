@@ -12,7 +12,7 @@ type ProjectsProps = {
 const Projects: React.FC<ProjectsProps> = ({ userInfo, setUserInfo }) => {
   // need to set type for projects/projectlist
   const [projectList, setProjectList] = useState([{projectName: 'DockerLocal(project1)', projectId: 1}, {projectName: 'React Visualizer 74.0(project2)', projectId: 2}]);
-  const [activeProject, setActiveProject] = useState({});
+  const [activeProject, setActiveProject] = useState({projectName: 'DockerLocal(project1)', projectId: 1});
 
 
   return (
