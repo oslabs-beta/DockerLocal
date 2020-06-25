@@ -10,12 +10,14 @@ apiController.getUserRepos = async (req: Request, res: Response, next: NextFunct
   const { accessToken } = res.locals;
   const { username } = res.locals;
 
-  const url = `https://api.github.com/user/repos`;
+  // `https://api.github.com/users/${username}/repos?access_token=${accessToken}`
+  // `https://api.github.com/user/repos?per_page=100`
+  const url = `https://api.github.com/user/repos?per_page=100`;
   const response = await fetch(url, {
     method: 'get',
     headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   const body = await response.json();
