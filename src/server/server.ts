@@ -27,7 +27,7 @@ app.use('/api', apiRoute);
 app.use(express.static('assets'));
 
 // Home endpoint
-app.get('/', (req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/index.html')));
+app.get('/',(req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/index.html')));
 
 // Handle redirections
 app.get('*', (req: Request, res: Response) => res.sendStatus(200));
