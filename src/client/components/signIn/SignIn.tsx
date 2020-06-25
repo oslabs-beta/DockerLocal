@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import AppInfo from "../appInfo/AppInfoModal";
+import AppInfoModal from "../appInfo/AppInfoModal";
 
 const SignIn: React.FC = () => {
-  const [] = 
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div>
@@ -18,7 +18,10 @@ const SignIn: React.FC = () => {
           width="100"
         />
       </div>
-      <button>More Info About DockerLocal</button>
+      <button onClick={() => setShowModal(!showModal)}>
+        More Info About DockerLocal
+      </button>
+      {showModal ? <AppInfoModal /> : null}
     </div>
   );
 };
