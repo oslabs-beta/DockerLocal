@@ -1,0 +1,29 @@
+import React, { useState, Dispatch, SetStateAction, } from 'react';
+
+import SidebarButton from './SidebarButton'
+
+type SidebarProps = {
+  projectList: Project[];
+  activeProject: Project;
+  setActiveProject: Dispatch<SetStateAction<Project>>;
+}
+
+type Project = {
+  projectName: string;
+  projectId: number;
+}
+
+
+// props need a type
+const Sidebar: React.FC<SidebarProps> = ({ projectList, activeProject, setActiveProject }) => {
+  return projectList.map(project => (
+    <SidebarButton
+      key={`project ${project.projectId}`}
+      projectName={project.projectName}
+      projectId={project.projectId}
+      {...{activeProject, setActiveProject}}
+    />
+  ))
+}
+
+export default Sidebar;
