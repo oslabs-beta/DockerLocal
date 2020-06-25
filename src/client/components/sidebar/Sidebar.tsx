@@ -14,8 +14,9 @@ type Project = {
 }
 
 
-// props need a type
 const Sidebar: React.FC<SidebarProps> = ({ projectList, activeProject, setActiveProject }) => {
+
+  // render a sidebar button for every project in list
   return projectList.map(project => (
     <SidebarButton
       key={`project ${project.projectId}`}

@@ -1,4 +1,6 @@
 import { app, BrowserWindow } from 'electron';
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+
 const express = require('./server/server.ts');
 const path = require('path');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
@@ -21,6 +23,13 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
   mainWindow.focus();
 };
+
+app.whenReady().then(() => {
+  installExtension(REACT_DEVELOPER_TOOLS)
+      .then((devtool: any) => console.log(`Added Extension:  ${devtool.name}`))
+      .catch((err: any) => console.log('An error occurred: ', err));
+});
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
