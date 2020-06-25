@@ -1,21 +1,29 @@
 export { };
-const fetch = require('node-fetch')
-const apiController = {};
+const fetch = require('node-fetch').default;
 import { Request, Response, NextFunction } from 'express';
 
-const authController: any = {};
+const apiController: any = {};
 
-authController.saveAccessToken = async (req: Request, res: Response, next: NextFunction) => {
+apiController.getUserRepos = async (req: Request, res: Response, next: NextFunction) => {
   const { accessToken } = req.cookies;
   const { username } = req.cookies;
   console.log(username, accessToken)
   console.log('inside getuserrepos')
-  await fetch(`https://api.github.com/users/${username}/repos`, {
+  console.log(`making fetch request to: https://api.github.com/users/${username}/repos`)
+  const url = `https://api.github.com/users/${username}/repos`;
+  const response = await fetch(url, {
     method: 'get',
     headers: {
-      Authorization: `token ${accessToken}`
+      Authorization: `${accessToken}`
     }
-  })
+  });
+
+  const body = await response.json();
+  res.locals.repos = [];
+  for(let repo of body){
+    res.locals.repos.push({name: repo.name, url: repo.url});
+  }
+  console.log(res.locals.repos);
 };
 
 module.exports = apiController;
