@@ -19,10 +19,9 @@ router.get(
   }),
   authController.saveAccessToken,
   (req: Request, res: Response) => {
-    console.log(req.cookies)
-    const { username }: any = req.cookies;
-    console.log('authenticated for user:',username)
-    res.status(200).send(`✔️ logged in as ${username} ✔️`);
+    console.log('/github/callback')
+
+    res.redirect('/api/repos');
   }
 );
 

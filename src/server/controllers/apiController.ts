@@ -5,16 +5,16 @@ import { Request, Response, NextFunction } from 'express';
 const apiController: any = {};
 
 apiController.getUserRepos = async (req: Request, res: Response, next: NextFunction) => {
-  const { accessToken } = req.cookies;
-  const { username } = req.cookies;
-  console.log(username, accessToken)
-  console.log('inside getuserrepos')
-  console.log(`making fetch request to: https://api.github.com/users/${username}/repos`)
-  const url = `https://api.github.com/users/${username}/repos`;
+  console.log('GET_USER_REPOS - api');
+
+  const { accessToken } = res.locals;
+  const { username } = res.locals;
+
+  const url = `https://api.github.com/user/repos`;
   const response = await fetch(url, {
     method: 'get',
     headers: {
-      Authorization: `${accessToken}`
+      Authorization: `Bearer ${accessToken}`
     }
   });
 
@@ -23,7 +23,9 @@ apiController.getUserRepos = async (req: Request, res: Response, next: NextFunct
   for(let repo of body){
     res.locals.repos.push({name: repo.name, url: repo.url});
   }
-  console.log(res.locals.repos);
+
+  return next();
 };
+
 
 module.exports = apiController;
