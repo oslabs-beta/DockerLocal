@@ -2,6 +2,7 @@ export {};
 const router = require('express').Router();
 const passport = require('passport');
 const authController = require('../controllers/authController');
+const apiController = require('../controllers/apiController');
 import { Request, Response } from 'express';
 
 //using passport to authenticate the github
@@ -18,6 +19,7 @@ router.get(
     failureRedirect: '/fail',
   }),
   authController.saveAccessToken,
+  apiController.getUserRepos,
   (req: Request, res: Response) => {
     console.log(req.cookies)
     const { username }: any = req.cookies;
