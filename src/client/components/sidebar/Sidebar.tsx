@@ -15,9 +15,7 @@ type Project = {
 
 
 const Sidebar: React.FC<SidebarProps> = ({ projectList, activeProject, setActiveProject }) => {
-
-  // render a sidebar button for every project in list
-  return projectList.map(project => (
+  const sidebarButtons = projectList.map(project => (
     <SidebarButton
       key={`project ${project.projectId}`}
       projectName={project.projectName}
@@ -25,6 +23,14 @@ const Sidebar: React.FC<SidebarProps> = ({ projectList, activeProject, setActive
       {...{activeProject, setActiveProject}}
     />
   ))
+
+  // render a sidebar button for every project in list
+  return (
+  <div>
+    {sidebarButtons}
+    <button>Add Project</button>
+  </div>
+  )
 }
 
 export default Sidebar;
