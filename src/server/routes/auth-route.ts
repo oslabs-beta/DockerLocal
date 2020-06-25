@@ -6,23 +6,18 @@ import { Request, Response } from 'express';
 
 //using passport to authenticate the github
 router.get(
-  '/github',
-  passport.authenticate('github', {
-    scope: ['user:email'],
-  })
-);
+  '/github', 
+  passport.authenticate('github', { 
+    scope: ['user:email'] 
+  }));
 
 router.get(
   '/github/callback',
-  passport.authenticate('github', {
-    failureRedirect: '/fail',
+  passport.authenticate('github', { 
+    failureRedirect: '/fail'
   }),
   authController.saveAccessToken,
-  (req: Request, res: Response) => {
-    console.log('/github/callback')
-
-    res.redirect('/api/repos');
-  }
+  (req: Request, res: Response) => res.redirect('/api/repos')
 );
 
 module.exports = router;
