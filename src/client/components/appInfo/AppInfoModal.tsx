@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import ReactDom from "react-dom";
+import React from "react";
 
 // const modalAppInfo = document.getElementById("modal-appInfo");
 
-const AppInfo: React.FC = () => {
+const AppInfoModal: React.FC = () => {
   // return ReactDom.createPortal(<div>This is appInfo modal</div>, modalAppInfo);
+
+  //WIP- make it a UI modal
+  //keep it as a div for now
   return <div>This is appInfo modal</div>;
 };
 
-export default AppInfo;
+export default AppInfoModal;
