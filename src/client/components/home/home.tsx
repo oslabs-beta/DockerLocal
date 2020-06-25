@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Projects from "../projects/Projects";
+import SignIn from "../signIn/SignIn";
 
 const Home: React.FC = (props) => {
   // hooks to define state
@@ -18,12 +19,16 @@ const Home: React.FC = (props) => {
   // } else {
   //   return <Projects />;
   // }
-  
-  return <Projects
+  return (
+    <div>
+      <h1> I'm a home component! </h1>
+      <Projects
             userInfo={userInfo}
             setUserInfo={setUserInfo}
           />
-  return <div>I'm a home component! </div>;
+      <SignIn />
+    </div>
+  );
 };
 
 export default Home;

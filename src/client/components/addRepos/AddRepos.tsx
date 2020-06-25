@@ -12,6 +12,7 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
   // dummy request and response 
   const fetchRepos = (userInfo) => {
     // send request to back end
+    // ** send request to **  /api/repos
     const response: [] = [
       {name: 'repo1', link: 'link1'},
       {name: 'repo2', link: 'link2'},
