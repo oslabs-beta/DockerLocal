@@ -11,22 +11,24 @@ type SidebarButtonProps =  Project & {
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({ projectName, projectId, activeProject, setActiveProject}) => {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState('');
   
-  // listens for change in [activeProject], toggles button on this component
+  // listens for change in [activeProject], changes isActive to string to style element
   // come check if we should be listening for [activeProject or more efficient to listen for specific property]
   useEffect(() => {
     if (projectName === activeProject.projectName) {
-      setIsActive(true)
+      setIsActive('is-active')
     } else {
-      setIsActive(false)
+      setIsActive('')
     }}, [activeProject])
 
 
   return (
-    <div onClick={(): void => setActiveProject({...{projectName, projectId}}) }> 
-      {projectName}
-    </div>
+    <li>
+      <a className={isActive} onClick={(): void => setActiveProject({...{projectName, projectId}})}>
+        {projectName}
+      </a>
+    </li>
   )
 
 }
