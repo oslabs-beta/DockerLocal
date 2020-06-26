@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
 const express = require('./server/server.ts');
@@ -8,6 +8,10 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 // // use this to disable dark mode
 // const { nativeTheme } = require('electron')
 // console.log(nativeTheme.themeSource = 'light')
+// console.log('menuItems!! ', Menu)
+// const viewSettingsMenu = new Menu()
+
+
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
