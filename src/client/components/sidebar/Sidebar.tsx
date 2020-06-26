@@ -1,5 +1,4 @@
 import React, { useState, Dispatch, SetStateAction, } from 'react';
-import React, { useState, Dispatch, SetStateAction, } from 'react';
 
 import SidebarButton from './SidebarButton'
 
@@ -37,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({ projectList, activeProject, setActive
       </ul>
     </aside>
 
-    <button>Add Project</button>
+    <button className="button is-primary">Add Project</button>
   </div>
   )
 }
