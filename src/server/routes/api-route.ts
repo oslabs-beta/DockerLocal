@@ -5,12 +5,15 @@ const authController = require('../controllers/authController');
 const router = require('express').Router();
 require('dotenv/config');
 
+// -> /api/repos will get the username and access token from cookies then fetch a list
+//  of user repos (and display these repos as json on the client side) 
 router.get(
   '/repos',
   authController.getNameAndTokenFromCookies, 
   apiController.getUserRepos, 
   (req: Request, res: Response) => res.status(200).json(res.locals.repos));
 
+//dummy post request (placeholder)
 router.post('/', (req: Request, res: Response) => res.send('Hitting api POST endpoint'));
 
 module.exports = router;
