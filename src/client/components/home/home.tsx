@@ -8,33 +8,25 @@ const Home: React.FC = (props) => {
   const [hasProjects, setHasProjects] = useState(false);
   const [rendered, setRendered] = useState(<SignIn />);
 
-
   // need to add type for userInfo if not null
   // const [userInfo, setUserInfo] = useState<user[] | null>(null);
-  const [userInfo, setUserInfo] = useState({username: 'tom', id: 'abc'});
+  const [userInfo, setUserInfo] = useState({ username: "tom", id: "abc" });
 
-  // display correct page depending on whether user is logged in or has projects
-  // if (!isLoggedIn) {
-  //   return <SignIn />;
-  // } else if (!hasProjects) {
-  //   return <GetStarted />;
-  // } else {
-  //   return <Projects />;
-  // }
-  useEffect(()=> {
+  // runs on render and checks 'isloggedin' display correct page depending on whether user is logged in
+  // could add logic for 'hasprojects'
+  // need to make prettier
+  useEffect(() => {
     if (isLoggedIn) {
-      setRendered(
-                    <Projects
-                      userInfo={userInfo}
-                      setUserInfo={setUserInfo}
-                    />
-                    )
-    } else setRendered(<SignIn />)
-  }, [isLoggedIn])
-  
+      setRendered(<Projects userInfo={userInfo} setUserInfo={setUserInfo} />);
+    } else setRendered(<SignIn />);
+  }, [isLoggedIn]);
+
   return (
     <div>
       <h1> I'm a home component! </h1>
+      <button onClick={(): void => setIsLoggedIn(!isLoggedIn)}>
+        TOGGLE BUTTON FOR DEBUG
+      </button>
       {rendered}
     </div>
   );
