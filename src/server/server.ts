@@ -5,13 +5,13 @@ const express = require('express');
 const path = require('path');
 const passportSetup = require('../../src/server/config/passport-setup');
 const passport = require('passport');
-const cookieParser = require('cookie-parser');
 require('dotenv/config');
 const app = express();
+const cookieParser = require('cookie-parser');
 
 // Bring in routes
 const authRoute = require('../../src/server/routes/auth-route');
-// const apiRoute = require('./routes/api-route');
+const apiRoute = require('../../src/server/routes/api-route');
 
 // Body Parsing Middleware
 app.use(express.json());
@@ -21,13 +21,13 @@ app.use(cookieParser());
 
 // Use routes
 app.use('/auth', authRoute);
-// app.use('/api', apiRoute);
+app.use('/api', apiRoute);
 
 // Serve static files
 app.use(express.static('assets'));
 
 // Home endpoint
-app.get('/', (req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/index.html')));
+app.get('/',(req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/index.html')));
 
 // Handle redirections
 app.get('*', (req: Request, res: Response) => res.sendStatus(200));
