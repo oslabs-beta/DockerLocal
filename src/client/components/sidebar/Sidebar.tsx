@@ -21,14 +21,22 @@ const Sidebar: React.FC<SidebarProps> = ({ projectList, activeProject, setActive
       projectName={project.projectName}
       projectId={project.projectId}
       {...{activeProject, setActiveProject}}
-    />
+      />
   ))
 
   // render a sidebar button for every project in list
   return (
   <div>
-    {sidebarButtons}
-    <button>Add Project</button>
+    <aside className="menu">
+      <p className="menu-label">
+        Projects
+      </p>
+      <ul className="menu-list">
+        {sidebarButtons}
+      </ul>
+    </aside>
+
+    <button className="button is-primary">Add Project</button>
   </div>
   )
 }
