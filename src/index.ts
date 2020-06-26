@@ -5,6 +5,11 @@ const express = require('./server/server.ts');
 const path = require('path');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
+// // use this to disable dark mode
+// const { nativeTheme } = require('electron')
+// console.log(nativeTheme.themeSource = 'light')
+
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-line global-require
 if (require('electron-squirrel-startup')) app.quit();
