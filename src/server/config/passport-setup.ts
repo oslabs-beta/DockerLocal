@@ -38,6 +38,11 @@ passport.use(
        * routes to 'authenticated page' w/ correct user information
        **/
       const { username } = profile;
+
+      //in case we want to use profile picture
+      const { avatar_url: profilePic } = profile;
+
+      console.log('ORIGINAL TOKEN: ', accessToken)
       const payload: object = {
         username,
         accessToken,
@@ -56,6 +61,6 @@ passport.use(
  **/
 passport.serializeUser((payload: object, done: Function) => done(null, payload));
 
-passport.deserializeUser((obj: object, done: Function) => done(null));
+passport.deserializeUser((payload: string, done: Function) =>done(null, payload));
 
 module.exports = passport.serializeUser, passport.deserializeUser;
