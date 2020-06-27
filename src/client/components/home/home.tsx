@@ -30,10 +30,10 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   return (
     <div>
       {/* <LoggedIn/> << logged in component at top with logout button and username*/}
-      {`${userInfo.username}`}
+      {`${userInfo.userName}`}
 
       <div className="columns"> 
-        <div className="column is-one-third">
+        <div className="column is-one-third" >
           <Sidebar {...{projectList, activeProject, setActiveProject}} />
         </div>
         <div className="column">
