@@ -15,12 +15,12 @@ type HomeProps = {
 // should set type for props
 const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   // need to set type for projects/projectlist
-  const [projectList, setProjectList] = useState([
-    {projectName: 'DockerLocal(project1)', projectId: 1}, 
-    {projectName: 'React Visualizer 74.0(project2)', projectId: 2}
+  const [projectList, setProjectList] = useState<Project[]>([
+    {projectName: 'DockerLocal(project1)', projectId: 1, projectRepos: []}, 
+    {projectName: 'React Visualizer 74.0(project2)', projectId: 2, projectRepos: []}
   ]);
   
-  const [activeProject, setActiveProject] = useState({
+  const [activeProject, setActiveProject] = useState<Project>({
     projectName: 'DockerLocal(project1)', 
     projectId: 1, 
     repos: [{repoName: 'repo 1', repoCloneLink: 'http/..github/..'}]

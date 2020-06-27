@@ -1,7 +1,7 @@
 export type Project = {
   projectName: string;
   projectId: number;
-  projectRepos: Repos[];
+  projectRepos: Repo[];
 };
 
 export type Repo = {
