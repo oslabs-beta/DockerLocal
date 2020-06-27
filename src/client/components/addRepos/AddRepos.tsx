@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-type Repo = {
-  name: string;
-  link: string;
-}
+import { Repo } from '../../../types/types'
 
 const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
   const [repos, setRepos] = useState<Repo[]>([])
@@ -13,13 +10,13 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
   const fetchRepos = (userInfo) => {
     // send request to back end
     // ** send request to **  /api/repos
-    const response: [] = [
-      {name: 'repo1', link: 'link1'},
-      {name: 'repo2', link: 'link2'},
-      {name: 'repo3', link: 'link3'},
-      {name: 'repo4', link: 'link4'},
-      {name: 'repo5', link: 'link5'},
-      {name: 'repo6', link: 'link6'},
+    const response: Repo[] = [
+      {repoName: 'repo1', repoCloneLink: 'link1'},
+      {repoName: 'repo2', repoCloneLink: 'link2'},
+      {repoName: 'repo3', repoCloneLink: 'link3'},
+      {repoName: 'repo4', repoCloneLink: 'link4'},
+      {repoName: 'repo5', repoCloneLink: 'link5'},
+      {repoName: 'repo6', repoCloneLink: 'link6'},
     ]
 
     return response;
@@ -43,7 +40,7 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
       adding repos
       <ul>
         {/* change this to component with checkmark etc, look for search box style */}
-        {repos.map(repo => <li>{repo.name}</li>)}
+        {repos.map(repo => <li>{repo.repoName}</li>)}
       </ul>
       <button onClick={handleSubmit}>Close</button>
     </div>
