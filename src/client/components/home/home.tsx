@@ -1,33 +1,47 @@
-import React, { useState, useEffect } from "react";
-import Projects from "../projects/Projects";
-import SignIn from "../signIn/SignIn";
+import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 
-const Home: React.FC = (props) => {
-  // hooks to define state
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [hasProjects, setHasProjects] = useState(false);
-  const [rendered, setRendered] = useState(<SignIn />);
+import Sidebar from "../sidebar/Sidebar";
+import AddRepos from "../addRepos/AddRepos";
+import ProjectPage from "../projects/ProjectPage";
 
-  // need to add type for userInfo if not null
-  // const [userInfo, setUserInfo] = useState<user[] | null>(null);
-  const [userInfo, setUserInfo] = useState({ username: "tom", id: "abc" });
+import { Project, Repo, User } from "../../../types/types";
 
-  // runs on render and checks 'isloggedin' display correct page depending on whether user is logged in
-  // could add logic for 'hasprojects'
-  // need to make prettier
-  useEffect(() => {
-    if (isLoggedIn) {
-      setRendered(<Projects userInfo={userInfo} setUserInfo={setUserInfo} />);
-    } else setRendered(<SignIn />);
-  }, [isLoggedIn]);
+type HomeProps = {
+  userInfo: User;
+  setUserInfo: Dispatch<SetStateAction<User>>;
+};
+
+// should set type for props
+const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
+  // need to set type for projects/projectlist
+  const [projectList, setProjectList] = useState<Project[]>([
+    { projectName: "DockerLocal(project1)", projectId: 1, projectRepos: [] },
+    {
+      projectName: "React Visualizer 74.0(project2)",
+      projectId: 2,
+      projectRepos: [],
+    },
+  ]);
+
+  const [activeProject, setActiveProject] = useState<Project>({
+    projectName: "DockerLocal(project1)",
+    projectId: 1,
+    projectRepos: [{ repoName: "repo 1", repoCloneLink: "http/..github/.." }],
+  });
 
   return (
     <div>
-      <h1> I'm a home component! </h1>
-      <button onClick={(): void => setIsLoggedIn(!isLoggedIn)}>
-        TOGGLE BUTTON FOR DEBUG
-      </button>
-      {rendered}
+      {/* <LoggedIn/> << logged in component at top with logout button and username*/}
+      {`${userInfo.userName}`}
+
+      <div className="columns">
+        <div className="column is-one-third">
+          <Sidebar {...{ projectList, activeProject, setActiveProject }} />
+        </div>
+        <div className="column">
+          <ProjectPage {...{ activeProject, userInfo }} />
+        </div>
+      </div>
     </div>
   );
 };

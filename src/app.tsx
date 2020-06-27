@@ -2,13 +2,13 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import './App.sass'
 
-import Home from "./client/components/home/home";
+import Routes from "./client/components/home/Routes";
 
 console.log("**********running app.tsx**** ");
 
 ReactDOM.render(
   <div>
-    <Home />
+    <Routes />
   </div>,
   document.getElementById("root")
 );
