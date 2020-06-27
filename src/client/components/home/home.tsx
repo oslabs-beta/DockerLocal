@@ -1,34 +1,42 @@
-import React, { useState } from "react";
-import Projects from "../projects/Projects";
-import SignIn from "../signIn/SignIn";
+import React, { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
-const Home: React.FC = (props) => {
-  // hooks to define state
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [hasProjects, setHasProjects] = useState(false);
+import Sidebar from '../sidebar/Sidebar';
+import AddRepos from '../addRepos/AddRepos';
 
-  // need to add type for userInfo if not null
-  // const [userInfo, setUserInfo] = useState<user[] | null>(null);
-  const [userInfo, setUserInfo] = useState({username: 'tom', id: 'abc'});
 
-  // display correct page depending on whether user is logged in or has projects
-  // if (!isLoggedIn) {
-  //   return <SignIn />;
-  // } else if (!hasProjects) {
-  //   return <GetStarted />;
-  // } else {
-  //   return <Projects />;
-  // }
+type HomeProps = {
+  userInfo: {username: string; id: string};
+  setUserInfo: Dispatch<SetStateAction<{username: string; id: string}>>;
+}
+
+// should set type for props
+const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
+  // need to set type for projects/projectlist
+  const [projectList, setProjectList] = useState([{projectName: 'DockerLocal(project1)', projectId: 1}, {projectName: 'React Visualizer 74.0(project2)', projectId: 2}]);
+  const [activeProject, setActiveProject] = useState({projectName: 'DockerLocal(project1)', projectId: 1});
+  const [showAddRepos, setShowAddRepos] = useState(false);
+
+
   return (
     <div>
-      <h1> I'm a home component! </h1>
-      <Projects
-            userInfo={userInfo}
-            setUserInfo={setUserInfo}
-          />
-      <SignIn />
+      {/* <LoggedIn/> << logged in component at top with logout button and username*/}
+      {`${userInfo.username}`}
+
+      <div className="columns"> 
+        <div className="column is-one-third">
+          <Sidebar {...{projectList, activeProject, setActiveProject}} />
+        </div>
+          <button onClick={():void => setShowAddRepos(true)}>Add Reopos!</button>
+          {showAddRepos && <AddRepos
+                              {...{showAddRepos, setShowAddRepos, userInfo}}
+                              />}
+        <div className="column">
+          {/* shows this element if showAddRepos is true */}
+        </div>
+
+      </div>
     </div>
-  );
-};
+  )
+}
 
 export default Home;

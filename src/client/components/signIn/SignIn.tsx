@@ -8,18 +8,24 @@ const SignIn: React.FC = () => {
 
   //display signIn button and appInfo button
   return (
-    <div>
+    <div className="buttons">
       <button
-        onClick={() =>
+        className="button is-primary"
+        onClick={(): void =>
           window.location.replace("http://localhost:3001/auth/github")
         }
       >
         Sign In With Github
       </button>
-      <button onClick={() => setShowModal(!showModal)}>
+      <button 
+        className="button is-link"
+        onClick={(): void => setShowModal(!showModal)}
+      >
         More Info About DockerLocal
       </button>
-      {showModal ? <AppInfoModal /> : null}
+      
+      {/* this will render AppInfoModal if showModal evaluates to true */}
+      {showModal && <AppInfoModal {...{ showModal, setShowModal }}/>}
     </div>
   );
 };
