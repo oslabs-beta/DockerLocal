@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Home from "./Home";
-import SignIn from "../signIn/SignIn";
+import Home from './Home';
+import SignIn from '../signIn/SignIn';
+import { User } from '../../../types/types';
 
 const Routes: React.FC = (props) => {
   // hooks to define state
@@ -11,7 +12,7 @@ const Routes: React.FC = (props) => {
 
   // need to add type for userInfo if not null
   // const [userInfo, setUserInfo] = useState<user[] | null>(null);
-  const [userInfo, setUserInfo] = useState({username: 'tom', id: 'abc'});
+  const [userInfo, setUserInfo] = useState<User>({userName: 'tom', userId: 'abc'});
 
   // runs on render and checks 'isloggedin' display correct page depending on whether user is logged in 
   // could add logic for 'hasprojects'

@@ -5,11 +5,11 @@ import AddRepos from '../addRepos/AddRepos';
 import ProjectPage from '../projects/ProjectPage';
 
 
-import { Project, Repo } from '../../../types/types'
+import { Project, Repo, User } from '../../../types/types'
 
 type HomeProps = {
-  userInfo: {username: string; id: string};
-  setUserInfo: Dispatch<SetStateAction<{username: string; id: string}>>;
+  userInfo: User;
+  setUserInfo: Dispatch<SetStateAction<User>>;
 }
 
 // should set type for props
@@ -23,7 +23,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   const [activeProject, setActiveProject] = useState<Project>({
     projectName: 'DockerLocal(project1)', 
     projectId: 1, 
-    repos: [{repoName: 'repo 1', repoCloneLink: 'http/..github/..'}]
+    projectRepos: [{repoName: 'repo 1', repoCloneLink: 'http/..github/..'}]
   });
 
 

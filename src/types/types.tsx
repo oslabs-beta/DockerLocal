@@ -7,4 +7,9 @@ export type Project = {
 export type Repo = {
   repoName: string;
   repoCloneLink: string;
+};
+
+export type User = {
+  userName: string;
+  userId: string;
 }
