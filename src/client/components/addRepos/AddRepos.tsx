@@ -35,15 +35,73 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
     setRepos(fetchRepos(userInfo));
   }, [])
 
+  // {repos.map(repo => <li>{repo.repoName}</li>)}
+  // <button onClick={handleSubmit}>Close</button>
   return (
-    <div>
-      adding repos
-      <ul>
-        {/* change this to component with checkmark etc, look for search box style */}
-        {repos.map(repo => <li>{repo.repoName}</li>)}
-      </ul>
-      <button onClick={handleSubmit}>Close</button>
+
+    <div className="modal is-active">
+      <div className="modal-background"></div>
+      <div className="modal-card">
+        <header className="modal-card-head">
+          <p className="modal-card-title">Modal title</p>
+          <button className="delete" aria-label="close"></button>
+        </header>
+        <section className="modal-card-body">
+          <article className="panel is-primary">
+              <p className="panel-heading">
+                Primary
+              </p>
+              <p className="panel-tabs">
+                <a className="is-active">All</a>
+                <a>Filter</a>
+                <a>Private</a>
+                <a>Sources</a>
+                <a>Forks</a>
+              </p>
+              <div className="panel-block">
+                <p className="control has-icons-left">
+                  <input className="input is-primary" type="text" placeholder="Search"/>
+                  <span className="icon is-left">
+                    <i className="fas fa-search" aria-hidden="true"></i>
+                  </span>
+                </p>
+              </div>
+              <a className="panel-block is-active">
+                <span className="panel-icon">
+                  <i className="fas fa-book" aria-hidden="true"></i>
+                </span>
+                bulma
+              </a>
+              <a className="panel-block">
+                <span className="panel-icon">
+                  <i className="fas fa-book" aria-hidden="true"></i>
+                </span>
+                marksheet
+              </a>
+              <a className="panel-block">
+                <span className="panel-icon">
+                  <i className="fas fa-book" aria-hidden="true"></i>
+                </span>
+                minireset.css
+              </a>
+              <a className="panel-block">
+                <span className="panel-icon">
+                  <i className="fas fa-book" aria-hidden="true"></i>
+                </span>
+                jgthms.github.io
+              </a>
+            </article>
+
+        </section>
+        <footer className="modal-card-foot">
+          <button className="button is-success" onClick={(): void => handleSubmit()}>Save changes</button>
+          <button className="button" onClick={(): void => setShowAddRepos(false)}>Cancel</button>
+        </footer>
+      </div>
     </div>
+
+
+    
   )
 }
 
