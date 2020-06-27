@@ -1,9 +1,11 @@
 import React, { useState, Dispatch, SetStateAction, useEffect, } from 'react';
 
-type Project = {
-  projectName: string;
-  projectId: number;
-}
+import { Project } from '../../../types/types'
+
+// type Project = {
+//   projectName: string;
+//   projectId: number;
+// }
 
 type SidebarButtonProps =  Project & {
   activeProject: Project;
