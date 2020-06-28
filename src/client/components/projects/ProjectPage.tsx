@@ -22,7 +22,7 @@ const ProjectPage: React.FC = ({ activeProject, userInfo }) => {
       
       
       {/* shows this element if showAddRepos is true */}
-      {showAddRepos && <AddRepos {...{showAddRepos, setShowAddRepos, userInfo}}/>}
+      {showAddRepos && <AddRepos {...{ setShowAddRepos, userInfo }}/>}
     </div>
   )
 }

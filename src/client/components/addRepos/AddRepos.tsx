@@ -1,4 +1,4 @@
-import React, { useState, useEffect, InputHTMLAttributes } from 'react';
+import React, { useState, useEffect, InputHTMLAttributes, MouseEvent, ReactHTMLElement } from 'react';
 import RepoListItem from './RepoListItem';
 
 import { Repo, RepoResponseType } from '../../../types/types';
@@ -8,7 +8,7 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
   const [repos, setRepos] = useState<RepoResponseType>({personal: [], organizations: [], collaborations: []})
   const [selectedRepos, setSelectedRepos] = useState<readonly Repo[]>([])
   const [searchValue, setSearchValue] = useState('');
-  const [activeFilter, setActiveFilter] = useState<'all' | 'personal' | 'organizations' | 'collaborations'>('all')
+  const [activeFilter, setActiveFilter] = useState('all')
   
   // dummy request and response 
   const fetchRepos = (userInfo) => {
@@ -48,8 +48,9 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
     setSearchValue(e.target.value)
   }
 
-  const filterClick = (e: React.MouseEvent<HTMLElement>): void => {
-    setActiveFilter(e.target.id)
+  // switches active filter onclick
+  const filterClick = (e: React.MouseEvent<HTMLAnchorElement & {id: string}>): void => {
+    setActiveFilter(e.currentTarget.id)
 
   }
 
@@ -79,8 +80,9 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
             Select Repositories to Add: 
           </p>
           <section style={{padding: 0}} className="modal-card-body">
+
+            {/* filter tabs */}
             <p className="panel-tabs">
-              {/* these currently have no functionality */}
               <a className={activeFilter === 'all' ? 'is-active' : ''}
                 id="all"
                 onClick={(e): void => filterClick(e)}
@@ -112,8 +114,12 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
               </p>
             </div>
           </section>
+
           <section style={{height: 300, padding: 0}} className="modal-card-body">
             {/* if activeFilter is all or personal, render personal repos */}
+            {/* if something is typed in the search box, only show repos that include the exact string */}
+            {/* could change filter to regex at a later date to include a more robust search */}
+            {/* map filtered list to render comonent for each item */}
             {(activeFilter === 'all' || activeFilter === 'personal') 
               && repos.personal
                 .filter(({ repoName }) => {
@@ -129,7 +135,7 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
                     }}
                   />
                 ))}
-            {/* if activeFilter is all or organizations, render organizations repos */}
+            {/* same as above for organizations */}
             {(activeFilter === 'all' || activeFilter === 'organizations') 
               && repos.organizations
                 .filter(({ repoName }) => {
@@ -145,7 +151,7 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
                     }}
                   />
                 ))}
-            {/* if activeFilter is all or collaborations, render collaborations repos */}
+            {/* same as above for collabs */}
             {(activeFilter === 'all' || activeFilter === 'collaborations') 
               && repos.collaborations
                 .filter(({ repoName }) => {
