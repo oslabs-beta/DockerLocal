@@ -2,15 +2,11 @@ import React, { Dispatch, SetStateAction } from "react";
 
 import AppInfoList from "./AppInfoList";
 
-// const modalAppInfo = document.getElementById("modal-appInfo");
-
+// display AppInfoList component
+// constains 2 buttons listen to onClick to close modal
 const AppInfoModal: React.FC<{
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }> = ({ setShowModal }) => {
-  // return ReactDom.createPortal(<div>This is appInfo modal</div>, modalAppInfo);
-
-  //WIP- make it a UI modal
-  //keep it as a div for now
   return (
     <div className="modal is-active">
       <div className="modal-background"></div>
@@ -25,7 +21,7 @@ const AppInfoModal: React.FC<{
             x
           </button>
         </header>
-        <section className="modal-card-body">{AppInfoList} </section>
+        <section className="modal-card-body">{AppInfoList}</section>
         <footer className="modal-card-foot">
           <button className="button" onClick={(): void => setShowModal(false)}>
             Close
