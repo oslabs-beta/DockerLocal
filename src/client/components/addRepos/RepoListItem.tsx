@@ -6,7 +6,12 @@ const RepoListItem: React.FC<RepoListItemProps> = ({ repo, selectedRepos, setSel
   const [isChecked, setIsChecked] = useState(false)
 
   useEffect(() => {
-    if (isChecked) setSelectedRepos([...selectedRepos, repo]);
+    // runs on render and whenver isChecked is changed
+    // need first conditional to account for switching back and forth between filters/tabs
+    if (selectedRepos.includes(repo)) setIsChecked(true);
+
+    // add or remove from selectedRepos list on click
+    else if (isChecked) setSelectedRepos([...selectedRepos, repo]);
     else setSelectedRepos(selectedRepos.filter(({ repoCloneLink }) => repoCloneLink !== repo.repoCloneLink ))
   }, [isChecked])
 
