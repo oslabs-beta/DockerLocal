@@ -8,6 +8,7 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
   const [repos, setRepos] = useState<RepoResponseType>({personal: [], organizations: [], collaborations: []})
   const [selectedRepos, setSelectedRepos] = useState<readonly Repo[]>([])
   const [searchValue, setSearchValue] = useState('');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'personal' | 'organizations' | 'collaborations'>('all')
   
   // dummy request and response 
   const fetchRepos = (userInfo) => {
@@ -21,20 +22,6 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
       {repoName: 'terrtqwwalRepo4', repoCloneLink: 'personallink4'},
       {repoName: 'abhhsdnalRepo5', repoCloneLink: 'personallink5'},
       {repoName: 'personalRepo6', repoCloneLink: 'personallink6'},
-      {repoName: 'organization Repo1', repoCloneLink: 'orglink1'},
-      {repoName: 'organization Repo2', repoCloneLink: 'orglink2'},
-      {repoName: 'organization Repo3', repoCloneLink: 'orglink3'},
-      {repoName: 'organization Repo4', repoCloneLink: 'orglink4'},
-      {repoName: 'organization Repo5', repoCloneLink: 'orglink5'},
-      {repoName: 'organization Repo6', repoCloneLink: 'orglink6'},
-      {repoName: 'collab Repo1', repoCloneLink: 'collablink1'},
-      {repoName: 'collab Repo2', repoCloneLink: 'collablink2'},
-      {repoName: 'collab Repo3', repoCloneLink: 'collablink3'},
-      {repoName: 'collab Repo4', repoCloneLink: 'collablink4'},
-      {repoName: 'collab Repo5', repoCloneLink: 'collablink5'},
-      {repoName: 'collab Repo6', repoCloneLink: 'collablink6'},
-
-
       ],
       organizations: [
       {repoName: 'organization Repo1', repoCloneLink: 'orglink1'},
@@ -59,6 +46,11 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value)
+  }
+
+  const filterClick = (e: React.MouseEvent<HTMLElement>): void => {
+    setActiveFilter(e.target.id)
+
   }
 
 
@@ -86,13 +78,26 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
           <p className="panel-heading">
             Select Repositories to Add: 
           </p>
-          <section className="modal-card-body">
+          <section style={{padding: 0}} className="modal-card-body">
             <p className="panel-tabs">
               {/* these currently have no functionality */}
-              <a className="is-active">All</a>
-              <a>Personal</a>
-              <a>Organizations</a>
-              <a>Coallaborations</a>
+              <a className={activeFilter === 'all' ? 'is-active' : ''}
+                id="all"
+                onClick={(e): void => filterClick(e)}
+                >All
+              </a>
+              <a className={activeFilter === 'personal' ? 'is-active' : ''}
+                id="personal"
+                onClick={(e): void => filterClick(e)}
+                >Personal</a>
+              <a className={activeFilter === 'organizations' ? 'is-active' : ''}
+                id="organizations"
+                onClick={(e): void => filterClick(e)}
+                >Organizations</a>
+              <a className={activeFilter === 'collaborations' ? 'is-active' : ''}
+                id="collaborations"
+                onClick={(e): void => filterClick(e)}
+                >Collaborations</a>
             </p>
             <div className="panel-block">
               <p className="control has-icons-left">
@@ -104,22 +109,19 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
                   value={searchValue}
                   onChange={handleChange}
                 />
-                {/* <span className="icon is-left">
-                  <i className="fas fa-search" aria-hidden="true"></i>
-                </span> */}
               </p>
             </div>
-          
-            <div className="is-scrollable">
-
-              {repos.personal
+          </section>
+          <section style={{height: 300, padding: 0}} className="modal-card-body">
+            {/* if activeFilter is all or personal, render personal repos */}
+            {(activeFilter === 'all' || activeFilter === 'personal') 
+              && repos.personal
                 .filter(({ repoName }) => {
                   return searchValue === '' ||  repoName.includes(searchValue)
                 })
                 .map((repo) => (
                   <RepoListItem 
                     key={repo.repoName}
-                    // repo={repo}
                     {...{ 
                       repo,
                       selectedRepos, 
@@ -127,12 +129,44 @@ const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
                     }}
                   />
                 ))}
-            </div>
-
+            {/* if activeFilter is all or organizations, render organizations repos */}
+            {(activeFilter === 'all' || activeFilter === 'organizations') 
+              && repos.organizations
+                .filter(({ repoName }) => {
+                  return searchValue === '' ||  repoName.includes(searchValue)
+                })
+                .map((repo) => (
+                  <RepoListItem 
+                    key={repo.repoName}
+                    {...{ 
+                      repo,
+                      selectedRepos, 
+                      setSelectedRepos
+                    }}
+                  />
+                ))}
+            {/* if activeFilter is all or collaborations, render collaborations repos */}
+            {(activeFilter === 'all' || activeFilter === 'collaborations') 
+              && repos.collaborations
+                .filter(({ repoName }) => {
+                  return searchValue === '' ||  repoName.includes(searchValue)
+                })
+                .map((repo) => (
+                  <RepoListItem 
+                    key={repo.repoName}
+                    {...{ 
+                      repo,
+                      selectedRepos, 
+                      setSelectedRepos
+                    }}
+                  />
+                ))}
           </section>
-
+          
+          {/* might want to add a style here to keep constant height */}
+          {/* could add uncheck functionality to list at bottom, would have to rethink state if so*/}
           <footer className="modal-card-foot">
-            <div className="content">
+            <div style={{height: '100px'}} className="content">
               Add the following Repositories to your project:
               <ul>
                 {selectedRepos.map(({ repoName }) => <li key={`confirm ${repoName}`}>{repoName}</li> )}
