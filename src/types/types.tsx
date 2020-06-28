@@ -13,3 +13,9 @@ export type User = {
   userName: string;
   userId: string;
 }
+
+export type RepoResponseType = {
+  personal: Repo[];
+  organizations: Repo[];
+  collaborations: Repo[];
+}
