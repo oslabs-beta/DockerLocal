@@ -6,7 +6,6 @@ const RepoListItem: React.FC<RepoListItemProps> = ({ repo, selectedRepos, setSel
   const [isChecked, setIsChecked] = useState(false)
 
   useEffect(() => {
-    console.log('useEffect in repoListitem', repo.repoName)
     if (isChecked) setSelectedRepos([...selectedRepos, repo]);
     else setSelectedRepos(selectedRepos.filter(({ repoCloneLink }) => repoCloneLink !== repo.repoCloneLink ))
   }, [isChecked])
