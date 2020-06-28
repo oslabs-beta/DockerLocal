@@ -14,7 +14,9 @@ shellController.cloneRepo = async (
   // TODO: add username and repo name as variables to
 
   const shellCommand =
-    "~/Code/DockerLocal/src/scripts/cloneRepo.sh " + username;
+    "~/Code/DockerLocal/src/scripts/cloneRepo.sh " +
+    username +
+    " git-drillo-board";
   exec(shellCommand, (error: any, stdout: any, stderr: any) => {
     if (error) {
       console.error(`exec error: ${error}`);
