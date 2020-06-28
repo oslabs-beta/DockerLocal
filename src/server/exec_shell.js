@@ -1,8 +1,6 @@
-const fs = require('fs');
-
 const exec = require('child_process').exec;
 const myShellScript = exec('sh src/server/findDockerfiles.sh');
-
+const buildPathArray = [];
 //
 myShellScript.stdout.on('data', (data)=>{
     const output = data;
@@ -20,22 +18,10 @@ myShellScript.stdout.on('data', (data)=>{
               break;
               }
         }
-      
     }
-    // console long all names that will be used in buildpath
-    console.log(buildPathArray); 
-    // take dockerfile path and use it to insert to create yaml file
 });
 myShellScript.stderr.on('data', (data)=>{
     console.error(data);
 })
 
-// const execFile = require('child_process').execFile;
-// execFile('ls', (e,stdout, stderr) => {
-//   if (e instanceof Error) {
-//       console.log(e);
-//       throw e;
-//   }
-//   console.log('stdout', stdout);
-//   console.log('stderr', stderr);
-// })
+module.exports = buildPathArray;
