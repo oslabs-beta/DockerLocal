@@ -9,9 +9,13 @@ shellController.cloneRepo = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { accessToken } = res.locals;
+  const { username } = res.locals;
 
-  exec("~/Code/cloneRepo.sh", (error: any, stdout: any, stderr: any) => {
+  // TODO: add username and repo name as variables to
+
+  const shellCommand =
+    "~/Code/DockerLocal/src/scripts/cloneRepo.sh " + username;
+  exec(shellCommand, (error: any, stdout: any, stderr: any) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;
@@ -19,7 +23,6 @@ shellController.cloneRepo = async (
     console.log(`stdout: ${stdout}`);
     console.error(`stderr: ${stderr}`);
   });
-  console.log("tried to run shell script");
 
   return next();
 };
