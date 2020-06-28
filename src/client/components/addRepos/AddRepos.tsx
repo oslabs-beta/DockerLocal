@@ -1,10 +1,10 @@
 import React, { useState, useEffect, InputHTMLAttributes, MouseEvent, ReactHTMLElement } from 'react';
 import RepoListItem from './RepoListItem';
 
-import { Repo, RepoResponseType } from '../../../types/types';
+import { Repo, RepoResponseType, AddReposProps } from '../../../types/types';
 
 
-const AddRepos: React.FC = ({showAddRepos, setShowAddRepos, userInfo}) => {
+const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
   const [repos, setRepos] = useState<RepoResponseType>({personal: [], organizations: [], collaborations: []})
   const [selectedRepos, setSelectedRepos] = useState<readonly Repo[]>([])
   const [searchValue, setSearchValue] = useState('');

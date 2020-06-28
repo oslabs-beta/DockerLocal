@@ -28,3 +28,12 @@ export type RepoListItemProps = {
   setSelectedRepos: Dispatch<SetStateAction<Repo[]>>;
 };
 
+export type AddReposProps = {
+  userInfo: User;
+  setShowAddRepos: Dispatch<SetStateAction<boolean>>;
+};
+
+export type ProjectPageProps = {
+  activeProject: Project;
+  userInfo: User;
+};
