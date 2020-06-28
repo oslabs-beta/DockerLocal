@@ -1,35 +1,26 @@
 export {};
-const fetch = require("node-fetch").default;
+const { exec } = require("child_process");
 import { Request, Response, NextFunction } from "express";
 
 const shellController: any = {};
 
-shellController.getUserRepos = async (
+shellController.cloneRepo = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const { accessToken } = res.locals;
 
-  const url = `https://api.github.com/user/repos?visibility="private"`;
-  const response = await fetch(url, {
-    method: "get",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  exec("~/Code/cloneRepo.sh", (error: any, stdout: any, stderr: any) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+    console.error(`stderr: ${stderr}`);
   });
+  console.log("tried to run shell script");
 
-  const body = await response.json();
-  res.locals.repos = [];
-  for (let repo of body) {
-    console.log(body);
-    res.locals.repos.push({
-      name: repo.name,
-      url: repo.url,
-      clone_token: repo.owner.temp_clone_token,
-    });
-  }
-  console.log(res.locals.repos);
   return next();
 };
 
