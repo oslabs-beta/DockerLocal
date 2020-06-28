@@ -88,6 +88,8 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                 onClick={(e): void => filterClick(e)}
                 >All
               </a>
+
+              {/* hardcoded id, might want to change these to variables */}
               <a className={activeFilter === 'personal' ? 'is-active' : ''}
                 id="personal"
                 onClick={(e): void => filterClick(e)}
