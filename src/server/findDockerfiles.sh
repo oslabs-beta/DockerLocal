@@ -4,4 +4,4 @@
 
 FILE=*[dD]ocker*
 # Folder path WILL change in production
-find . -name "$FILE"
+find . -name "$FILE" -type f
