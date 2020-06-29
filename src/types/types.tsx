@@ -38,3 +38,8 @@ export type ProjectPageProps = {
   activeProject: Project;
   userInfo: User;
 };
+
+export type ProjectRepoListItemProps = {
+  activeProject: Project;
+  repo: Repo;
+}
