@@ -15,7 +15,7 @@ router.get(
   sshKeyController.createSSHkey,
   sshKeyController.addSSHkeyToGithub,
   gitController.cloneRepo,
-
+  sshKeyController.deleteSSHkey,
   (req: Request, res: Response) => res.status(200).json(res.locals.repos)
 );
 

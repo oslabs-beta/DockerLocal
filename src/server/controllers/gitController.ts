@@ -1,8 +1,25 @@
 export {};
-const { exec } = require("child_process");
+
+const exec = require("child_process").execFile;
+
 import { Request, Response, NextFunction } from "express";
 
 const gitController: any = {};
+
+function execShellCommand(shellCommand: string, args: Array) {
+  return new Promise((resolve, reject) => {
+    exec(
+      shellCommand,
+      args,
+      (error: string, stdout: string, stderr: string) => {
+        if (error) {
+          console.warn(error);
+        }
+        resolve(stdout ? stdout : stderr);
+      }
+    );
+  });
+}
 
 gitController.cloneRepo = async (
   req: Request,
@@ -15,17 +32,9 @@ gitController.cloneRepo = async (
   const repoName = repos[1].name;
 
   // shell script clones github repo using SSH connection
-  const shellCommand =
-    "~/Code/DockerLocal/src/scripts/cloneRepo.sh " + username + ` ${repoName}`;
-  console.log(shellCommand);
-  exec(shellCommand, (error: any, stdout: any, stderr: any) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-    console.error(`stderr: ${stderr}`);
-  });
+  const shellCommand = "/home/katty/Code/DockerLocal/src/scripts/cloneRepo.sh";
+
+  await execShellCommand(shellCommand, [username, repoName]);
 
   return next();
 };
