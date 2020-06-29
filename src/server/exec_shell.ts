@@ -3,6 +3,7 @@ const myShellScript = exec('sh src/server/findDockerfiles.sh');
 import fs = require('fs');
 const name1 = 'happy';
 let filePath1= 'sad';
+let filePathNo: number = 1;
 let portNo = 5001;
 const dockerPortNo = 80;
 // contains the filepaths to use for docker compose file build
@@ -24,7 +25,8 @@ myShellScript.stdout.on('data', (data: string)=>{
     }
     // build Path Array now exists
     for (const buildPath of buildPathArray){
-        filePath1 = buildPath;
+        filePath1 = buildPath + filePathNo.toString();
+        filePathNo++;
         portNo++;
         fs.appendFile('docker-compose.yml',
         `  ${name1}:
