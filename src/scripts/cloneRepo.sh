@@ -4,7 +4,8 @@
 username=$1
 repoName=$2
 
+mkdir ./myRepos
+cd myRepos
 
-ssh-keyscan github.com >> ~/.ssh/known_hosts
 git clone git@github.com:$username/$repoName.git
 echo "We finished cloning"

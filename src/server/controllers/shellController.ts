@@ -9,14 +9,15 @@ shellController.cloneRepo = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username } = res.locals;
+  const { username, repos } = res.locals;
 
-  // TODO: add username and repo name as variables to
+  // TODO: add repoName from res.locals
+  const repoName = repos[1].name;
 
+  // shell script clones github repo using SSH connection
   const shellCommand =
-    "~/Code/DockerLocal/src/scripts/cloneRepo.sh " +
-    username +
-    " git-drillo-board";
+    "~/Code/DockerLocal/src/scripts/cloneRepo.sh " + username + ` ${repoName}`;
+  console.log(shellCommand);
   exec(shellCommand, (error: any, stdout: any, stderr: any) => {
     if (error) {
       console.error(`exec error: ${error}`);
