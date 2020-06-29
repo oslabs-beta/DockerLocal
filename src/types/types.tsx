@@ -9,6 +9,7 @@ export type Project = {
 export type Repo = {
   repoName: string;
   repoCloneLink: string;
+  isIncluded?: boolean;
 };
 
 export type User = {
