@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import { shell } from "electron";
 const apiController = require("../controllers/apiController");
 const authController = require("../controllers/authController");
-const shellController = require("../controllers/shellController");
-const sshController = require("../controllers/sshController");
+const gitController = require("../controllers/gitController");
+const sshKeyController = require("../controllers/sshKeyController");
 const router = require("express").Router();
 require("dotenv/config");
 
@@ -12,9 +12,9 @@ router.get(
   "/repos",
   authController.getNameAndTokenFromCookies,
   apiController.getUserRepos,
-  sshController.createSSHkey,
-  sshController.addSSHkeyToGithub,
-  shellController.cloneRepo,
+  sshKeyController.createSSHkey,
+  sshKeyController.addSSHkeyToGithub,
+  gitController.cloneRepo,
 
   (req: Request, res: Response) => res.status(200).json(res.locals.repos)
 );

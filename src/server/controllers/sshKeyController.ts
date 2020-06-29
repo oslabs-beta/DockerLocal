@@ -4,13 +4,13 @@ import { Request, Response, NextFunction } from "express";
 const fetch = require("node-fetch").default;
 const fs = require("fs");
 
-const sshController: any = {};
+const sshKeyController: any = {};
 
 /**
  * @middleware  Create SSH key to be used for connection to clone/update github repos
  * @desc    Executes sshKeygen.sh
  */
-sshController.createSSHkey = async (
+sshKeyController.createSSHkey = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -34,7 +34,7 @@ sshController.createSSHkey = async (
  * @middleware  Push SSH key to user's github account
  * @desc    Uses a post request to github API
  */
-sshController.addSSHkeyToGithub = async (
+sshKeyController.addSSHkeyToGithub = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -63,7 +63,7 @@ sshController.addSSHkeyToGithub = async (
  * @middleware  Deletes public SSH key from user's github account and private/public keys from ./tmp folder
  * @desc    Uses a post request to github API
  */
-sshController.deleteSSHkey = async (
+sshKeyController.deleteSSHkey = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -102,4 +102,4 @@ sshController.deleteSSHkey = async (
   return next();
 };
 
-module.exports = sshController;
+module.exports = sshKeyController;

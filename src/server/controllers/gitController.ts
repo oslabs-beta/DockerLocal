@@ -2,9 +2,9 @@ export {};
 const { exec } = require("child_process");
 import { Request, Response, NextFunction } from "express";
 
-const shellController: any = {};
+const gitController: any = {};
 
-shellController.cloneRepo = async (
+gitController.cloneRepo = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -30,4 +30,4 @@ shellController.cloneRepo = async (
   return next();
 };
 
-module.exports = shellController;
+module.exports = gitController;
