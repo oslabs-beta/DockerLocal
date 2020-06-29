@@ -3,7 +3,7 @@ import { SetStateAction, Dispatch } from "react";
 export type Project = {
   projectName: string;
   projectId: number;
-  projectRepos: Repo[];
+  projectRepos: readonly Repo[];
 };
 
 export type Repo = {
@@ -16,13 +16,13 @@ export type User = {
   userId: string;
 };
 
-export type RepoResponseType = {
+export type ProjectReposType = {
   personal: readonly Repo[];
   organizations: readonly Repo[];
   collaborations: readonly Repo[];
 };
 
-export type RepoListItemProps = {
+export type RepoSearchListItem = {
   repo: Repo;
   selectedRepos: readonly Repo[];
   setSelectedRepos: Dispatch<SetStateAction<Repo[]>>;
