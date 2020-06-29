@@ -1,11 +1,11 @@
 import React, { useState, useEffect, InputHTMLAttributes, MouseEvent, ReactHTMLElement } from 'react';
-import RepoListItem from './RepoListItem';
+import RepoSearchListItem from './RepoSearchListItem';
 
-import { Repo, RepoResponseType, AddReposProps } from '../../../types/types';
+import { Repo, ProjectReposType, AddReposProps } from '../../../types/types';
 
 
 const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
-  const [repos, setRepos] = useState<RepoResponseType>({personal: [], organizations: [], collaborations: []})
+  const [repos, setRepos] = useState<ProjectReposType>({personal: [], organizations: [], collaborations: []})
   const [selectedRepos, setSelectedRepos] = useState<readonly Repo[]>([])
   const [searchValue, setSearchValue] = useState('');
   const [activeFilter, setActiveFilter] = useState('all')
@@ -14,7 +14,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
   const fetchRepos = (userInfo) => {
     // send request to back end
     // ** send request to **  /api/repos
-    const response: RepoResponseType = {
+    const response: ProjectReposType = {
       personal: [
       {repoName: 'perrepop1', repoCloneLink: 'personallink1'},
       {repoName: 'abcdefgpersonal2', repoCloneLink: 'personallink2'},
@@ -128,7 +128,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                   return searchValue === '' ||  repoName.includes(searchValue)
                 })
                 .map((repo) => (
-                  <RepoListItem 
+                  <RepoSearchListItem 
                     key={repo.repoName}
                     {...{ 
                       repo,
@@ -144,7 +144,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                   return searchValue === '' ||  repoName.includes(searchValue)
                 })
                 .map((repo) => (
-                  <RepoListItem 
+                  <RepoSearchListItem 
                     key={repo.repoName}
                     {...{ 
                       repo,
@@ -160,7 +160,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                   return searchValue === '' ||  repoName.includes(searchValue)
                 })
                 .map((repo) => (
-                  <RepoListItem 
+                  <RepoSearchListItem 
                     key={repo.repoName}
                     {...{ 
                       repo,
