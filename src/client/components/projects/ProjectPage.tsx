@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import AddRepos from '../addRepos/AddRepos';
 import { Project, User, ProjectPageProps } from '../../../types/types'
+import ProjectRepoListItem from './ProjectRepoListItem';
 
 
 const ProjectPage: React.FC<ProjectPageProps> = ({ activeProject, userInfo }) => {
@@ -12,9 +13,9 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ activeProject, userInfo }) =>
       <div>Select your repositories: </div>
       <button className="button is-primary is-large" onClick={(): void => setShowAddRepos(true)}>Add Repositories</button>
       
-      {/* {activeProject .map(() => {
-
-      })} */}
+      {activeProject.projectRepos.map((repo) => {
+        return <ProjectRepoListItem/>
+      })}
       
       
       {/* shows this element if showAddRepos is true */}
