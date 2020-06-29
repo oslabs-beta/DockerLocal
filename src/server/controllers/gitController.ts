@@ -6,7 +6,7 @@ import { Request, Response, NextFunction } from "express";
 
 const gitController: any = {};
 
-function execShellCommand(shellCommand: string, args: Array) {
+function execShellCommand(shellCommand: string, args: Array<string>) {
   return new Promise((resolve, reject) => {
     exec(
       shellCommand,

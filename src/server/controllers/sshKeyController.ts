@@ -65,9 +65,10 @@ sshKeyController.addSSHkeyToGithub = async (
     },
     body: reqBody,
   });
-  // const jsonResponse = await response.json();
-  // const { key_id } = jsonResponse.body;
-  console.log(response);
+
+  const jsonResponse = await response.json();
+  const { id } = jsonResponse;
+  res.locals.keyId = id;
 
   return next();
 };
@@ -81,25 +82,14 @@ sshKeyController.deleteSSHkey = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { accessToken, username } = res.locals;
-
-  const sshKeyId = `${username}@DockerLocal`;
+  const { accessToken, username, keyId } = res.locals;
 
   const shellCommand =
     "/home/katty/Code/DockerLocal/src/scripts/sshKeyDelete.sh";
 
   await execShellCommand(shellCommand);
 
-  // await exec(shellCommand, (error: any, stdout: any, stderr: any) => {
-  //   if (error) {
-  //     console.error(`exec error: ${error}`);
-  //     return;
-  //   }
-  //   console.log(`stdout: ${stdout}`);
-  //   console.error(`stderr: ${stderr}`);
-  // });
-
-  const url = `https://api.github.com/user/keys/${sshKeyId}`;
+  const url = `https://api.github.com/user/keys/${keyId}`;
   const response = await fetch(url, {
     method: "delete",
     headers: {
@@ -107,7 +97,6 @@ sshKeyController.deleteSSHkey = async (
     },
   });
 
-  console.log(response);
   return next();
 };
 
