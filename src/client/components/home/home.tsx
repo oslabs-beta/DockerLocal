@@ -24,13 +24,11 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   });
 
   const testRequest = () => {
-    fetch('http://localhost:3001/api/repos', {
+    fetch('/api/repos', {
       method: 'GET',
-      headers: {
-        cookie: 'username=tlutz888; token=U2FsdGVkX19jh7cHD6ex1I8zZ7DGK1wsQT5JxsAs76%2FuJrGrpY6WrIBiiyOr1xx7Zr%2FhIWB%2FpkrG%2BU8Erut5NA%3D%3D',
-      },
       credentials: 'include',
     })
+    .then(res => res.json())
     .then(res => console.log('success', res))
     .catch(err => console.log('fail', err))
   }

@@ -14,7 +14,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ activeProject, userInfo }) =>
       <button className="button is-primary is-large" onClick={(): void => setShowAddRepos(true)}>Add Repositories</button>
       
       {activeProject.projectRepos.map((repo) => {
-        return <ProjectRepoListItem/>
+        return <ProjectRepoListItem {...{activeProject, repo} }/>
       })}
       
       

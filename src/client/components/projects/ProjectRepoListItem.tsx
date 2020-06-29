@@ -1,7 +1,13 @@
 import React from 'react';
 
-const ProjectRepoListItem: React.FC = (props) => {
-  return <div>ProjectRepoListItem</div>
+import { ProjectRepoListItemProps } from '../../../types/types'
+
+const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ activeProject, repo }) => {
+  return (
+    <div>
+      {repo.repoName}
+    </div>
+  )
 }
 
 export default ProjectRepoListItem;
