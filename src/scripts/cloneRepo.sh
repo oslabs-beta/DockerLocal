@@ -9,3 +9,4 @@ cd myRepos
 
 git clone git@github.com:$username/$repoName.git
 echo "We finished cloning"
+exit 0
