@@ -3,8 +3,8 @@ import React, { useState, Dispatch, SetStateAction, useEffect, } from 'react';
 import { Project } from '../../../types/types'
 
 type SidebarButtonProps =  Project & {
-  activeProject: Project;
-  setActiveProject: Dispatch<SetStateAction<Project>>;
+  activeProject: number;
+  setActiveProject: Dispatch<SetStateAction<number>>;
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({ projectName, projectId, projectRepos, activeProject, setActiveProject}) => {
@@ -13,7 +13,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({ projectName, projectId, p
   // listens for change in [activeProject], changes isActive to string to style element
   // come check if we should be listening for [activeProject or more efficient to listen for specific property]
   useEffect(() => {
-    if (projectName === activeProject.projectName) {
+    if (projectId === activeProject) {
       setIsActive('is-active')
     } else {
       setIsActive('')
@@ -22,7 +22,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({ projectName, projectId, p
 
   return (
     <li>
-      <a className={isActive} onClick={(): void => setActiveProject({...{projectName, projectId, projectRepos}})}>
+      <a className={isActive} onClick={(): void => setActiveProject(projectId)}>
         {projectName}
       </a>
     </li>
