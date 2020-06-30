@@ -8,14 +8,19 @@ const fs = require("fs");
 
 const sshKeyController: any = {};
 
-function execShellCommand(shellCommand: string) {
+function execShellCommand(shellCommand: string, args: Array<string>) {
   return new Promise((resolve, reject) => {
-    exec(shellCommand, (error: string, stdout: string, stderr: string) => {
-      if (error) {
-        console.warn(error);
+    exec(
+      shellCommand,
+      args,
+      (error: string, stdout: string, stderr: string) => {
+        if (error) {
+          console.warn(error);
+        }
+        console.warn(stderr);
+        resolve(stdout ? stdout : stderr);
       }
-      resolve(stdout ? stdout : stderr);
-    });
+    );
   });
 }
 
@@ -32,8 +37,9 @@ sshKeyController.createSSHkey = async (
   // script then clones github repo using SSH connection
   const shellCommand = "/home/katty/Code/DockerLocal/src/scripts/sshKeygen.sh";
 
-  await execShellCommand(shellCommand);
-
+  const shellResult = await execShellCommand(shellCommand, []);
+  console.log(shellResult);
+  console.log("Finished Generating a Key");
   return next();
 };
 
@@ -69,7 +75,7 @@ sshKeyController.addSSHkeyToGithub = async (
   const jsonResponse = await response.json();
   const { id } = jsonResponse;
   res.locals.keyId = id;
-
+  console.log("Finished adding key to github");
   return next();
 };
 
@@ -87,7 +93,7 @@ sshKeyController.deleteSSHkey = async (
   const shellCommand =
     "/home/katty/Code/DockerLocal/src/scripts/sshKeyDelete.sh";
 
-  await execShellCommand(shellCommand);
+  await execShellCommand(shellCommand, ["./tmpKeys/dockerKey"]);
 
   const url = `https://api.github.com/user/keys/${keyId}`;
   const response = await fetch(url, {
@@ -96,7 +102,7 @@ sshKeyController.deleteSSHkey = async (
       Authorization: `Bearer ${accessToken}`,
     },
   });
-
+  console.log("Finished Deleting Key");
   return next();
 };
 
