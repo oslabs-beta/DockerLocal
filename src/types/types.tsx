@@ -3,12 +3,13 @@ import { SetStateAction, Dispatch } from "react";
 export type Project = {
   projectName: string;
   projectId: number;
-  projectRepos: Repo[];
+  projectRepos: readonly Repo[];
 };
 
 export type Repo = {
   repoName: string;
   repoCloneLink: string;
+  isIncluded?: boolean;
 };
 
 export type User = {
@@ -16,13 +17,13 @@ export type User = {
   userId: string;
 };
 
-export type RepoResponseType = {
+export type ProjectReposType = {
   personal: readonly Repo[];
   organizations: readonly Repo[];
   collaborations: readonly Repo[];
 };
 
-export type RepoListItemProps = {
+export type RepoSearchListItemProps = {
   repo: Repo;
   selectedRepos: readonly Repo[];
   setSelectedRepos: Dispatch<SetStateAction<Repo[]>>;
@@ -34,6 +35,15 @@ export type AddReposProps = {
 };
 
 export type ProjectPageProps = {
-  activeProject: Project;
+  activeProject: number;
   userInfo: User;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
 };
+
+export type ProjectRepoListItemProps = {
+  activeProject: number;
+  repo: Repo;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
+}
