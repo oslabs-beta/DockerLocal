@@ -1,7 +1,9 @@
 #!/bin/bash
 # Script to generate an SSH key and add github.com to known hosts
 
+# create temporary folders to store agent info and ssh keys
 mkdir ./tmpKeys
+mkdir ./tmpAgent
 
 # generate public and private SSH keys with no password
 ssh-keygen -t ed25519 -f ./tmpKeys/dockerKey -g -N ""
@@ -12,7 +14,6 @@ ssh-keyscan -H github.com -y >> ~/.ssh/known_hosts
 eval $(ssh-agent -s)
 
 # save ssh agent sock info and agent PID so that we can connect later
-mkdir ./tmpAgent
 echo $SSH_AUTH_SOCK > ./tmpAgent/agentSock
 echo $SSH_AGENT_PID > ./tmpAgent/agentPID
 
