@@ -7,15 +7,25 @@ import ProjectRepoListItem from './ProjectRepoListItem';
 
 const ProjectPage: React.FC<ProjectPageProps> = ({ activeProject, userInfo, projectList, setProjectList }) => {
   const [showAddRepos, setShowAddRepos] = useState(false);
+  const [projectRepoListItems, setprojectRepoListItems] = useState([])
+
+  // populate repo list items when active project changes and when request from home.tsx comes back to update project list
+  useEffect(() => {
+    const currentProject = projectList.find(project => project.projectId === activeProject)
+    if (currentProject) {
+      const newList = currentProject.projectRepos.map((repo) => {
+        return <ProjectRepoListItem key={`ProjectRepoListItem ${repo.repoName}`} {...{ repo, activeProject, projectList, setProjectList }} />
+      })
+      setprojectRepoListItems(newList)
+    }
+  }, [activeProject, projectList])
 
   return (
     <div>
       <div>Select your repositories: </div>
       <button className="button is-primary is-large" onClick={(): void => setShowAddRepos(true)}>Add Repositories</button>
 
-      {activeProject.projectRepos.map((repo) => {
-        return <ProjectRepoListItem key={`ProjectRepoListItem ${repo.repoName}`} {...{ repo, activeProject, projectList, setProjectList }} />
-      })}
+      {projectRepoListItems}
 
 
       {/* shows this element if showAddRepos is true */}

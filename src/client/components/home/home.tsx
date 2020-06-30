@@ -17,11 +17,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   // need to set type for projects/projectlist
   const [projectList, setProjectList] = useState<readonly Project[]>([]);
 
-  const [activeProject, setActiveProject] = useState<Project>({
-    projectName: 'No Projects Found',
-    projectId: 1,
-    projectRepos: [{ repoName: 'repo 1', repoCloneLink: 'http/..github/..' }]
-  });
+  const [activeProject, setActiveProject] = useState(1);
 
   const testRequest = () => {
     fetch('/api/repos', {
@@ -68,8 +64,8 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
       },
       {
         projectName: 'React Visualizer 77.0(project4)', projectId: 4, projectRepos: [
-          { repoName: 'organization Repo5', repoCloneLink: 'orglink5', isIncluded: false },
-          { repoName: 'organization Repo6', repoCloneLink: 'orglink6', isIncluded: false },
+          { repoName: 'organization Repo6', repoCloneLink: 'orglink5', isIncluded: false },
+          { repoName: 'organization Repo7', repoCloneLink: 'orglink6', isIncluded: false },
           { repoName: 'collab Repo1', repoCloneLink: 'collablink1', isIncluded: false },
           { repoName: 'collab Repo2', repoCloneLink: 'collablink2', isIncluded: false },
         ]
