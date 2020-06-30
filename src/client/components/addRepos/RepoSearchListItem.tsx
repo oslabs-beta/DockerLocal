@@ -7,7 +7,6 @@ const RepoSearchListItem: React.FC<RepoSearchListItemProps> = ({ repo, selectedR
 
   // needed to account for switching back and forth between filters/tabs
   useEffect(() => {
-    console.log('using effect')
     if (selectedRepos.includes(repo) && !isChecked) setIsChecked(true);
   }, [isChecked])
 

@@ -23,7 +23,7 @@ export type ProjectReposType = {
   collaborations: readonly Repo[];
 };
 
-export type RepoSearchListItem = {
+export type RepoSearchListItemProps = {
   repo: Repo;
   selectedRepos: readonly Repo[];
   setSelectedRepos: Dispatch<SetStateAction<Repo[]>>;
@@ -35,11 +35,15 @@ export type AddReposProps = {
 };
 
 export type ProjectPageProps = {
-  activeProject: Project;
+  activeProject: number;
   userInfo: User;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
 };
 
 export type ProjectRepoListItemProps = {
-  activeProject: Project;
+  activeProject: number;
   repo: Repo;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
 }

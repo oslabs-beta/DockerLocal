@@ -16,11 +16,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   // need to set type for projects/projectlist
   const [projectList, setProjectList] = useState<readonly Project[]>([]);
 
-  const [activeProject, setActiveProject] = useState<Project>({
-    projectName: "No Projects Found",
-    projectId: 1,
-    projectRepos: [{ repoName: "repo 1", repoCloneLink: "http/..github/.." }],
-  });
+  const [activeProject, setActiveProject] = useState(1);
 
   const testRequest = () => {
     fetch("/api/repos", {
@@ -47,7 +43,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
           {
             repoName: "perrepop1",
             repoCloneLink: "personallink1",
-            isIncluded: false,
+            isIncluded: true,
           },
           {
             repoName: "abcdefgpersonal2",
@@ -57,12 +53,12 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
           {
             repoName: "abbsddpersonalRepo3",
             repoCloneLink: "personallink3",
-            isIncluded: false,
+            isIncluded: true,
           },
           {
             repoName: "collab Repo4",
             repoCloneLink: "collablink4",
-            isIncluded: false,
+            isIncluded: true,
           },
           {
             repoName: "collab Repo5",
@@ -88,7 +84,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
           {
             repoName: "collab Repo5",
             repoCloneLink: "collablink5",
-            isIncluded: false,
+            isIncluded: true,
           },
           {
             repoName: "collab Repo6",
@@ -128,12 +124,12 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
         projectId: 4,
         projectRepos: [
           {
-            repoName: "organization Repo5",
+            repoName: "organization Repo6",
             repoCloneLink: "orglink5",
             isIncluded: false,
           },
           {
-            repoName: "organization Repo6",
+            repoName: "organization Repo7",
             repoCloneLink: "orglink6",
             isIncluded: false,
           },
@@ -152,18 +148,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
       {
         projectName: "React Visualizer 85.0(project5)",
         projectId: 5,
-        projectRepos: [
-          {
-            repoName: "organization Repo4",
-            repoCloneLink: "orglink4",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo3",
-            repoCloneLink: "collablink3",
-            isIncluded: false,
-          },
-        ],
+        projectRepos: [],
       },
     ];
     setProjectList(fetched);
@@ -180,7 +165,9 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
           <Sidebar {...{ projectList, activeProject, setActiveProject }} />
         </div>
         <div className="column">
-          <ProjectPage {...{ activeProject, userInfo }} />
+          <ProjectPage
+            {...{ activeProject, userInfo, projectList, setProjectList }}
+          />
         </div>
       </div>
     </div>

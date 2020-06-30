@@ -6,8 +6,8 @@ import { Project } from "../../../types/types";
 
 type SidebarProps = {
   projectList: readonly Project[];
-  activeProject: Project;
-  setActiveProject: Dispatch<SetStateAction<Project>>;
+  activeProject: number;
+  setActiveProject: Dispatch<SetStateAction<number>>;
 };
 
 const Sidebar: React.FC<SidebarProps> = ({
