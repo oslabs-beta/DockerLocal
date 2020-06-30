@@ -2,7 +2,10 @@
 # Script to generate an SSH key and add github.com to known hosts
 
 mkdir ./tmpKeys
+
+# generate public and private SSH keys with no password
 ssh-keygen -t ed25519 -f ./tmpKeys/dockerKey -g -N ""
+# add github.com to ssh known hosts so that we can ssh connect to github.com
 ssh-keyscan -H github.com -y >> ~/.ssh/known_hosts
 
 # start ssh agent 
