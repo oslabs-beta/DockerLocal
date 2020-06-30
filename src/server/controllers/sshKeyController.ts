@@ -92,7 +92,7 @@ sshKeyController.deleteSSHkey = async (
 
   const shellCommand = "./src/scripts/sshKeyDelete.sh";
 
-  await execShellCommand(shellCommand, ["./tmpKeys/dockerKey"]);
+  await execShellCommand(shellCommand, []);
 
   const url = `https://api.github.com/user/keys/${keyId}`;
   const response = await fetch(url, {

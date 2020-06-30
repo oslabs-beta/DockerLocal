@@ -1,15 +1,16 @@
 #!/bin/bash
 # Script to generate an SSH key and add github.com to known hosts
 
-keyIdentity=$1
-
-temp_sock=$(cat ./tmpAgent/agentInfo)
+temp_sock=$(cat ./tmpAgent/agentSock)
 export SSH_AUTH_SOCK=$temp_sock
 
-# Remove our key from the ssh-agent
-ssh-add -d $keyIdentity >/dev/null
+agent_pid=$(cat ./tmpAgent/agentPID)
 
-# remove the ./tmpKeys folder and all contents
+# Remove our key from the ssh-agent
+ssh-add -D $agent_pid >/dev/null
+
+# remove the ./tmpKeys and .tmpAgent folders and all contents
 rm -rf ./tmpKeys
+rm -rf ./tmpAgent
 
 exit 0
