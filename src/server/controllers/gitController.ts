@@ -33,7 +33,7 @@ gitController.cloneRepo = async (
   const repoName = repos[1].name;
 
   // shell script clones github repo using SSH connection
-  const shellCommand = "/home/katty/Code/DockerLocal/src/scripts/cloneRepo.sh";
+  const shellCommand = "./src/scripts/cloneRepo.sh";
 
   const shellResp = await execShellCommand(shellCommand, [username, repoName]);
   console.log(shellResp);
