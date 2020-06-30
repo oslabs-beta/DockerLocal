@@ -32,7 +32,7 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
         res.locals.buildPathArray = buildPathArray;
         return next();
     });
-
+    // shell script errror handling
     myShellScript.stderr.on('data', (data: Error)=>{
         return next({
             log: "ERROR IN SHELL SCRIPT",
@@ -56,6 +56,7 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
           }
     }
     res.locals.containerNameArray = containerNameArray;
+    // error handling
     if (Error) return next({
         log: "ERROR IN GET CONTAINER NAMES",
         msg: {err: `error ${Error}`}
@@ -70,6 +71,7 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     let filePath: string;
     let containerName: string;
     // making docker compose file
+    // indentation is important in yaml files
     for (let i = 0; i < buildPathArray.length; i++){
         filePath = buildPathArray[i];
         containerName = containerNameArray[i];
