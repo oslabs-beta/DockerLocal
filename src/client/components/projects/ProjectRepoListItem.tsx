@@ -3,25 +3,31 @@ import React, { useEffect, useState } from 'react';
 import { ProjectRepoListItemProps, Project, Repo } from '../../../types/types'
 
 const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ repo, activeProject, projectList, setProjectList }) => {
+  // return <div>hi</div>
+  
   const [isChecked, setIsChecked] = useState(repo.isIncluded)
 
   useEffect(() => {
-    console.log('useeffect')
-    if (repo.isIncluded && !isChecked) setIsChecked(true)
-  }, [isChecked])
+    setIsChecked(repo.isIncluded)
+  })
 
   const toggleIsIncluded = (): void => {
+    // define current repo
+    const currentProject = projectList.find(project => project.projectId === activeProject);
+
     // need to make copy of states to include in new to not mutate state directly
     // make copy of repo with toggled isIncluded value
     const newRepo: Repo = { ...repo, isIncluded: !repo.isIncluded };
 
+
+
     // make copy of active project repo list with new repo included
-    const newProjectRepos = activeProject.projectRepos.map((repo) => (
+    const newProjectRepos = currentProject.projectRepos.map((repo) => (
       repo.repoCloneLink === newRepo.repoCloneLink ? newRepo : repo
     ));
 
     // copy active project
-    const newActiveProject: Project = { ...activeProject }
+    const newActiveProject: Project = { ...currentProject }
     newActiveProject.projectRepos = newProjectRepos;
 
     // insert new project into new project list
@@ -30,7 +36,7 @@ const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ repo, activeP
     ));
 
     // set new project list
-    setIsChecked(!isChecked)
+    // setIsChecked(newRepo.isIncluded)
     setProjectList(newProjectList)
 
   }

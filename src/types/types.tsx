@@ -35,14 +35,14 @@ export type AddReposProps = {
 };
 
 export type ProjectPageProps = {
-  activeProject: Project;
+  activeProject: number;
   userInfo: User;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;
 };
 
 export type ProjectRepoListItemProps = {
-  activeProject: Project;
+  activeProject: number;
   repo: Repo;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;
