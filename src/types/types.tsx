@@ -42,7 +42,7 @@ export type ProjectPageProps = {
 };
 
 export type ProjectRepoListItemProps = {
-  activeProject: number;
+  activeProject: Project;
   repo: Repo;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;
