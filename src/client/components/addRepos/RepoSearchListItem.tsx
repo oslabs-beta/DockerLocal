@@ -1,16 +1,16 @@
 import React, { useState, useEffect, Dispatch } from 'react';
-import { RepoListItemProps } from '../../../types/types';
+import { RepoSearchListItemProps } from '../../../types/types';
 
 
-const RepoListItem: React.FC<RepoListItemProps> = ({ repo, selectedRepos, setSelectedRepos }) => {
+const RepoSearchListItem: React.FC<RepoSearchListItemProps> = ({ repo, selectedRepos, setSelectedRepos }) => {
   const [isChecked, setIsChecked] = useState(false)
 
   // needed to account for switching back and forth between filters/tabs
   useEffect(() => {
-    console.log('using effect')
     if (selectedRepos.includes(repo) && !isChecked) setIsChecked(true);
   }, [isChecked])
 
+  // adds/removes from selected repos list and toggles checkbox
   const toggleSelect = (): void => {
     if (!isChecked) setSelectedRepos([...selectedRepos, repo]);
     else setSelectedRepos(selectedRepos.filter(({ repoCloneLink }) => repoCloneLink !== repo.repoCloneLink ))
@@ -26,4 +26,4 @@ const RepoListItem: React.FC<RepoListItemProps> = ({ repo, selectedRepos, setSel
   )
 }
 
-export default RepoListItem;
+export default RepoSearchListItem;
