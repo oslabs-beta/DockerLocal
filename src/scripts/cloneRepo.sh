@@ -6,7 +6,7 @@ repoName=$2
 
 echo $1 $2
 
-temp_sock=$(cat ./tmpAgent/agentInfo)
+temp_sock=$(cat ./tmpAgent/agentSock)
 export SSH_AUTH_SOCK=$temp_sock
 
 mkdir ./myRepos
