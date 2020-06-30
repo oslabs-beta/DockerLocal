@@ -28,12 +28,13 @@ app.use(express.static('assets'));
 
 // Home endpoint
 app.get('/',(req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/index.html')));
-
+app.get('/test',(req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/test.html')));
 // Handle redirections
-app.get('*', (req: Request, res: Response) => res.sendStatus(200));
+// app.get('*', (req: Request, res: Response) => res.sendStatus(200));
 
 // Failed auth redirect
 app.get('/fail', (req: Request, res: Response) => res.status(200).send('❌ FAILURE TO AUTHENTICATE ❌'));
+
 
 // Global Error handler
 app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction) => {
