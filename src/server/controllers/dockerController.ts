@@ -68,22 +68,39 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
 dockerController.createDockerCompose = (req: Request, res: Response, next: NextFunction) => {
     buildPathArray = res.locals.buildPathArray
     containerNameArray = res.locals.containerNameArray;
-    let filePath: string;
+    let directory: string;
     let containerName: string;
+    const composeFilePath = "./myRepos/docker-compose.yaml"
     // making docker compose file
     // indentation is important in yaml files
+
+    // checking if compose file already exists
+    // If it does not it will make one
+    if(!fs.existsSync(composeFilePath)){
+        // spacing matters so it looks weird on purpose
+        fs.writeFile(composeFilePath, `version: "3"
+        services:
+        `, (error) => {
+            if(error) return next({
+                log: 'ERROR IN CREATING COMPOSE FILE ',
+                msg: {err: `ERROR: ${error}`}
+            })
+        });
+      }
+
+    // appending the file with the configurations for each service
     for (let i = 0; i < buildPathArray.length; i++){
-        filePath = buildPathArray[i];
+        directory = buildPathArray[i];
         containerName = containerNameArray[i];
         portNo++;
-        fs.appendFile('./myRepos/docker-compose.yml',
+        fs.appendFile(composeFilePath,
         `  ${containerName}:
-        build: ${filePath}
+        build: ${directory}
         ports:
-          - ${portNo}:${dockerPortNo}\n`, (err: Error) => {
-            if (err) return next({
+          - ${portNo}:${dockerPortNo}\n`, (error: Error) => {
+            if (error) return next({
                 log: "ERROR IN CREATEDOCKERCOMPOSE",
-                msg: {err:`error: ${err}`}
+                msg: {err:`error: ${error}`}
             });
         });
     }
