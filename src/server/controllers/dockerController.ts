@@ -8,6 +8,12 @@ const dockerPortNo = portNo;
 let buildPathArray: string[] = [];
 let containerNameArray: string[] = [];
 
+// WORKING ASSUMPTIONS:
+// All chosen directories will be stored in the same folder so that findDockerfiles will access it
+// My Repos folder will exist before dockerController is run
+// Docker-Compose file will be stored in DockerLocal/MyRepos
+// Dockerfiles will have docker in the name and no other files will have docker in the name
+// Dockerfiles will be located in the root folder of a project and so will be descriptive of the project(i.e. Container Name)
 
 const dockerController: any = { };
 
@@ -19,7 +25,7 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
         const filePathArray: string[] = output.split('\n').slice(0,-1);
         let buildPath: string;
         // make filepaths into buildpaths by removing the name of the file from the path
-        // "src/server/happy/dopckerfile" => "src/server/happy"
+        // "src/server/happy/dockerfile" => "src/server/happy"
         for (const filePath of filePathArray){
           for (let char = filePath.length - 1; char >= 0; char--){
               if (filePath[char] === '/'){
@@ -41,7 +47,7 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
 
 }
 
-// Use build paths to get Cotainer Names
+// Use build paths to get Container Names
 dockerController.getContainerNames = (req: Request, res: Response, next: NextFunction) => {
     buildPathArray = res.locals.buildPathArray;
     let containerName: string;
@@ -74,11 +80,10 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     // making docker compose file
     // indentation is important in yaml files
 
-    // checking if compose file already exists
-    // If it does not it will make one
+    // checking if compose file already exists. If it does not, it will make one
     if(!fs.existsSync(composeFilePath)){
         // spacing matters so it looks weird on purpose
-        fs.writeFile(composeFilePath, `version: "3"
+        fs.writeFile(composeFilePath, `version: '3'
         services:
         `, (error) => {
             if(error) return next({
