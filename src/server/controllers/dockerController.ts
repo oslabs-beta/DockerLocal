@@ -1,7 +1,7 @@
 export { };
 import { Request, Response, NextFunction } from 'express';
 const { exec } = require('child_process');
-const myShellScript = exec('sh src/server/shell_scripts/findDockerfiles.sh');
+const myShellScript = exec('sh src/scripts/findDockerfiles.sh');
 import fs = require('fs');
 let portNo = 5001;
 const dockerPortNo = portNo;
