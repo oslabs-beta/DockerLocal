@@ -15,6 +15,7 @@ function execShellCommand(shellCommand: string, args: Array<string>) {
         if (error) {
           console.warn(error);
         }
+        console.warn(stderr);
         resolve(stdout ? stdout : stderr);
       }
     );
@@ -34,8 +35,9 @@ gitController.cloneRepo = async (
   // shell script clones github repo using SSH connection
   const shellCommand = "/home/katty/Code/DockerLocal/src/scripts/cloneRepo.sh";
 
-  await execShellCommand(shellCommand, [username, repoName]);
-
+  const shellResp = await execShellCommand(shellCommand, [username, repoName]);
+  console.log(shellResp);
+  console.log("Finished Cloning Repo");
   return next();
 };
 
