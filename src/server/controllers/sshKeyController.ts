@@ -1,28 +1,13 @@
 export {};
 
-const exec = require("child_process").execFile;
-
 import { Request, Response, NextFunction } from "express";
 const fetch = require("node-fetch").default;
 const fs = require("fs");
 
-const sshKeyController: any = {};
+// import helper function to execute shell scripts
+const execShellCommand = require("./helpers/shellHelper");
 
-function execShellCommand(shellCommand: string, args: Array<string>) {
-  return new Promise((resolve, reject) => {
-    exec(
-      shellCommand,
-      args,
-      (error: string, stdout: string, stderr: string) => {
-        if (error) {
-          console.warn(error);
-        }
-        console.warn(stderr);
-        resolve(stdout ? stdout : stderr);
-      }
-    );
-  });
-}
+const sshKeyController: any = {};
 
 /**
  * @middleware  Create SSH key to be used for connection to clone/update github repos
@@ -57,11 +42,13 @@ sshKeyController.addSSHkeyToGithub = async (
   console.log("before read sshKey");
   const sshKey = fs.readFileSync("./tmpKeys/dockerKey.pub", "utf8");
 
+  // create the request body which we will use to create the ssh key on Github
   const reqBody = JSON.stringify({
     title: `${username}@DockerLocal`,
     key: sshKey,
   });
 
+  // send a post request to Github api to add the ssh key to user's keys
   const url = `https://api.github.com/user/keys`;
   const response = await fetch(url, {
     method: "POST",
@@ -72,7 +59,10 @@ sshKeyController.addSSHkeyToGithub = async (
     body: reqBody,
   });
 
+  // converts the response body into JSON
   const jsonResponse = await response.json();
+
+  // save the key id from the response. this will be used to delete the key from Github after we are done using it
   const { id } = jsonResponse;
   res.locals.keyId = id;
   console.log("Finished adding key to github");

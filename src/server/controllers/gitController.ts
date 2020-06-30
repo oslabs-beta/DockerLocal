@@ -1,27 +1,16 @@
 export {};
 
-const exec = require("child_process").execFile;
-
 import { Request, Response, NextFunction } from "express";
+
+// import helper function to execute shell scripts
+const execShellCommand = require("./helpers/shellHelper");
 
 const gitController: any = {};
 
-function execShellCommand(shellCommand: string, args: Array<string>) {
-  return new Promise((resolve, reject) => {
-    exec(
-      shellCommand,
-      args,
-      (error: string, stdout: string, stderr: string) => {
-        if (error) {
-          console.warn(error);
-        }
-        console.warn(stderr);
-        resolve(stdout ? stdout : stderr);
-      }
-    );
-  });
-}
-
+/**
+ * @middleware  Clone Github repositor(y/ies) using an SSH connection
+ * @desc    Clones git repository from github. Expects repository info to be in res.locals.
+ */
 gitController.cloneRepo = async (
   req: Request,
   res: Response,
@@ -29,8 +18,13 @@ gitController.cloneRepo = async (
 ) => {
   const { username, repos } = res.locals;
 
-  // TODO: add repoName from res.locals
-  const repoName = repos[1].name;
+  /** Use below line for testing.
+   *  Replace repoName with a string that is the name of a private repository on your Github account  */
+  const repoName = "DockerLocal";
+  // const repoName = repos[1].name;
+
+  // TODO: integrate loop into this middleware to handle an array of objects with repo info
+  // all repos indicated in the array should be cloned
 
   // shell script clones github repo using SSH connection
   const shellCommand = "./src/scripts/cloneRepo.sh";
