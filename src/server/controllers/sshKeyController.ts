@@ -35,7 +35,7 @@ sshKeyController.createSSHkey = async (
 ) => {
   // shell script adds the github.com domain name to the known_hosts file using the ssh-keyscan command
   // script then clones github repo using SSH connection
-  const shellCommand = "/home/katty/Code/DockerLocal/src/scripts/sshKeygen.sh";
+  const shellCommand = "./src/scripts/sshKeygen.sh";
 
   const shellResult = await execShellCommand(shellCommand, []);
   console.log(shellResult);
@@ -90,8 +90,7 @@ sshKeyController.deleteSSHkey = async (
 ) => {
   const { accessToken, username, keyId } = res.locals;
 
-  const shellCommand =
-    "/home/katty/Code/DockerLocal/src/scripts/sshKeyDelete.sh";
+  const shellCommand = "./src/scripts/sshKeyDelete.sh";
 
   await execShellCommand(shellCommand, ["./tmpKeys/dockerKey"]);
 
