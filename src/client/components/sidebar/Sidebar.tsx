@@ -1,6 +1,7 @@
 import React, { useState, Dispatch, SetStateAction, } from 'react';
 
-import SidebarButton from './SidebarButton'
+import SidebarButton from './SidebarButton';
+import { Project } from '../../../types/types'
 
 type SidebarProps = {
   projectList: Project[];
@@ -8,10 +9,6 @@ type SidebarProps = {
   setActiveProject: Dispatch<SetStateAction<Project>>;
 }
 
-type Project = {
-  projectName: string;
-  projectId: number;
-}
 
 
 const Sidebar: React.FC<SidebarProps> = ({ projectList, activeProject, setActiveProject }) => {
@@ -20,6 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({ projectList, activeProject, setActive
       key={`project ${project.projectId}`}
       projectName={project.projectName}
       projectId={project.projectId}
+      projectRepos={project.projectRepos}
       {...{activeProject, setActiveProject}}
       />
   ))
