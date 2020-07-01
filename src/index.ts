@@ -28,8 +28,8 @@ const createWindow = () => {
     resizable: false,
   
   });
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.webContents.openDevTools();
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+  .then(() => mainWindow.webContents.openDevTools());
   mainWindow.focus();
 };
 

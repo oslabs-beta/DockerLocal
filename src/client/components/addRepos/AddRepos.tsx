@@ -1,16 +1,25 @@
 import React, { useState, useEffect, InputHTMLAttributes, MouseEvent, ReactHTMLElement } from 'react';
-import RepoListItem from './RepoListItem';
+import RepoSearchListItem from './RepoSearchListItem';
 
+<<<<<<< HEAD
 import { Repo, RepoResponseType, AddReposProps } from '../../../types/types';
 const CryptoJS = require('crypto-js');
 
 const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
   const [repos, setRepos] = useState<RepoResponseType>({ personal: [], organizations: [], collaborations: [] })
+=======
+import { Repo, ProjectReposType, AddReposProps } from '../../../types/types';
+
+
+const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
+  const [repos, setRepos] = useState<ProjectReposType>({personal: [], organizations: [], collaborations: []})
+>>>>>>> 971ddc0011119671de11cf04a19a0e47ccfef815
   const [selectedRepos, setSelectedRepos] = useState<readonly Repo[]>([])
   const [searchValue, setSearchValue] = useState('');
   const [activeFilter, setActiveFilter] = useState('all')
 
   // dummy request and response 
+<<<<<<< HEAD
   const fetchRepos = async () => {
 
     //PARSE TOKEN AND USERNAME FROM COOKIES
@@ -123,6 +132,37 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
     //     priv = privRepos;
     //   })
     //   .catch(error => console.log('error', error));
+=======
+  const fetchRepos = (userInfo) => {
+    // send request to back end
+    // ** send request to **  /api/repos
+    const response: ProjectReposType = {
+      personal: [
+      {repoName: 'perrepop1', repoCloneLink: 'personallink1'},
+      {repoName: 'abcdefgpersonal2', repoCloneLink: 'personallink2'},
+      {repoName: 'abbsddpersonalRepo3', repoCloneLink: 'personallink3'},
+      {repoName: 'terrtqwwalRepo4', repoCloneLink: 'personallink4'},
+      {repoName: 'abhhsdnalRepo5', repoCloneLink: 'personallink5'},
+      {repoName: 'personalRepo6', repoCloneLink: 'personallink6'},
+      ],
+      organizations: [
+      {repoName: 'organization Repo1', repoCloneLink: 'orglink1'},
+      {repoName: 'organization Repo2', repoCloneLink: 'orglink2'},
+      {repoName: 'organization Repo3', repoCloneLink: 'orglink3'},
+      {repoName: 'organization Repo4', repoCloneLink: 'orglink4'},
+      {repoName: 'organization Repo5', repoCloneLink: 'orglink5'},
+      {repoName: 'organization Repo6', repoCloneLink: 'orglink6'},
+      ],
+      collaborations: [
+      {repoName: 'collab Repo1', repoCloneLink: 'collablink1'},
+      {repoName: 'collab Repo2', repoCloneLink: 'collablink2'},
+      {repoName: 'collab Repo3', repoCloneLink: 'collablink3'},
+      {repoName: 'collab Repo4', repoCloneLink: 'collablink4'},
+      {repoName: 'collab Repo5', repoCloneLink: 'collablink5'},
+      {repoName: 'collab Repo6', repoCloneLink: 'collablink6'},
+      ],
+    }
+>>>>>>> 971ddc0011119671de11cf04a19a0e47ccfef815
 
     // response.personal = [Object.assign(pub, priv)];
 
@@ -306,9 +346,15 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                   return searchValue === '' || repoName.includes(searchValue)
                 })
                 .map((repo) => (
+<<<<<<< HEAD
                   <RepoListItem
                     key={repo.nameWithOwner}
                     {...{
+=======
+                  <RepoSearchListItem 
+                    key={repo.repoName}
+                    {...{ 
+>>>>>>> 971ddc0011119671de11cf04a19a0e47ccfef815
                       repo,
                       selectedRepos,
                       setSelectedRepos
@@ -322,7 +368,11 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                   return searchValue === '' || repoName.includes(searchValue)
                 })
                 .map((repo) => (
+<<<<<<< HEAD
                   <RepoListItem
+=======
+                  <RepoSearchListItem 
+>>>>>>> 971ddc0011119671de11cf04a19a0e47ccfef815
                     key={repo.repoName}
                     {...{
                       repo,
@@ -338,7 +388,11 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                   return searchValue === '' || repoName.includes(searchValue)
                 })
                 .map((repo) => (
+<<<<<<< HEAD
                   <RepoListItem
+=======
+                  <RepoSearchListItem 
+>>>>>>> 971ddc0011119671de11cf04a19a0e47ccfef815
                     key={repo.repoName}
                     {...{
                       repo,
