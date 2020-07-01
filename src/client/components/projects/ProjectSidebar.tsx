@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Project } from "../../../types/types";
 
 const ProjectSideBar: React.FC<{
@@ -10,11 +11,17 @@ const ProjectSideBar: React.FC<{
     setProjectNameValue(e.target.value);
   };
 
-  // use uuid to generate projectId?????*********
+  // ============= TODO: ==================
+  // 1. improve logic to handle project name input edge cases
+  //     1.1 handle empty string
+  //     1.2 handle max lenght
+  // 2. on setProjectLise, add logic to write to file
+  // 3. add more comments
+  // ========================================
   const handleSubmit = () => {
     //create an object
     const newProject: Project = {
-      projectId: 6,
+      projectId: uuidv4(),
       projectName: projectNameValue,
       projectRepos: [],
     };
