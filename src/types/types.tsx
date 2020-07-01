@@ -1,4 +1,5 @@
 import { SetStateAction, Dispatch } from "react";
+import { report } from "process";
 
 export type Project = {
   projectName: string;
@@ -8,7 +9,8 @@ export type Project = {
 
 export type Repo = {
   repoName: string;
-  repoCloneLink: string;
+  repoId: string;
+  repoOwner: string;
   isIncluded?: boolean;
 };
 
@@ -46,4 +48,10 @@ export type ProjectRepoListItemProps = {
   repo: Repo;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;
+}
+
+export type RepoResponseType = { 
+  personal: readonly Repo[]; 
+  organizations: readonly Repo[];
+  collaborations: readonly Repo[]; 
 }

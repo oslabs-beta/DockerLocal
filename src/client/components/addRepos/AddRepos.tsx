@@ -13,6 +13,9 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
   // dummy request and response 
   const fetchRepos = async () => {
 
+    // *** need to add conditional if user is not logged in or if fetch error etc ***
+
+
     //PARSE TOKEN AND USERNAME FROM COOKIES
     const nameAndToken = document.cookie.split(';');
     const username = nameAndToken[0].replace('username=', '').trim();
@@ -74,9 +77,9 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
         let pubChain = result.data.user.repositories;
         for (let i = 0; i < pubLength; i++) {
           pubRepos.push({ 
-            id: pubChain.edges[i].node.id, 
-            name: pubChain.edges[i].node.name, 
-            owner: pubChain.edges[i].node.owner.login 
+            repoId: pubChain.edges[i].node.id, 
+            repoName: pubChain.edges[i].node.name, 
+            repoOwner: pubChain.edges[i].node.owner.login 
           })
         }
         response.personal = pubRepos;
@@ -158,9 +161,9 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
         let collabChain = result.data.user.repositories;
         for (let i = 0; i < collabLength; i++) {
           collabRepos.push({ 
-            id: collabChain.nodes[i].id, 
-            name: collabChain.nodes[i].name, 
-            owner: collabChain.nodes[i].owner.login 
+            repoId: collabChain.nodes[i].id, 
+            repoName: collabChain.nodes[i].name, 
+            repoOwner: collabChain.nodes[i].owner.login 
           })
         }
         response.collaborations = collabRepos;
@@ -208,9 +211,9 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
         for (let x = 0; x < orgLength; x++) {
           for (let i = 0; i < objChain[x].node.repositories.edges.length; i++) {
             orgArr.push({ 
-              name: objChain[x].node.repositories.edges[i].node.name, 
-              id: objChain[x].node.repositories.edges[i].node.id, 
-              owner: objChain[x].node.repositories.edges[i].node.owner.login
+              repoId: objChain[x].node.repositories.edges[i].node.name, 
+              repoName: objChain[x].node.repositories.edges[i].node.id, 
+              repoOwner: objChain[x].node.repositories.edges[i].node.owner.login
             })
           }
         }
@@ -241,9 +244,12 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
   }
 
   useEffect(() => {
-    // fetchRepos(userInfo)
+    fetchRepos()
+    .then(res => console.log('result', res))
     // then
+    console.log('fetching repos ******** ******** * ** * * *')
     setRepos(fetchRepos());
+    console.log('repos fetched, state has been set')
   }, [])
 
   // {repos.map(repo => <li>{repo.repoName}</li>)}

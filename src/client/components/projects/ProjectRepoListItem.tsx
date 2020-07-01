@@ -23,7 +23,7 @@ const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ repo, activeP
 
     // make copy of active project repo list with new repo included
     const newProjectRepos = currentProject.projectRepos.map((repo) => (
-      repo.repoCloneLink === newRepo.repoCloneLink ? newRepo : repo
+      repo.repoId === newRepo.repoId ? newRepo : repo
     ));
 
     // copy active project

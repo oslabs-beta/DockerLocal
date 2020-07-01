@@ -13,7 +13,7 @@ const RepoSearchListItem: React.FC<RepoSearchListItemProps> = ({ repo, selectedR
   // adds/removes from selected repos list and toggles checkbox
   const toggleSelect = (): void => {
     if (!isChecked) setSelectedRepos([...selectedRepos, repo]);
-    else setSelectedRepos(selectedRepos.filter(({ repoCloneLink }) => repoCloneLink !== repo.repoCloneLink ))
+    else setSelectedRepos(selectedRepos.filter(({ repoId }) => repoId !== repo.repoId ))
     setIsChecked(!isChecked)
     }
 
