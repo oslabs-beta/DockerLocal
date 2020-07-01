@@ -7,8 +7,8 @@ require('dotenv/config');
 
 router.get(
   '/repos',
-  authController.getNameAndTokenFromCookies, 
-  apiController.getUserRepos, 
+  authController.getNameAndTokenFromCookies,
+  apiController.getUserRepos,
   (req: Request, res: Response) => res.status(200).json(res.locals.repos));
 
 router.post('/', (req: Request, res: Response) => res.send('Hitting api POST endpoint'));
