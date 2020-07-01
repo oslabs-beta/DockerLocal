@@ -15,22 +15,12 @@ router.get(
     'X-Accepted-OAuth-Scopes': ['repo','user']
   }));
 
-//   user
-// public_repo
-// repo
-// repo_deployment
-// repo:status
-// read:repo_hook
-// read:org
-// read:public_key
-// read:gpg_key
-
 //Github callback function (authentication)
 //if successful
 //save username/accessToken to cookies
 //redirect to /api/repos
 //if unsuccessful
-//redirect to /fail 
+//redirect to /fail
 router.get(
   '/github/callback',
   passport.authenticate('github', {
