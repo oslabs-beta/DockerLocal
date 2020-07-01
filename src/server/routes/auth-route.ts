@@ -4,16 +4,16 @@ const passport = require('passport');
 const authController = require('../controllers/authController');
 import { Request, Response } from 'express';
 
-//using passport to authenticate the github
+// using passport to authenticate the github
 router.get(
-  '/github', 
-  passport.authenticate('github', { 
-    scope: ['user:email'] 
+  '/github',
+  passport.authenticate('github', {
+    scope: ['user:email']
   }));
 
 router.get(
   '/github/callback',
-  passport.authenticate('github', { 
+  passport.authenticate('github', {
     failureRedirect: '/fail'
   }),
   authController.saveAccessToken,
