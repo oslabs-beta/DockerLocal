@@ -1,17 +1,17 @@
 import React, { useState, useEffect, InputHTMLAttributes, MouseEvent, ReactHTMLElement } from 'react';
-import RepoListItem from './RepoListItem';
+import RepoSearchListItem from './RepoSearchListItem';
 
-import { Repo, RepoResponseType, AddReposProps } from '../../../types/types';
+import { Repo, RepoResponseType, AddReposProps, Project } from '../../../types/types';
 const CryptoJS = require('crypto-js');
 
-const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
+const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, activeProject, projectList, setProjectList }) => {
   const [repos, setRepos] = useState<RepoResponseType>({ personal: [], organizations: [], collaborations: [] })
   const [selectedRepos, setSelectedRepos] = useState<readonly Repo[]>([])
   const [searchValue, setSearchValue] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all')
+  const [activeFilter, setActiveFilter] = useState('all');
 
   // dummy request and response 
-  const fetchRepos = async () => {
+  const fetchRepos = async (): Promise<RepoResponseType> => {
 
     // *** need to add conditional if user is not logged in or if fetch error etc ***
 
@@ -28,7 +28,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
     const decryptedToken = await CryptoJS.AES.decrypt(parsedToken, 'super_secret').toString(CryptoJS.enc.Utf8);
     console.log('DECRYPTED: ', decryptedToken)
 
-    const response = { personal: [], organizations: [], collaborations: [] };
+    const response: RepoResponseType = { personal: [], organizations: [], collaborations: [] };
     let pub, priv;
 
     //WILL USE USERNAME AND ACCESS TOKEN FOR THESE REQUESTS
@@ -211,8 +211,8 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
         for (let x = 0; x < orgLength; x++) {
           for (let i = 0; i < objChain[x].node.repositories.edges.length; i++) {
             orgArr.push({ 
-              repoId: objChain[x].node.repositories.edges[i].node.name, 
-              repoName: objChain[x].node.repositories.edges[i].node.id, 
+              repoName: objChain[x].node.repositories.edges[i].node.name, 
+              repoId: objChain[x].node.repositories.edges[i].node.id, 
               repoOwner: objChain[x].node.repositories.edges[i].node.owner.login
             })
           }
@@ -227,6 +227,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value)
+
   }
 
   // switches active filter onclick
@@ -237,19 +238,27 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
 
 
   const handleSubmit = () => {
-    // submit stuff to back end
-    // then
+    // make copy of current project
+    const currentProject: Project = {...projectList.find(project => project.projectId === activeProject)};
+
+    // add selected repos to current project
+    currentProject.projectRepos = [...currentProject.projectRepos, ...selectedRepos];
+
+    // insert new project into new project list
+    const newProjectList: Project[] = projectList.map((project) => (
+      project.projectId === currentProject.projectId ? currentProject : project
+    ));
+    
+    // update state
+    setProjectList(newProjectList)
     setShowAddRepos(false);
 
   }
 
   useEffect(() => {
+    // fetch repos on load, will not setRepos if modal is already closed when the fetch request returns
     fetchRepos()
-    .then(res => console.log('result', res))
-    // then
-    console.log('fetching repos ******** ******** * ** * * *')
-    setRepos(fetchRepos());
-    console.log('repos fetched, state has been set')
+    .then(res => showAddRepos && setRepos(res))
   }, [])
 
   // {repos.map(repo => <li>{repo.repoName}</li>)}
@@ -290,6 +299,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
             <div className="panel-block">
               <p className="control has-icons-left">
                 <input
+                  autoFocus
                   className="input is-large"
                   type="text"
                   placeholder="Search"
@@ -306,53 +316,53 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
             {/* if something is typed in the search box, only show repos that include the exact string */}
             {/* could change filter to regex at a later date to include a more robust search */}
             {/* map filtered list to render comonent for each item */}
-            {/* {(activeFilter === 'all' || activeFilter === 'personal')
+            {(activeFilter === 'all' || activeFilter === 'personal')
               && repos.personal
-                .filter(({ nameWithOwner }) => {
-                  return searchValue === '' || repoName.includes(searchValue)
+                .filter(({ repoName, repoOwner }) => {
+                  return searchValue === '' || repoName.includes(searchValue) || repoOwner.includes(searchValue)
                 })
                 .map((repo) => (
-                  <RepoListItem
-                    key={repo.nameWithOwner}
+                  <RepoSearchListItem
+                    key={repo.repoId}
                     {...{
                       repo,
                       selectedRepos,
                       setSelectedRepos
                     }}
                   />
-                ))} */}
+                ))}
             {/* same as above for organizations */}
-            {/* {(activeFilter === 'all' || activeFilter === 'organizations')
+            {(activeFilter === 'all' || activeFilter === 'organizations')
               && repos.organizations
-                .filter(({ repoName }) => {
-                  return searchValue === '' || repoName.includes(searchValue)
-                })
+              .filter(({ repoName, repoOwner }) => {
+                return searchValue === '' || repoName.includes(searchValue) || repoOwner.includes(searchValue)
+              })
                 .map((repo) => (
-                  <RepoListItem
-                    key={repo.repoName}
+                  <RepoSearchListItem
+                    key={repo.repoId}
                     {...{
                       repo,
                       selectedRepos,
                       setSelectedRepos
                     }}
                   />
-                ))} */}
+                ))}
             {/* same as above for collabs */}
-            {/* {(activeFilter === 'all' || activeFilter === 'collaborations')
+            {(activeFilter === 'all' || activeFilter === 'collaborations')
               && repos.collaborations
-                .filter(({ repoName }) => {
-                  return searchValue === '' || repoName.includes(searchValue)
-                })
+              .filter(({ repoName, repoOwner }) => {
+                return searchValue === '' || repoName.includes(searchValue) || repoOwner.includes(searchValue)
+              })
                 .map((repo) => (
-                  <RepoListItem
-                    key={repo.repoName}
+                  <RepoSearchListItem
+                    key={repo.repoId}
                     {...{
                       repo,
                       selectedRepos,
                       setSelectedRepos
                     }}
                   />
-                ))} */}
+                ))}
           </section>
 
           {/* might want to add a style here to keep constant height */}
