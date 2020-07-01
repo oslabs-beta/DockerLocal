@@ -1,21 +1,25 @@
 import React, { useState, useEffect, InputHTMLAttributes, MouseEvent, ReactHTMLElement } from 'react';
-import RepoListItem from './RepoListItem';
+import RepoSearchListItem from './RepoSearchListItem';
 
-import { Repo, RepoResponseType, AddReposProps } from '../../../types/types';
+import { Repo, RepoResponseType, AddReposProps, Project } from '../../../types/types';
+import { report } from 'process';
 const CryptoJS = require('crypto-js');
 
 /**
  * @function  Add array of repositories to repos array in state
  * @desc    Sends fetch requests to Github API to populate repository info for authenticated user
  */
-const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
+const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, activeProject, projectList, setProjectList }) => {
   const [repos, setRepos] = useState<RepoResponseType>({ personal: [], organizations: [], collaborations: [] })
   const [selectedRepos, setSelectedRepos] = useState<readonly Repo[]>([])
   const [searchValue, setSearchValue] = useState('');
-  const [activeFilter, setActiveFilter] = useState('all')
+  const [activeFilter, setActiveFilter] = useState('all');
 
   // dummy request and response 
   const fetchRepos = async (): Promise<RepoResponseType> => {
+
+    // *** need to add conditional if user is not logged in or if fetch error etc ***
+
 
     //PARSE TOKEN AND USERNAME FROM COOKIES
     const nameAndToken = document.cookie.split(';');
@@ -39,7 +43,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
     // Query to get the repo id, repo name, and repo owner for public repositories
     var publicRepoQuery = JSON.stringify({
       query: `{
-        user(login: "louisxsheid") {
+        user(login: "${username}") {
           repositories(first: 100, privacy: PUBLIC) {
             edges {
               node {
@@ -77,9 +81,9 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
         for (let i = 0; i < pubLength; i++) {
           currentNode = result.data.user.repositories.edges[i].node;
           pubRepos.push({ 
-            id: currentNode.id, 
-            name: currentNode.name, 
-            owner: currentNode.owner.login 
+            repoId: currentNode.id, 
+            repoName: currentNode.name, 
+            repoOwner: currentNode.owner.login 
           })
         }
         response.personal = pubRepos;
@@ -120,9 +124,9 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
         for (let i = 0; i < collabLength; i++) {
           currentNode = result.data.user.repositories.nodes[i];
           collabRepos.push({ 
-            id: currentNode.id, 
-            name: currentNode.name, 
-            owner: currentNode.owner.login 
+            repoId: currentNode.id, 
+            repoName: currentNode.name, 
+            repoOwner: currentNode.owner.login 
           })
         }
         response.collaborations = collabRepos;
@@ -175,9 +179,9 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
           for (let i = 0; i < reposLength; i++) {
             currentNode = result.data.user.organizations.edges[x].node.repositories.edges[i].node;
             orgArr.push({ 
-              name: currentNode.name, 
-              id: currentNode.id, 
-              owner: currentNode.owner.login
+              repoName: currentNode.name, 
+              repoId: currentNode.id, 
+              repoOwner: currentNode.owner.login
             })
           }
         }
@@ -192,6 +196,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value)
+
   }
 
   // switches active filter onclick
@@ -202,16 +207,31 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
 
 
   const handleSubmit = () => {
-    // submit stuff to back end
-    // then
+    // make copy of current project
+    const currentProject: Project = {...projectList.find(project => project.projectId === activeProject)};
+
+    // *** this should be changed to show an error message or repos should not be clickable *** 
+    // remove any repos that are already included in the project so user will not have duplicate repos
+    const reposToAdd = selectedRepos.filter((newRepo) => !currentProject.projectRepos.some((existingRepo) => newRepo.repoId === existingRepo.repoId))
+
+    // add selected repos to current project
+    currentProject.projectRepos = [...currentProject.projectRepos, ...reposToAdd];
+
+    // insert new project into new project list
+    const newProjectList: Project[] = projectList.map((project) => (
+      project.projectId === currentProject.projectId ? currentProject : project
+    ));
+    
+    // update state
+    setProjectList(newProjectList)
     setShowAddRepos(false);
 
   }
 
   useEffect(() => {
-    // fetchRepos(userInfo)
-    // then
-    setRepos(fetchRepos());
+    // fetch repos on load, will not setRepos if modal is already closed when the fetch request returns
+    fetchRepos()
+    .then(res => showAddRepos && setRepos(res))
   }, [])
 
   // {repos.map(repo => <li>{repo.repoName}</li>)}
@@ -252,6 +272,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
             <div className="panel-block">
               <p className="control has-icons-left">
                 <input
+                  autoFocus
                   className="input is-large"
                   type="text"
                   placeholder="Search"
@@ -268,53 +289,59 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
             {/* if something is typed in the search box, only show repos that include the exact string */}
             {/* could change filter to regex at a later date to include a more robust search */}
             {/* map filtered list to render comonent for each item */}
-            {/* {(activeFilter === 'all' || activeFilter === 'personal')
+            {(activeFilter === 'all' || activeFilter === 'personal')
               && repos.personal
-                .filter(({ nameWithOwner }) => {
-                  return searchValue === '' || repoName.includes(searchValue)
+                .filter(({ repoName, repoOwner }) => {
+                  return searchValue === '' || repoName.includes(searchValue) || repoOwner.includes(searchValue)
                 })
                 .map((repo) => (
-                  <RepoListItem
-                    key={repo.nameWithOwner}
+                  <RepoSearchListItem
+                    key={repo.repoId}
                     {...{
                       repo,
                       selectedRepos,
-                      setSelectedRepos
+                      setSelectedRepos,
+                      projectList,
+                      activeProject
                     }}
                   />
-                ))} */}
+                ))}
             {/* same as above for organizations */}
-            {/* {(activeFilter === 'all' || activeFilter === 'organizations')
+            {(activeFilter === 'all' || activeFilter === 'organizations')
               && repos.organizations
-                .filter(({ repoName }) => {
-                  return searchValue === '' || repoName.includes(searchValue)
-                })
+              .filter(({ repoName, repoOwner }) => {
+                return searchValue === '' || repoName.includes(searchValue) || repoOwner.includes(searchValue)
+              })
                 .map((repo) => (
-                  <RepoListItem
-                    key={repo.repoName}
+                  <RepoSearchListItem
+                    key={repo.repoId}
                     {...{
                       repo,
                       selectedRepos,
-                      setSelectedRepos
+                      setSelectedRepos,
+                      projectList,
+                      activeProject
                     }}
                   />
-                ))} */}
+                ))}
             {/* same as above for collabs */}
-            {/* {(activeFilter === 'all' || activeFilter === 'collaborations')
+            {(activeFilter === 'all' || activeFilter === 'collaborations')
               && repos.collaborations
-                .filter(({ repoName }) => {
-                  return searchValue === '' || repoName.includes(searchValue)
-                })
+              .filter(({ repoName, repoOwner }) => {
+                return searchValue === '' || repoName.includes(searchValue) || repoOwner.includes(searchValue)
+              })
                 .map((repo) => (
-                  <RepoListItem
-                    key={repo.repoName}
+                  <RepoSearchListItem
+                    key={repo.repoId}
                     {...{
                       repo,
                       selectedRepos,
-                      setSelectedRepos
+                      setSelectedRepos,
+                      projectList,
+                      activeProject
                     }}
                   />
-                ))} */}
+                ))}
           </section>
 
           {/* might want to add a style here to keep constant height */}
@@ -323,7 +350,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
             <div style={{ height: '100px' }} className="content">
               Add the following Repositories to your project:
               <ul>
-                {selectedRepos.map(({ repoName }) => <li key={`confirm ${repoName}`}>{repoName}</li>)}
+                {selectedRepos.map(({ repoName, repoId }) => <li key={`confirm ${repoId}`}>{repoName}</li>)}
               </ul>
             </div>
             <div>
