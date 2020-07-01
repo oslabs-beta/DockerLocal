@@ -11,39 +11,48 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
   const [activeFilter, setActiveFilter] = useState('all')
 
   // dummy request and response 
-  const fetchRepos = (userInfo) => {
+  const fetchRepos = async () => {
 
     //PARSE TOKEN AND USERNAME FROM COOKIES
     const nameAndToken = document.cookie.split(';');
     const username = nameAndToken[0].replace('username=', '').trim();
     const token = nameAndToken[1].replace('token=', '').trim();
+    const parsedToken = decodeURIComponent((token));
 
-    const decryptedToken = CryptoJS.AES.decrypt(token, 'super_secret').toString(CryptoJS.enc.Utf8);
+    //DECRYPT TOKEN FROM COOKIES
+    console.log('PARSED: ', parsedToken)
     console.log('ENCRYPTED: ', token)
+    const decryptedToken = await CryptoJS.AES.decrypt(parsedToken, 'super_secret').toString(CryptoJS.enc.Utf8);
     console.log('DECRYPTED: ', decryptedToken)
-    
+
     const response = { personal: [], organizations: [], collaborations: [] };
+    let pub, priv;
 
     //WILL USE USERNAME AND ACCESS TOKEN FOR THESE REQUESTS
+    //ADD HEADERS FOR POST REQUEST
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${decryptedToken}`);
     myHeaders.append("Content-Type", "application/json");
 
 
-    //PUPLIC REPO FETCH //////////////////////////////////////////////////
+    //PUPLIC REPO FETCH //////////////////////////////      ////////////////////
     var publicRepoQuery = JSON.stringify({
       query: `{
-        user(login: \"${username}\") { 
-          repositories(first:100, privacy: PUBLIC) { 
-            edges { 
-              node { 
-                id, 
-                nameWithOwner, 
-                url 
-              } 
-            } 
-          } 
-        } 
+        user(login: "louisxsheid") {
+          repositories(first: 100, privacy: PUBLIC) {
+            edges {
+              node {
+                id
+                name
+                owner {
+                  ... on User {
+                    login
+                  }
+                }
+              }
+            }
+          }
+        }
       }`,
       variables: {}
     })
@@ -55,52 +64,82 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
       redirect: 'follow'
     };
 
-    fetch("https://api.github.com/graphql", requestOptions)
+    await fetch("https://api.github.com/graphql", requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log('PUBLIC REPO FETCH: ', result)
-        response.personal.public.push(result)
+        console.log('PUBLIC REPO FETCH: ', JSON.parse(result))
+        result = JSON.parse(result);
+        let pubLength = result.data.user.repositories.edges.length;
+        let pubRepos = [];
+        let pubChain = result.data.user.repositories;
+        for (let i = 0; i < pubLength; i++) {
+          pubRepos.push({ 
+            id: pubChain.edges[i].node.id, 
+            name: pubChain.edges[i].node.name, 
+            owner: pubChain.edges[i].node.owner.login 
+          })
+        }
+        response.personal = pubRepos;
       })
       .catch(error => console.log('error', error));
 
 
+    //NOT WORKING
     //PRIVATE REPO FETCH //////////////////////////////////////////////////
 
-    const privateRepoQuery = JSON.stringify({
-      query: `{user(login: "${username}") { 
-        repositories(first:100, privacy: PRIVATE) { 
-          edges { 
-            node { 
-              id, 
-              nameWithOwner, 
-              url 
-            } 
-          } 
-        } 
-      } 
-    }`,
-      variables: {}
-    })
+    // const privateRepoQuery = JSON.stringify({
+    //   query: `{
+    //     user(login: "${username}") { 
+    //     repositories(first:100, privacy: PRIVATE) { 
+    //       edges { 
+    //         node { 
+    //           nameWithOwner, 
+    //           sshUrl 
+    //         } 
+    //       } 
+    //     } 
+    //   } 
+    // }`,
+    //   variables: {}
+    // })
 
-    requestOptions.body = privateRepoQuery;
+    // requestOptions.body = privateRepoQuery;
 
-    fetch("https://api.github.com/graphql", requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        console.log('PRIVATE REPO FETCH: ', result)
-        response.personal.private.push(result)
-      })
-      .catch(error => console.log('error', error));
+    // var requestOptions2 = {
+    //   method: 'GET',
+    //   headers: myHeaders,
+    //   redirect: 'follow'
+    // };
+
+    // await fetch(`https://api.github.com/user/repos?access_token=${decryptedToken}`, requestOptions2)
+    //   .then(response => response.text())
+    //   .then(result => {
+    //     console.log('PRIVATE REPO FETCH: ', JSON.parse(result))
+    //     // result = JSON.parse(result);
+    //     // let privRepos = [];
+    //     // for (let i = 0; i < result.length; i++) {
+    //     //   privRepos.push({ nameWithOwner: result[i].full_name, sshUrl: result[i].ssh_url, privacy: 'private' })
+    //     // }
+    //     priv = privRepos;
+    //   })
+    //   .catch(error => console.log('error', error));
+
+    // response.personal = [Object.assign(pub, priv)];
 
 
     //COLLABORATOR REPO FETCH//////////////////////////////////////////////////
 
     const collabFetch = JSON.stringify({
-      query: `user(login: "${username}") {
-        repositories(first: 100, affiliations: COLLABORATOR) {
-          nodes {
-            nameWithOwner
-            url
+      query: `{
+        user(login: "${username}") {
+          repositories(first: 100, affiliations: COLLABORATOR) {
+            nodes {
+              id
+              name
+              owner {
+                login
+              }
+            }
           }
         }
       }`,
@@ -109,11 +148,22 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
 
     requestOptions.body = collabFetch;
 
-    fetch("https://api.github.com/graphql", requestOptions)
+    await fetch("https://api.github.com/graphql", requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log('COLLABORATOR REPO FETCH: ', result)
-        response.collaborations.push(result)
+        console.log('COLLABORATOR REPO FETCH: ', JSON.parse(result))
+        result = JSON.parse(result);
+        let collabLength = result.data.user.repositories.nodes.length;
+        let collabRepos = [];
+        let collabChain = result.data.user.repositories;
+        for (let i = 0; i < collabLength; i++) {
+          collabRepos.push({ 
+            id: collabChain.nodes[i].id, 
+            name: collabChain.nodes[i].name, 
+            owner: collabChain.nodes[i].owner.login 
+          })
+        }
+        response.collaborations = collabRepos;
       })
       .catch(error => console.log('error', error));
 
@@ -121,17 +171,20 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
     //ORGANIZATION REPO FETCH//////////////////////////////////////////////////
 
     const orgFetch = JSON.stringify({
-      query: `user(login: "${username}") {
-        organizations(first: 100) {
-          edges {
-            node {
-              name
-              url
-              repositories(affiliations: ORGANIZATION_MEMBER, first: 100) {
-                edges {
-                  node {
-                    nameWithOwner
-                    url
+      query: `{
+        user(login: "${username}") {
+          organizations(first: 100) {
+            edges {
+              node {
+                repositories(affiliations: ORGANIZATION_MEMBER, first: 100) {
+                  edges {
+                    node {
+                      name
+                      id
+                      owner {
+                        login
+                      }
+                    }
                   }
                 }
               }
@@ -144,15 +197,28 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
 
     requestOptions.body = orgFetch;
 
-    fetch("https://api.github.com/graphql", requestOptions)
+    await fetch("https://api.github.com/graphql", requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log('ORGANIZATION REPO FETCH: ', result)
-        response.organizations.push(result)
+        console.log('ORGANIZATION REPO FETCH: ', JSON.parse(result))
+        let orgRepos = JSON.parse(result);
+        let objChain = orgRepos.data.user.organizations.edges;
+        let orgLength = objChain.length;
+        let orgArr = [];
+        for (let x = 0; x < orgLength; x++) {
+          for (let i = 0; i < objChain[x].node.repositories.edges.length; i++) {
+            orgArr.push({ 
+              name: objChain[x].node.repositories.edges[i].node.name, 
+              id: objChain[x].node.repositories.edges[i].node.id, 
+              owner: objChain[x].node.repositories.edges[i].node.owner.login
+            })
+          }
+        }
+        response.organizations = orgArr;
       })
       .catch(error => console.log('error', error));
 
-      console.log('RESPONSE: ', response);
+    console.log('RESPONSE: ', response);
     return response;
   }
 
@@ -177,7 +243,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
   useEffect(() => {
     // fetchRepos(userInfo)
     // then
-    setRepos(fetchRepos(userInfo));
+    setRepos(fetchRepos());
   }, [])
 
   // {repos.map(repo => <li>{repo.repoName}</li>)}
@@ -234,23 +300,23 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
             {/* if something is typed in the search box, only show repos that include the exact string */}
             {/* could change filter to regex at a later date to include a more robust search */}
             {/* map filtered list to render comonent for each item */}
-            {(activeFilter === 'all' || activeFilter === 'personal')
+            {/* {(activeFilter === 'all' || activeFilter === 'personal')
               && repos.personal
-                .filter(({ repoName }) => {
+                .filter(({ nameWithOwner }) => {
                   return searchValue === '' || repoName.includes(searchValue)
                 })
                 .map((repo) => (
                   <RepoListItem
-                    key={repo.repoName}
+                    key={repo.nameWithOwner}
                     {...{
                       repo,
                       selectedRepos,
                       setSelectedRepos
                     }}
                   />
-                ))}
+                ))} */}
             {/* same as above for organizations */}
-            {(activeFilter === 'all' || activeFilter === 'organizations')
+            {/* {(activeFilter === 'all' || activeFilter === 'organizations')
               && repos.organizations
                 .filter(({ repoName }) => {
                   return searchValue === '' || repoName.includes(searchValue)
@@ -264,9 +330,9 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                       setSelectedRepos
                     }}
                   />
-                ))}
+                ))} */}
             {/* same as above for collabs */}
-            {(activeFilter === 'all' || activeFilter === 'collaborations')
+            {/* {(activeFilter === 'all' || activeFilter === 'collaborations')
               && repos.collaborations
                 .filter(({ repoName }) => {
                   return searchValue === '' || repoName.includes(searchValue)
@@ -280,7 +346,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
                       setSelectedRepos
                     }}
                   />
-                ))}
+                ))} */}
           </section>
 
           {/* might want to add a style here to keep constant height */}
