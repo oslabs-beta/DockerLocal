@@ -14,7 +14,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ activeProject, userInfo, proj
     const currentProject = projectList.find(project => project.projectId === activeProject)
     if (currentProject) {
       const newList = currentProject.projectRepos.map((repo) => {
-        return <ProjectRepoListItem key={`ProjectRepoListItem ${repo.repoName}`} {...{ repo, activeProject, projectList, setProjectList }} />
+        return <ProjectRepoListItem key={`ProjectRepoListItem ${repo.repoId}`} {...{ repo, activeProject, projectList, setProjectList }} />
       })
       setprojectRepoListItems(newList)
     }

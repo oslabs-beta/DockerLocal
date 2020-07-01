@@ -2,6 +2,7 @@ import React, { useState, useEffect, InputHTMLAttributes, MouseEvent, ReactHTMLE
 import RepoSearchListItem from './RepoSearchListItem';
 
 import { Repo, RepoResponseType, AddReposProps, Project } from '../../../types/types';
+import { report } from 'process';
 const CryptoJS = require('crypto-js');
 
 const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, activeProject, projectList, setProjectList }) => {
@@ -371,7 +372,7 @@ const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, acti
             <div style={{ height: '100px' }} className="content">
               Add the following Repositories to your project:
               <ul>
-                {selectedRepos.map(({ repoName }) => <li key={`confirm ${repoName}`}>{repoName}</li>)}
+                {selectedRepos.map(({ repoName, repoId }) => <li key={`confirm ${repoId}`}>{repoName}</li>)}
               </ul>
             </div>
             <div>
