@@ -4,9 +4,9 @@ import SidebarButton from './SidebarButton';
 import { Project } from '../../../types/types'
 
 type SidebarProps = {
-  projectList: Project[];
-  activeProject: Project;
-  setActiveProject: Dispatch<SetStateAction<Project>>;
+  projectList: readonly Project[];
+  activeProject: number;
+  setActiveProject: Dispatch<SetStateAction<number>>;
 }
 
 
