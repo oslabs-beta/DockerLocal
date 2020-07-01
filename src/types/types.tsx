@@ -32,8 +32,11 @@ export type RepoSearchListItemProps = {
 };
 
 export type AddReposProps = {
-  userInfo: User;
+  showAddRepos: boolean;
   setShowAddRepos: Dispatch<SetStateAction<boolean>>;
+  activeProject: number;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
 };
 
 export type ProjectPageProps = {

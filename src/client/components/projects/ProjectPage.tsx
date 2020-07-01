@@ -29,7 +29,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ activeProject, userInfo, proj
 
 
       {/* shows this element if showAddRepos is true */}
-      {showAddRepos && <AddRepos {...{ setShowAddRepos, userInfo }} />}
+      {showAddRepos && <AddRepos {...{ showAddRepos, setShowAddRepos, activeProject, projectList, setProjectList }} />}
     </div>
   )
 }

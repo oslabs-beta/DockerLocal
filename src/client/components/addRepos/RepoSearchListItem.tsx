@@ -21,7 +21,7 @@ const RepoSearchListItem: React.FC<RepoSearchListItemProps> = ({ repo, selectedR
     <a className="panel-block" onClick={toggleSelect}>
         {/* checkbox is readonly because it rerenders on state change */}
         <input type="checkbox" checked={isChecked} readOnly/>
-      {repo.repoName}
+      {`${repo.repoName} - ${repo.repoOwner}`}
     </a>
   )
 }
