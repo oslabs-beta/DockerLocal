@@ -75,11 +75,11 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
         let pubLength = result.data.user.repositories.edges.length;
         let pubRepos = [];
         for (let i = 0; i < pubLength; i++) {
-          currentNode = result.data.user.repositories.edges[i];
+          currentNode = result.data.user.repositories.edges[i].node;
           pubRepos.push({ 
-            id: currentNode.node.id, 
-            name: currentNode.node.name, 
-            owner: currentNode.node.owner.login 
+            id: currentNode.id, 
+            name: currentNode.name, 
+            owner: currentNode.owner.login 
           })
         }
         response.personal = pubRepos;
