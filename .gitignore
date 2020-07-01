@@ -87,3 +87,13 @@ typings/
 
 # Electron-Forge
 out/
+
+# VS Code
+ .vscode/
+
+# Repository directories
+myRepos/
+
+# ssh agent directories
+tmpAgent/
+tmpKeys/
