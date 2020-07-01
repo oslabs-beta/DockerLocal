@@ -27,25 +27,17 @@ app.use("/api", apiRoute);
 app.use(express.static("assets"));
 
 // Home endpoint
-<<<<<<< HEAD
-app.get('/',(req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/index.html')));
-app.get('/test',(req: Request, res: Response) => res.sendFile(path.resolve(__dirname, '../../src/test.html')));
-// Handle redirections
-// app.get('*', (req: Request, res: Response) => res.sendStatus(200));
-=======
 app.get("/", (req: Request, res: Response) =>
   res.sendFile(path.resolve(__dirname, "../../src/index.html"))
 );
 
 // Handle redirections
 app.get("*", (req: Request, res: Response) => res.sendStatus(200));
->>>>>>> 971ddc0011119671de11cf04a19a0e47ccfef815
 
 // Failed auth redirect
 app.get("/fail", (req: Request, res: Response) =>
   res.status(200).send("❌ FAILURE TO AUTHENTICATE ❌")
 );
-
 
 // Global Error handler
 app.use(
