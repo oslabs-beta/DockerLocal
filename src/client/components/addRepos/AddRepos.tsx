@@ -43,7 +43,7 @@ const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, acti
     // Query to get the repo id, repo name, and repo owner for public repositories
     var publicRepoQuery = JSON.stringify({
       query: `{
-        user(login: "louisxsheid") {
+        user(login: "${username}") {
           repositories(first: 100, privacy: PUBLIC) {
             edges {
               node {
