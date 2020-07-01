@@ -12,6 +12,12 @@ router.get(
   })
 );
 
+//Github callback function (authentication)
+//if successful
+//save username/accessToken to cookies
+//redirect to /api/repos
+//if unsuccessful
+//redirect to /fail
 router.get(
   "/github/callback",
   passport.authenticate("github", {
