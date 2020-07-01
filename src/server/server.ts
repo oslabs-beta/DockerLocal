@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 // Bring in routes
 const authRoute = require('../../src/server/routes/auth-route');
 const apiRoute = require('../../src/server/routes/api-route');
+const dockerRoute = require('../../src/server/routes/docker-route');
 
 // Body Parsing Middleware
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use(cookieParser());
 // Use routes
 app.use('/auth', authRoute);
 app.use('/api', apiRoute);
+app.use('/docker', dockerRoute);
 
 // Serve static files
 app.use(express.static('assets'));
