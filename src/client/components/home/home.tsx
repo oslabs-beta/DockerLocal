@@ -1,16 +1,15 @@
-import React, { useState, Dispatch, SetStateAction, useEffect } from 'react';
+import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 
-import Sidebar from '../sidebar/Sidebar';
-import AddRepos from '../addRepos/AddRepos';
-import ProjectPage from '../projects/ProjectPage';
+import Sidebar from "../sidebar/Sidebar";
+import AddRepos from "../addRepos/AddRepos";
+import ProjectPage from "../projects/ProjectPage";
 
-
-import { Project, Repo, User } from '../../../types/types'
+import { Project, Repo, User } from "../../../types/types";
 
 type HomeProps = {
   userInfo: User;
   setUserInfo: Dispatch<SetStateAction<User>>;
-}
+};
 
 // should set type for props
 const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
@@ -39,11 +38,10 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
       method: 'GET',
       credentials: 'include',
     })
-      .then(res => res.json())
-      .then(res => console.log('success', res))
-      .catch(err => console.log('fail', err))
-  }
-
+      .then((res) => res.json())
+      .then((res) => console.log("success", res))
+      .catch((err) => console.log("fail", err));
+  };
 
   // populate list of projects, happens on render
   useEffect(() => {
@@ -85,11 +83,9 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
           { repoName: 'collab Repo2', repoOwner: 'collablink2', repoId: 'q', isIncluded: false },
         ]
       },
-      { projectName: 'React Visualizer 85.0(project5)', projectId: 5, projectRepos: [] },
     ];
-    setProjectList(fetched)
-  }, [])
-
+    setProjectList(fetched);
+  }, []);
 
   return (
     <div>
@@ -100,16 +96,24 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
       <button onClick={(): void => Request3()}>DEMO Request3</button>
 
       <div className="columns">
-        <div className="column is-one-third" >
-          <Sidebar {...{ projectList, activeProject, setActiveProject }} />
+        <div className="column is-one-third">
+          <Sidebar
+            {...{
+              projectList,
+              setProjectList,
+              activeProject,
+              setActiveProject,
+            }}
+          />
         </div>
         <div className="column">
-          <ProjectPage {...{ activeProject, userInfo, projectList, setProjectList }} />
+          <ProjectPage
+            {...{ activeProject, userInfo, projectList, setProjectList }}
+          />
         </div>
-
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Home;

@@ -11,8 +11,6 @@ authController.saveAccessToken = (req: Request, res: Response, next: NextFunctio
 
   //CryptoJS -> encrypt accessToken with AES and a "super_secret" password
   const encrypted = CryptoJS.AES.encrypt(accessToken, "super_secret").toString();
-  console.log("MIDDLEWARE: ", encrypted)
-  
   //Save encrypted token as cookie
   res.cookie('token', encrypted, { maxAge: 360000 });
 
