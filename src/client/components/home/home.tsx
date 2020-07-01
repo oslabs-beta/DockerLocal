@@ -162,7 +162,14 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
 
       <div className="columns">
         <div className="column is-one-third">
-          <Sidebar {...{ projectList, activeProject, setActiveProject }} />
+          <Sidebar
+            {...{
+              projectList,
+              setProjectList,
+              activeProject,
+              setActiveProject,
+            }}
+          />
         </div>
         <div className="column">
           <ProjectPage

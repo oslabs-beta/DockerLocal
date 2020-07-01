@@ -6,12 +6,14 @@ import { Project } from "../../../types/types";
 
 type SidebarProps = {
   projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
   activeProject: number;
   setActiveProject: Dispatch<SetStateAction<number>>;
 };
 
 const Sidebar: React.FC<SidebarProps> = ({
   projectList,
+  setProjectList,
   activeProject,
   setActiveProject,
 }) => {
@@ -44,7 +46,12 @@ const Sidebar: React.FC<SidebarProps> = ({
       </button>
       {showProjectSideBarModal && (
         <ProjectSideBar
-          {...{ showProjectSideBarModal, setShowProjectSidebarModal }}
+          {...{
+            showProjectSideBarModal,
+            setShowProjectSidebarModal,
+            projectList,
+            setProjectList,
+          }}
         />
       )}
     </div>
