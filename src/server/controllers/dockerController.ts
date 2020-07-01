@@ -1,7 +1,5 @@
-export { };
 import { Request, Response, NextFunction } from 'express';
 const { exec } = require('child_process');
-const myShellScript = exec('sh src/scripts/findDockerfiles.sh');
 import fs = require('fs');
 let portNo = 5001;
 const dockerPortNo = portNo;
@@ -18,7 +16,11 @@ let containerNameArray: string[] = [];
 const dockerController: any = { };
 
 // insert and run (findDockerfile.sh) inside repo root directory to find all dockerfile build paths
-dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction) => {
+// give this function a folder that contains all pof t
+dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction): void => {
+    // the name of the project folder that you are storing all the repos inside DockerLocal/MyRepos/
+    const projectFolder: string = req.body.projectName;
+    const myShellScript = exec(`sh src/scripts/findDockerfiles.sh ${projectFolder}`);
     myShellScript.stdout.on('data', (data: string) => {
         const output = data;
         // get filepaths from one long data string
@@ -48,7 +50,7 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
 }
 
 // Use build paths to get Container Names
-dockerController.getContainerNames = (req: Request, res: Response, next: NextFunction) => {
+dockerController.getContainerNames = (req: Request, res: Response, next: NextFunction): void => {
     buildPathArray = res.locals.buildPathArray;
     let containerName: string;
     // use folder names as the container name
@@ -71,7 +73,7 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
 }
 
 // Use container names and build paths to create docker compose file
-dockerController.createDockerCompose = (req: Request, res: Response, next: NextFunction) => {
+dockerController.createDockerCompose = (req: Request, res: Response, next: NextFunction): void => {
     buildPathArray = res.locals.buildPathArray
     containerNameArray = res.locals.containerNameArray;
     let directory: string;
@@ -112,4 +114,4 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     return next();
 }
 
-module.exports = dockerController;
+export default dockerController;
