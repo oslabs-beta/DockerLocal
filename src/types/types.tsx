@@ -29,6 +29,8 @@ export type RepoSearchListItemProps = {
   repo: Repo;
   selectedRepos: readonly Repo[];
   setSelectedRepos: Dispatch<SetStateAction<Repo[]>>;
+  projectList: readonly Project[];
+  activeProject: number;
 };
 
 export type AddReposProps = {

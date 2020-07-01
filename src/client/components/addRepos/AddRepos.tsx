@@ -242,8 +242,12 @@ const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, acti
     // make copy of current project
     const currentProject: Project = {...projectList.find(project => project.projectId === activeProject)};
 
+    // *** this should be changed to show an error message or repos should not be clickable *** 
+    // remove any repos that are already included in the project so user will not have duplicate repos
+    const reposToAdd = selectedRepos.filter((newRepo) => !currentProject.projectRepos.some((existingRepo) => newRepo.repoId === existingRepo.repoId))
+
     // add selected repos to current project
-    currentProject.projectRepos = [...currentProject.projectRepos, ...selectedRepos];
+    currentProject.projectRepos = [...currentProject.projectRepos, ...reposToAdd];
 
     // insert new project into new project list
     const newProjectList: Project[] = projectList.map((project) => (
@@ -328,7 +332,9 @@ const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, acti
                     {...{
                       repo,
                       selectedRepos,
-                      setSelectedRepos
+                      setSelectedRepos,
+                      projectList,
+                      activeProject
                     }}
                   />
                 ))}
@@ -344,7 +350,9 @@ const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, acti
                     {...{
                       repo,
                       selectedRepos,
-                      setSelectedRepos
+                      setSelectedRepos,
+                      projectList,
+                      activeProject
                     }}
                   />
                 ))}
@@ -360,7 +368,9 @@ const AddRepos: React.FC<AddReposProps> = ({ showAddRepos, setShowAddRepos, acti
                     {...{
                       repo,
                       selectedRepos,
-                      setSelectedRepos
+                      setSelectedRepos,
+                      projectList,
+                      activeProject
                     }}
                   />
                 ))}
