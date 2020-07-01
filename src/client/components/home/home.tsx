@@ -1,16 +1,15 @@
-import React, { useState, Dispatch, SetStateAction, useEffect } from 'react';
+import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 
-import Sidebar from '../sidebar/Sidebar';
-import AddRepos from '../addRepos/AddRepos';
-import ProjectPage from '../projects/ProjectPage';
+import Sidebar from "../sidebar/Sidebar";
+import AddRepos from "../addRepos/AddRepos";
+import ProjectPage from "../projects/ProjectPage";
 
-
-import { Project, Repo, User } from '../../../types/types'
+import { Project, Repo, User } from "../../../types/types";
 
 type HomeProps = {
   userInfo: User;
   setUserInfo: Dispatch<SetStateAction<User>>;
-}
+};
 
 // should set type for props
 const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
@@ -20,15 +19,15 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   const [activeProject, setActiveProject] = useState(1);
 
   const testRequest = () => {
-    fetch('/api/repos', {
-      method: 'GET',
-      credentials: 'include',
+    fetch("/api/repos", {
+      //******** '/http:3000/api/repos' */
+      method: "GET",
+      credentials: "include",
     })
-      .then(res => res.json())
-      .then(res => console.log('success', res))
-      .catch(err => console.log('fail', err))
-  }
-
+      .then((res) => res.json())
+      .then((res) => console.log("success", res))
+      .catch((err) => console.log("fail", err));
+  };
 
   // populate list of projects, happens on render
   useEffect(() => {
@@ -38,43 +37,122 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
     // dummy response
     const fetched = [
       {
-        projectName: 'DockerLocal(project1)', projectId: 1, projectRepos: [
-          { repoName: 'perrepop1', repoCloneLink: 'personallink1', isIncluded: true },
-          { repoName: 'abcdefgpersonal2', repoCloneLink: 'personallink2', isIncluded: false },
-          { repoName: 'abbsddpersonalRepo3', repoCloneLink: 'personallink3', isIncluded: true },
-          { repoName: 'collab Repo4', repoCloneLink: 'collablink4', isIncluded: true },
-          { repoName: 'collab Repo5', repoCloneLink: 'collablink5', isIncluded: false },
-          { repoName: 'collab Repo6', repoCloneLink: 'collablink6', isIncluded: false },
+        projectName: "DockerLocal(project1)",
+        projectId: 1,
+        projectRepos: [
+          {
+            repoName: "perrepop1",
+            repoCloneLink: "personallink1",
+            isIncluded: true,
+          },
+          {
+            repoName: "abcdefgpersonal2",
+            repoCloneLink: "personallink2",
+            isIncluded: false,
+          },
+          {
+            repoName: "abbsddpersonalRepo3",
+            repoCloneLink: "personallink3",
+            isIncluded: true,
+          },
+          {
+            repoName: "collab Repo4",
+            repoCloneLink: "collablink4",
+            isIncluded: true,
+          },
+          {
+            repoName: "collab Repo5",
+            repoCloneLink: "collablink5",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo6",
+            repoCloneLink: "collablink6",
+            isIncluded: false,
+          },
         ],
       },
       {
-        projectName: 'React Visualizer 2.5(project2)', projectId: 2, projectRepos: [
-          { repoName: 'collab Repo4', repoCloneLink: 'collablink4', isIncluded: false },
-          { repoName: 'collab Repo5', repoCloneLink: 'collablink5', isIncluded: true },
-          { repoName: 'collab Repo6', repoCloneLink: 'collablink6', isIncluded: false },
-        ]
+        projectName: "React Visualizer 2.5(project2)",
+        projectId: 2,
+        projectRepos: [
+          {
+            repoName: "collab Repo4",
+            repoCloneLink: "collablink4",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo5",
+            repoCloneLink: "collablink5",
+            isIncluded: true,
+          },
+          {
+            repoName: "collab Repo6",
+            repoCloneLink: "collablink6",
+            isIncluded: false,
+          },
+        ],
       },
       {
-        projectName: 'React Visualizer 8.5(project3)', projectId: 3, projectRepos: [
-          { repoName: 'organization Repo5', repoCloneLink: 'orglink5', isIncluded: false },
-          { repoName: 'organization Repo6', repoCloneLink: 'orglink6', isIncluded: false },
-          { repoName: 'collab Repo1', repoCloneLink: 'collablink1', isIncluded: false },
-          { repoName: 'collab Repo2', repoCloneLink: 'collablink2', isIncluded: false },
-        ]
+        projectName: "React Visualizer 8.5(project3)",
+        projectId: 3,
+        projectRepos: [
+          {
+            repoName: "organization Repo5",
+            repoCloneLink: "orglink5",
+            isIncluded: false,
+          },
+          {
+            repoName: "organization Repo6",
+            repoCloneLink: "orglink6",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo1",
+            repoCloneLink: "collablink1",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo2",
+            repoCloneLink: "collablink2",
+            isIncluded: false,
+          },
+        ],
       },
       {
-        projectName: 'React Visualizer 77.0(project4)', projectId: 4, projectRepos: [
-          { repoName: 'organization Repo6', repoCloneLink: 'orglink5', isIncluded: false },
-          { repoName: 'organization Repo7', repoCloneLink: 'orglink6', isIncluded: false },
-          { repoName: 'collab Repo1', repoCloneLink: 'collablink1', isIncluded: false },
-          { repoName: 'collab Repo2', repoCloneLink: 'collablink2', isIncluded: false },
-        ]
+        projectName: "React Visualizer 77.0(project4)",
+        projectId: 4,
+        projectRepos: [
+          {
+            repoName: "organization Repo6",
+            repoCloneLink: "orglink5",
+            isIncluded: false,
+          },
+          {
+            repoName: "organization Repo7",
+            repoCloneLink: "orglink6",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo1",
+            repoCloneLink: "collablink1",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo2",
+            repoCloneLink: "collablink2",
+            isIncluded: false,
+          },
+        ],
       },
-      { projectName: 'React Visualizer 85.0(project5)', projectId: 5, projectRepos: [] },
+      {
+        projectName: "React Visualizer 85.0(project5)",
+        projectId: 5,
+        projectRepos: [],
+      },
     ];
-    setProjectList(fetched)
-  }, [])
-
+    setProjectList(fetched);
+  }, []);
 
   return (
     <div>
@@ -83,16 +161,24 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
       <button onClick={(): void => testRequest()}>DEMO Request</button>
 
       <div className="columns">
-        <div className="column is-one-third" >
-          <Sidebar {...{ projectList, activeProject, setActiveProject }} />
+        <div className="column is-one-third">
+          <Sidebar
+            {...{
+              projectList,
+              setProjectList,
+              activeProject,
+              setActiveProject,
+            }}
+          />
         </div>
         <div className="column">
-          <ProjectPage {...{ activeProject, userInfo, projectList, setProjectList }} />
+          <ProjectPage
+            {...{ activeProject, userInfo, projectList, setProjectList }}
+          />
         </div>
-
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Home;
