@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-const { exec } = require('child_process');
+import { exec } from 'child_process';
 import fs = require('fs');
 let portNo = 5001;
 const dockerPortNo = portNo;
