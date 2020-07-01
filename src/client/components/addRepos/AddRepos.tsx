@@ -15,7 +15,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
   const [activeFilter, setActiveFilter] = useState('all')
 
   // dummy request and response 
-  const fetchRepos = async () => {
+  const fetchRepos = async (): Promise<RepoResponseType> => {
 
     //PARSE TOKEN AND USERNAME FROM COOKIES
     const nameAndToken = document.cookie.split(';');
@@ -26,7 +26,7 @@ const AddRepos: React.FC<AddReposProps> = ({ setShowAddRepos, userInfo }) => {
     //DECRYPT TOKEN FROM COOKIES
     const decryptedToken = await CryptoJS.AES.decrypt(parsedToken, 'super_secret').toString(CryptoJS.enc.Utf8);
 
-    const response = { personal: [], organizations: [], collaborations: [] };
+    const response: RepoResponseType = { personal: [], organizations: [], collaborations: [] };
 
     //WILL USE USERNAME AND ACCESS TOKEN FOR THESE REQUESTS
     //ADD HEADERS FOR POST REQUEST
