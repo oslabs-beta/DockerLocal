@@ -13,7 +13,7 @@ let containerNameArray: string[] = [];
 // Dockerfiles will have docker in the name and no other files will have docker in the name
 // Dockerfiles will be located in the root folder of a project and so will be descriptive of the project(i.e. Container Name)
 
-const dockerController: any = { };
+export const dockerController: any = { };
 
 // insert and run (findDockerfile.sh) inside repo root directory to find all dockerfile build paths
 // give this function a folder that contains all pof t
@@ -113,5 +113,3 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     }
     return next();
 }
-
-export default dockerController;

@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 export const router = express.Router();
-import dockerController = require('../controllers/dockerController');
+import { dockerController } from '../controllers/dockerController';
 
 
 router.get(
