@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { ProjectRepoListItemProps, Project, Repo } from '../../../types/types'
 
 const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ repo, activeProject, projectList, setProjectList }) => {
-  // return <div>hi</div>
   
-  const [isChecked, setIsChecked] = useState(repo.isIncluded)
+  const [isChecked, setIsChecked] = useState(repo.isIncluded || false)
 
   useEffect(() => {
-    setIsChecked(repo.isIncluded)
+    setIsChecked(repo.isIncluded || false)
   })
 
   const toggleIsIncluded = (): void => {
@@ -19,11 +18,9 @@ const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ repo, activeP
     // make copy of repo with toggled isIncluded value
     const newRepo: Repo = { ...repo, isIncluded: !repo.isIncluded };
 
-
-
     // make copy of active project repo list with new repo included
     const newProjectRepos = currentProject.projectRepos.map((repo) => (
-      repo.repoCloneLink === newRepo.repoCloneLink ? newRepo : repo
+      repo.repoId === newRepo.repoId ? newRepo : repo
     ));
 
     // copy active project
