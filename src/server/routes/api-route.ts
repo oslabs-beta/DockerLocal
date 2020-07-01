@@ -9,11 +9,7 @@ const router = require("express").Router();
 require("dotenv/config");
 
 // -> /api/repos will get the username and access token from cookies then fetch a list
-<<<<<<< HEAD
-//  of user repos (and display these repos as json on the client side) 
-=======
 //  of user repos (and display these repos as json on the client side)
->>>>>>> 9686311dc6ea81664e4fd43601ee1e1f26bec112
 router.get(
   "/repos",
   authController.getNameAndTokenFromCookies,
