@@ -8,6 +8,8 @@ const sshKeyController = require("../controllers/sshKeyController");
 const router = require("express").Router();
 require("dotenv/config");
 
+// -> /api/repos will get the username and access token from cookies then fetch a list
+//  of user repos (and display these repos as json on the client side)
 router.get(
   "/repos",
   authController.getNameAndTokenFromCookies,
