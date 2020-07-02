@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 
-//using passport to authenticate the github
+// using passport to authenticate the github
 router.get(
   '/github',
   passport.authenticate('github', {

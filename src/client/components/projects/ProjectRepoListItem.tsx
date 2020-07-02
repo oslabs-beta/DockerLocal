@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
 import { ProjectRepoListItemProps, Project, Repo } from '../../../types/types'
+import { findActiveProject } from '../../helpers/projectHelper'
+
 
 const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ repo, activeProject, projectList, setProjectList }) => {
   
   const [isChecked, setIsChecked] = useState(repo.isIncluded || false)
-
+  
   useEffect(() => {
     setIsChecked(repo.isIncluded || false)
   })
-
+  
   const toggleIsIncluded = (): void => {
     // define current repo
-    const currentProject = projectList.find(project => project.projectId === activeProject);
+    const currentProject: Project = findActiveProject(projectList, activeProject);
 
     // need to make copy of states to include in new to not mutate state directly
     // make copy of repo with toggled isIncluded value
