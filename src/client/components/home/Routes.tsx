@@ -30,7 +30,7 @@ const Routes: React.FC = (props) => {
   
   return (
     <div>
-      <button onClick={(): void=> setIsLoggedIn(!isLoggedIn)} >TOGGLE isLoggedIn FOR DEV</button>
+      <button onClick={(): void=> setIsLoggedIn(!isLoggedIn)} >isLoggedIn</button>
       {rendered}
     </div>
   );
