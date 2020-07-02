@@ -2,8 +2,11 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Project, ProjectSideBarProps } from "../../../types/types";
 
-
-const ProjectSideBar: React.FC<ProjectSideBarProps> = ({ setShowProjectSidebarModal, projectList, setProjectList }) => {
+const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
+  setShowProjectSidebarModal,
+  projectList,
+  setProjectList,
+}) => {
   const [projectNameValue, setProjectNameValue] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {

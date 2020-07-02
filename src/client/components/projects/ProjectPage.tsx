@@ -7,8 +7,7 @@ import ComposeFileModal from "./ComposeFileModal";
 import CloningReposModal from "./CloningReposModal";
 import { findActiveProject } from "../../helpers/projectHelper";
 import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
-import { findActiveProject } from '../../helpers/projectHelper'
-
+import { findActiveProject } from "../../helpers/projectHelper";
 
 const ProjectPage: React.FC<ProjectPageProps> = ({
   activeProject,
@@ -18,14 +17,17 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 }) => {
   const [showAddRepos, setShowAddRepos] = useState(false);
   const [projectRepoListItems, setprojectRepoListItems] = useState([]);
-  
+
   const [showCloningReposModal, setShowCloningReposModal] = useState(false);
   const [showComposeModal, setShowComposeModal] = useState(false);
-  
+
   // populate repo list items when active project changes and when request from home.tsx comes back to update project list
   useEffect(() => {
-    const currentProject: Project = findActiveProject(projectList, activeProject);
-    
+    const currentProject: Project = findActiveProject(
+      projectList,
+      activeProject
+    );
+
     if (currentProject && currentProject.projectRepos) {
       const newList = currentProject.projectRepos.map((repo) => {
         return (
@@ -40,12 +42,17 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
   }, [activeProject, projectList]);
 
   const cloneRepos = async () => {
-
     setShowCloningReposModal(true);
+
+    const currentProject: Project = findActiveProject(
+      projectList,
+      activeProject
+    );
+
     // get selected repos that are checked to clone
-    const reposToClone = findActiveProject(projectList, activeProject)
-      .projectRepos
-      .filter(({ isIncluded }) => isIncluded)
+    const reposToClone = currentProject.projectRepos.filter(
+      ({ isIncluded }) => isIncluded
+    );
 
     // get username and token
     const { username, accessToken } = await getUsernameAndToken();
@@ -54,6 +61,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       username: username,
       accessToken: accessToken,
       repos: reposToClone,
+      projectName: currentProject.projectName,
     });
 
     console.log(username, " decrypte", accessToken);
@@ -65,8 +73,8 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       },
     })
       .then((res) => {
-        setShowCloningReposModal(false)
-        return res.json()
+        setShowCloningReposModal(false);
+        return res.json();
       })
       .then((res) => console.log("success", res))
       .catch((err) => console.log("fail", err));
@@ -109,8 +117,10 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
           }}
         />
       )}
-            {showCloningReposModal && (
-        <CloningReposModal {...{ showCloningReposModal, setShowCloningReposModal }} />
+      {showCloningReposModal && (
+        <CloningReposModal
+          {...{ showCloningReposModal, setShowCloningReposModal }}
+        />
       )}
 
       {showComposeModal && (
