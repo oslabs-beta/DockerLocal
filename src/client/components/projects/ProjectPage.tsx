@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import AddRepos from "../addRepos/AddRepos";
-import { Project, User, ProjectPageProps } from "../../../types/types";
+import { Project, User, ProjectPageProps, Repo } from "../../../types/types";
 import ProjectRepoListItem from "./ProjectRepoListItem";
 import ComposeFileModal from "./ComposeFileModal";
 import { findActiveProject } from "../../helpers/projectHelper";
@@ -38,17 +38,19 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
   }, [activeProject, projectList]);
 
   const cloneRepos = async () => {
-    const currentActiveProject = findActiveProject(projectList, activeProject);
+    const currentActiveProject: Project = findActiveProject(projectList, activeProject);
+
+    const reposToClone = currentActiveProject.projectRepos.filter(({ isIncluded }) => isIncluded)
 
     const { username, accessToken } = await getUsernameAndToken();
 
     const body = JSON.stringify({
       username: username,
       accessToken: accessToken,
-      repos: currentActiveProject.projectRepos,
+      repos: reposToClone,
     });
 
-    // console.log(username, " decrypte", accessToken, body);
+    console.log(username, " decrypte", accessToken);
     fetch("http://localhost:3001/api/clonerepos", {
       method: "POST",
       body: body,
