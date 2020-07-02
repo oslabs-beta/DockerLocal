@@ -17,15 +17,15 @@ const SignIn: React.FC = () => {
       >
         Sign In With Github
       </button>
-      <button 
+      <button
         className="button is-link"
         onClick={(): void => setShowModal(!showModal)}
       >
         More Info About DockerLocal
       </button>
-      
+
       {/* this will render AppInfoModal if showModal evaluates to true */}
-      {showModal && <AppInfoModal {...{ showModal, setShowModal }}/>}
+      {showModal && <AppInfoModal {...{ showModal, setShowModal }} />}
     </div>
   );
 };

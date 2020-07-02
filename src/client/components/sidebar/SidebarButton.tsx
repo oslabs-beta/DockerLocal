@@ -1,11 +1,7 @@
 import React, { useState, Dispatch, SetStateAction, useEffect, } from 'react';
 
-import { Project } from '../../../types/types'
+import { Project, SidebarButtonProps } from '../../../types/types'
 
-type SidebarButtonProps =  Project & {
-  activeProject: number;
-  setActiveProject: Dispatch<SetStateAction<number>>;
-}
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({ projectName, projectId, projectRepos, activeProject, setActiveProject}) => {
   const [isActive, setIsActive] = useState('');

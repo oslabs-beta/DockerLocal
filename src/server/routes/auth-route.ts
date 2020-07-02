@@ -20,7 +20,7 @@ router.get(
 //save username/accessToken to cookies
 //redirect to /api/repos
 //if unsuccessful
-//redirect to /fail
+//redirect to /fail 
 router.get(
   '/github/callback',
   passport.authenticate('github', {
