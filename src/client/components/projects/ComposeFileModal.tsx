@@ -8,7 +8,7 @@ const ComposeFileModal: React.FC = ({ setShowComposeModal }) => {
 
   //display: project_name.yml
   //display: File created at users/dockerLocal/project_name
-  //display: button 'open folder' and 'close'
+  //caontains 2 buttons 'open folder' and 'close'
   return (
     <div className="modal is-active">
       <div className="modal-background"></div>
