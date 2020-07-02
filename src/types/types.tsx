@@ -70,3 +70,10 @@ export type SidebarButtonProps =  Project & {
   activeProject: string;
   setActiveProject: Dispatch<SetStateAction<string>>;
 };
+
+export type SidebarProps = {
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
+  activeProject: string;
+  setActiveProject: Dispatch<SetStateAction<string>>;
+};
