@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         onClick={(): void =>
           setShowProjectSidebarModal(!showProjectSideBarModal)
         }
-        style={{marginTop:"10%", marginLeft:"26%"}}
+        style={{marginTop:"10%", marginLeft:"35%"}}
       >
         Add Project
       </button>
