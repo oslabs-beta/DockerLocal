@@ -78,7 +78,7 @@ sshKeyController.deleteSSHkey = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { accessToken, username, keyId } = res.locals;
+  const { accessToken, keyId } = res.locals;
 
   const shellCommand = "./src/scripts/sshKeyDelete.sh";
 
