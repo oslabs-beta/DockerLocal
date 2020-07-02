@@ -41,6 +41,34 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     }
   }, [activeProject, projectList]);
 
+  const composeFile = () => {
+
+    const Url = "http://localhost:3001/docker/";
+
+
+    const body = {
+      projectName: `${activeProject}`,
+    };
+    //optional parameters
+    const otheParam = {
+      headers: {
+        "content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(body),
+      method: "POST",
+    };
+    fetch(Url, otheParam)
+      .then((data) => {
+        setShowComposeModal(true)
+        return data.json();
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
+  };
+
+
   const cloneRepos = async () => {
     setShowCloningReposModal(true);
 
@@ -98,7 +126,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 
       <button
         className="button is-link"
-        onClick={(): void => setShowComposeModal(!showComposeModal)}
+        onClick={(): void => composeFile()}
       >
         Compose File
       </button>
@@ -124,7 +152,14 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       )}
 
       {showComposeModal && (
-        <ComposeFileModal {...{ showComposeModal, setShowComposeModal }} />
+        <ComposeFileModal
+          {...{
+            showComposeModal,
+            setShowComposeModal,
+            activeProject,
+            projectList,
+          }}
+        />
       )}
     </div>
   );
