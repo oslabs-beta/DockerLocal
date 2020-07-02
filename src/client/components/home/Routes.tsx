@@ -12,7 +12,7 @@ const Routes: React.FC = (props) => {
 
   // need to add type for userInfo if not null
   // const [userInfo, setUserInfo] = useState<user[] | null>(null);
-  const [userInfo, setUserInfo] = useState<User>({userName: 'tom', userId: 'abc'});
+  const [userInfo, setUserInfo] = useState<User>({userName: 'User', userId: 'abc'});
 
   // runs on render and checks 'isloggedin' display correct page depending on whether user is logged in 
   // could add logic for 'hasprojects'
