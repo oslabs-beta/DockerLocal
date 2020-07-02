@@ -1,20 +1,14 @@
-import React, {
-  useState,
-  useEffect,
-  InputHTMLAttributes,
-  MouseEvent,
-  ReactHTMLElement,
-} from "react";
+import React, { useState, useEffect } from "react";
 import RepoSearchListItem from "./RepoSearchListItem";
 
+import { findActiveProject } from "../../helpers/projectHelper";
+import { fetchRepos } from "../../helpers/fetchRepoHelper";
 import {
   Repo,
   RepoResponseType,
   AddReposProps,
   Project,
 } from "../../../types/types";
-
-import { fetchRepos } from "../../helpers/fetchRepoHelper";
 
 /**
  * @function  Add array of repositories to repos array in state
@@ -49,11 +43,8 @@ const AddRepos: React.FC<AddReposProps> = ({
 
   const handleSubmit = () => {
     // make copy of current project
-    const currentProject: Project = {
-      ...projectList.find((project) => project.projectId === activeProject),
-    };
-
-    // *** this should be changed to show an error message or repos should not be clickable ***
+    const currentProject: Project = findActiveProject(projectList, activeProject);
+    
     // remove any repos that are already included in the project so user will not have duplicate repos
     const reposToAdd = selectedRepos.filter(
       (newRepo) =>
@@ -83,8 +74,6 @@ const AddRepos: React.FC<AddReposProps> = ({
     fetchRepos().then((res) => showAddRepos && setRepos(res));
   }, []);
 
-  // {repos.map(repo => <li>{repo.repoName}</li>)}
-  // <button onClick={handleSubmit}>Close</button>
   return (
     <div className="modal is-active">
       <div className="modal-background"></div>
