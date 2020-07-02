@@ -56,10 +56,11 @@ authController.saveUserInfoAndRepos = (
   next: NextFunction
 ) => {
   // save username, access token and repos from request body
-  const { username, accessToken, repos }: any = req.body;
+  const { username, accessToken, repos, projectName }: any = req.body;
   res.locals.username = username;
   res.locals.accessToken = accessToken;
   res.locals.repos = repos;
+  res.locals.projectName = projectName;
   return next();
 };
 
