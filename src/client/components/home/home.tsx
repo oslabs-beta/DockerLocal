@@ -51,7 +51,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
     // dummy response
     const fetched = [
       {
-        projectName: "DockerLocal(project1)",
+        projectName: "DockerLocal",
         projectId: "one",
         projectRepos: [
           {
@@ -93,7 +93,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
         ],
       },
       {
-        projectName: "React Visualizer 2.5(project2)",
+        projectName: "Swell",
         projectId: "two",
         projectRepos: [
           {
@@ -117,7 +117,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
         ],
       },
       {
-        projectName: "React Visualizer 8.5(project3)",
+        projectName: "Chronos",
         projectId: "two and a half",
         projectRepos: [
           {
@@ -147,8 +147,68 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
         ],
       },
       {
-        projectName: "React Visualizer 77.0(project4)",
+        projectName: "ReactType",
         projectId: "four",
+        projectRepos: [
+          {
+            repoName: "organization Repo6",
+            repoOwner: "orglink5",
+            repoId: "n",
+            isIncluded: false,
+          },
+          {
+            repoName: "organization Repo7",
+            repoOwner: "orglink6",
+            repoId: "o",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo1",
+            repoOwner: "collablink1",
+            repoId: "p",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo2",
+            repoOwner: "collablink2",
+            repoId: "q",
+            isIncluded: false,
+          },
+        ],
+      },
+      {
+        projectName: "Recoilize",
+        projectId: "five",
+        projectRepos: [
+          {
+            repoName: "organization Repo6",
+            repoOwner: "orglink5",
+            repoId: "n",
+            isIncluded: false,
+          },
+          {
+            repoName: "organization Repo7",
+            repoOwner: "orglink6",
+            repoId: "o",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo1",
+            repoOwner: "collablink1",
+            repoId: "p",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo2",
+            repoOwner: "collablink2",
+            repoId: "q",
+            isIncluded: false,
+          },
+        ],
+      },
+      {
+        projectName: "Reactime",
+        projectId: "six",
         projectRepos: [
           {
             repoName: "organization Repo6",
