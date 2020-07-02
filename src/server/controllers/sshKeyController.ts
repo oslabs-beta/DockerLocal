@@ -18,11 +18,13 @@ sshKeyController.createSSHkey = async (
   res: Response,
   next: NextFunction
 ) => {
+  
   // shell script adds the github.com domain name to the known_hosts file using the ssh-keyscan command
   // script then clones github repo using SSH connection
   const shellCommand = "./src/scripts/sshKeygen.sh";
-
+  
   const shellResult = await execShellCommand(shellCommand, []);
+  console.log('request')
   console.log(shellResult);
   console.log("Finished Generating a Key");
   return next();

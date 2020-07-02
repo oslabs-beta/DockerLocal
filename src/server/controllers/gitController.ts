@@ -16,26 +16,35 @@ gitController.cloneRepo = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('request')
+
   const { repos } = res.locals;
 
   /** Use below line for testing.
    *  Replace repoName with a string that is the name of a private repository on your Github account  */
   // const repoName = "DockerLocal";
-  const currentRepo = repos[0];
+  // await repos.forEach(async ({ repoName, repoOwner}) =>  {
+    console.log('******* cloning repos   *******')
+    for (let i = 0; i < repos.length; i += 1) {
 
-  const repoName = currentRepo.repoName;
-  const repoOwner = currentRepo.repoOwner;
-
-  // TODO: integrate loop into this middleware to handle an array of objects with repo info
-  // all repos indicated in the array should be cloned
-
-  // shell script clones github repo using SSH connection
-  const shellCommand = "./src/scripts/cloneRepo.sh";
-
-  const shellResp = await execShellCommand(shellCommand, [repoOwner, repoName]);
-  console.log(shellResp);
-  console.log("Finished Cloning Repo");
-  return next();
-};
-
+      const currentRepo = repos[i];
+      
+      const repoName = currentRepo.repoName;
+      const repoOwner = currentRepo.repoOwner;
+      console.log('******* ', repoName, repoOwner, '*******')
+      
+      // TODO: integrate loop into this middleware to handle an array of objects with repo info
+      // all repos indicated in the array should be cloned
+      
+      // shell script clones github repo using SSH connection
+      const shellCommand = "./src/scripts/cloneRepo.sh";
+      
+      const shellResp = await execShellCommand(shellCommand, [repoOwner, repoName]);
+      console.log(shellResp);
+      console.log("Finished Cloning Repo");
+    }
+  // })
+    return next();
+  };
+  
 module.exports = gitController;

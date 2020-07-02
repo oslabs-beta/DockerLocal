@@ -3,8 +3,8 @@ import React, { useState, Dispatch, SetStateAction, useEffect, } from 'react';
 import { Project } from '../../../types/types'
 
 type SidebarButtonProps =  Project & {
-  activeProject: number;
-  setActiveProject: Dispatch<SetStateAction<number>>;
+  activeProject: string;
+  setActiveProject: Dispatch<SetStateAction<string>>;
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({ projectName, projectId, projectRepos, activeProject, setActiveProject}) => {
