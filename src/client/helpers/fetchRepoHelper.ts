@@ -1,12 +1,5 @@
-import {
-  Repo,
-  RepoResponseType,
-  AddReposProps,
-  Project,
-} from "../../types/types";
+import { RepoResponseType } from "../../types/types";
 import { getUsernameAndToken } from "../helpers/cookieClientHelper";
-
-const CryptoJS = require("crypto-js");
 
 // dummy request and response
 export const fetchRepos = async (): Promise<RepoResponseType> => {
