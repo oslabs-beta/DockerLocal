@@ -1,4 +1,4 @@
-export { };
+export {};
 
 import { Request, Response, NextFunction } from "express";
 
@@ -16,28 +16,30 @@ gitController.cloneRepo = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log('request')
+  console.log("request");
 
-  const { repos } = res.locals;
+  const { repos, projectName } = res.locals;
   const shellCommand = "./src/scripts/cloneRepo.sh";
 
   // make an array of promises to clone all selected repos
-  const promises = repos.map(async currentRepo => {
+  const promises = repos.map(async (currentRepo) => {
     const repoOwner = currentRepo.repoOwner;
     const repoName = currentRepo.repoName;
 
     //     // shell script clones github repo using SSH connection
-    const shellResp = await execShellCommand(shellCommand, [repoOwner, repoName]);
+    const shellResp = await execShellCommand(shellCommand, [
+      repoOwner,
+      repoName,
+      projectName,
+    ]);
     console.log("Finished Cloning Repo");
     return shellResp;
-  })
+  });
 
-  const shellResp = await Promise.all(promises)
-  console.log(shellResp)
+  const shellResp = await Promise.all(promises);
+  console.log(shellResp);
 
-  console.log('Finished cloning all repos')
-
-
+  console.log("Finished cloning all repos");
 
   return next();
 };
