@@ -1,28 +1,30 @@
+export { };
 import { Request, Response, NextFunction } from 'express';
 import { exec } from 'child_process';
 import fs = require('fs');
 let portNo = 5001;
-const dockerPortNo = portNo;
-let buildPathArray: string[] = [];
-let containerNameArray: string[] = [];
+let dockerPortNo = portNo;
+
 
 // WORKING ASSUMPTIONS:
-// All chosen directories will be stored in the same folder so that findDockerfiles will access it
+// All chosen directories will be stored in the same folder so that findDockerfiles.sh will access it
 // My Repos folder will exist before dockerController is run
 // Docker-Compose file will be stored in DockerLocal/MyRepos
 // Dockerfiles will have docker in the name and no other files will have docker in the name
 // Dockerfiles will be located in the root folder of a project and so will be descriptive of the project(i.e. Container Name)
 
-export const dockerController: any = { };
+const dockerController: any = { };
 
 // insert and run (findDockerfile.sh) inside repo root directory to find all dockerfile build paths
-// give this function a folder that contains all pof t
 dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction): void => {
     // the name of the project folder that you are storing all the repos inside DockerLocal/MyRepos/
     const projectFolder: string = req.body.projectName;
+    const buildPathArray: string[] = [];
+    // console.log("project Folder", projectFolder);
     const myShellScript = exec(`sh src/scripts/findDockerfiles.sh ${projectFolder}`);
     myShellScript.stdout.on('data', (data: string) => {
         const output = data;
+        // console.log("data", data);
         // get filepaths from one long data string
         const filePathArray: string[] = output.split('\n').slice(0,-1);
         let buildPath: string;
@@ -51,7 +53,10 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
 
 // Use build paths to get Container Names
 dockerController.getContainerNames = (req: Request, res: Response, next: NextFunction): void => {
-    buildPathArray = res.locals.buildPathArray;
+    const containerNameArray: string[] = [];
+    console.log("GET CONTAINER NAMESSSS");
+    const buildPathArray = res.locals.buildPathArray;
+    console.log("buildPathArray", buildPathArray);
     let containerName: string;
     // use folder names as the container name
     // "src/server/happy" => "happy"
@@ -60,22 +65,22 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
             if (buildPath[char] === '/'){
                 containerName = buildPath.substring(char + 1);
                 containerNameArray.push(containerName);
+                console.log("CURREN BUILD PATH ARRAY", buildPathArray);
+                console.log("CURREN CONTAI NER ARRAY", containerNameArray);
+                break;
                 }
           }
     }
     res.locals.containerNameArray = containerNameArray;
-    // error handling
-    if (Error) return next({
-        log: "ERROR IN GET CONTAINER NAMES",
-        msg: {err: `error ${Error}`}
-    });
+    console.log("containerNameArray",containerNameArray);
     return next();
 }
 
 // Use container names and build paths to create docker compose file
 dockerController.createDockerCompose = (req: Request, res: Response, next: NextFunction): void => {
-    buildPathArray = res.locals.buildPathArray
-    containerNameArray = res.locals.containerNameArray;
+    console.log("CREATE DOCKER COMPOSE");
+    const buildPathArray = res.locals.buildPathArray;
+    const containerNameArray = res.locals.containerNameArray;
     let directory: string;
     let containerName: string;
     const composeFilePath = "./myRepos/docker-compose.yaml"
@@ -85,9 +90,7 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     // checking if compose file already exists. If it does not, it will make one
     if(!fs.existsSync(composeFilePath)){
         // spacing matters so it looks weird on purpose
-        fs.writeFile(composeFilePath, `version: '3'
-        services:
-        `, (error) => {
+        fs.writeFile(composeFilePath, `version: "3"\nservices:\n`, (error) => {
             if(error) return next({
                 log: 'ERROR IN CREATING COMPOSE FILE ',
                 msg: {err: `ERROR: ${error}`}
@@ -100,11 +103,9 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
         directory = buildPathArray[i];
         containerName = containerNameArray[i];
         portNo++;
+        dockerPortNo++;
         fs.appendFile(composeFilePath,
-        `  ${containerName}:
-        build: ${directory}
-        ports:
-          - ${portNo}:${dockerPortNo}\n`, (error: Error) => {
+        `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`, (error: Error) => {
             if (error) return next({
                 log: "ERROR IN CREATEDOCKERCOMPOSE",
                 msg: {err:`error: ${error}`}
@@ -113,3 +114,5 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     }
     return next();
 }
+
+module.exports = dockerController;

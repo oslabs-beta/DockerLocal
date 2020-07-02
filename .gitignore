@@ -92,7 +92,6 @@ out/
  .vscode/
 
 # Repository directories
-myRepos/
 
 # ssh agent directories
 tmpAgent/

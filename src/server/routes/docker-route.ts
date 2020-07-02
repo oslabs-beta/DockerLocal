@@ -1,15 +1,19 @@
+export { };
 import express, { Request, Response } from 'express';
-export const router = express.Router();
-import { dockerController } from '../controllers/dockerController';
+import path from 'path';
+const router = express.Router();
+const dockerController = require('../controllers/dockerController');
 
-
-router.get(
-    '/docker',
+// creates docker compose file using project folder names
+router.post(
+    '/',
     dockerController.getFilePaths,
     dockerController.getContainerNames,
     dockerController.createDockerCompose,
-    (req: Request, res: Response) => {
-        res.status(200).sendFile('./myRepos/docker-compose.yml')
-    }
+     (req: Request, res: Response) => {
+         // sends compose file to front end
+         res.status(200).sendFile(path.resolve(__dirname, '../../myRepos/docker-compose.yaml'));
+     }
     )
 
+module.exports = router;
