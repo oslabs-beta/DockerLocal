@@ -2,14 +2,8 @@ import React, { useState, Dispatch, SetStateAction } from "react";
 
 import SidebarButton from "./SidebarButton";
 import ProjectSideBar from "../projects/ProjectSidebar";
-import { Project } from "../../../types/types";
+import { Project, SidebarProps } from "../../../types/types";
 
-type SidebarProps = {
-  projectList: readonly Project[];
-  setProjectList: Dispatch<SetStateAction<Project[]>>;
-  activeProject: number;
-  setActiveProject: Dispatch<SetStateAction<number>>;
-};
 
 const Sidebar: React.FC<SidebarProps> = ({
   projectList,

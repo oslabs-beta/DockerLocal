@@ -7,6 +7,9 @@ const passport = require("passport");
 require("dotenv/config");
 const app = express();
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
+app.use(cors());
 
 // Bring in routes
 const authRoute = require("../../src/server/routes/auth-route");
