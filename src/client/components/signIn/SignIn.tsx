@@ -8,7 +8,7 @@ const SignIn: React.FC = () => {
 
   //display signIn button and appInfo button
   return (
-    <div className="buttons">
+    <div className="buttons is-centered" style={{height:"70vh"}}>
       <button
         className="button is-primary"
         onClick={(): void =>
