@@ -98,6 +98,7 @@
     "@types/uuid": "^8.0.0",
     "bulma": "^0.9.0",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "electron-squirrel-startup": "^1.0.0",
