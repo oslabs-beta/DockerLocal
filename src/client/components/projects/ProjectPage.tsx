@@ -112,21 +112,24 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     <div>
       <div>Select your repositories: </div>
       <button
-        className="button is-primary is-large"
+        className="button is-primary"
         onClick={(): void => setShowAddRepos(true)}
+        style={{margin:"10px"}}
       >
         Add Repositories
       </button>
       <button
-        className="button is-link"
+        className="button is-primary"
         onClick={(): Promise<void> => cloneRepos()}
+        style={{margin:"10px"}}
       >
         Clone Repos
       </button>
 
       <button
-        className="button is-link"
+        className="button is-primary"
         onClick={(): void => composeFile()}
+        style={{margin:"10px"}}
       >
         Compose File
       </button>
