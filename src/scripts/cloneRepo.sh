@@ -14,12 +14,13 @@ export SSH_AUTH_SOCK=$temp_sock
 # create a myRepos folder to store repositories if it doesn't already exist
 if [ ! -d "./myRepos" ] 
 then
-mkdir ./myRepos
+  mkdir ./myRepos
 fi
 cd myRepos
 # create a folder named after the current project if one doesn't exist already
 if [ ! -d "./$projectName" ] 
-mkdir $projectName
+then
+  mkdir $projectName
 fi
 
 cd $projectName
