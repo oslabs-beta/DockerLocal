@@ -4,6 +4,7 @@ import AddRepos from "../addRepos/AddRepos";
 import { Project, User, ProjectPageProps, Repo } from "../../../types/types";
 import ProjectRepoListItem from "./ProjectRepoListItem";
 import ComposeFileModal from "./ComposeFileModal";
+import CloningReposModal from "./CloningReposModal";
 import { findActiveProject } from "../../helpers/projectHelper";
 import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
 
@@ -16,7 +17,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
   const [showAddRepos, setShowAddRepos] = useState(false);
   const [projectRepoListItems, setprojectRepoListItems] = useState([]);
 
-  //set state compose file modal
+  const [showCloningReposModal, setShowCloningReposModal] = useState(false);
   const [showComposeModal, setShowComposeModal] = useState(false);
 
   // populate repo list items when active project changes and when request from home.tsx comes back to update project list
@@ -38,10 +39,14 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
   }, [activeProject, projectList]);
 
   const cloneRepos = async () => {
-    const currentActiveProject: Project = findActiveProject(projectList, activeProject);
 
-    const reposToClone = currentActiveProject.projectRepos.filter(({ isIncluded }) => isIncluded)
+    setShowCloningReposModal(true);
+    // get selected repos that are checked to clone
+    const reposToClone = findActiveProject(projectList, activeProject)
+      .projectRepos
+      .filter(({ isIncluded }) => isIncluded)
 
+    // get username and token
     const { username, accessToken } = await getUsernameAndToken();
 
     const body = JSON.stringify({
@@ -58,7 +63,10 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
         "Content-Type": "application/json",
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        setShowCloningReposModal(false)
+        return res.json()
+      })
       .then((res) => console.log("success", res))
       .catch((err) => console.log("fail", err));
   };
@@ -99,6 +107,9 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
             setProjectList,
           }}
         />
+      )}
+            {showCloningReposModal && (
+        <CloningReposModal {...{ showCloningReposModal, setShowCloningReposModal }} />
       )}
 
       {showComposeModal && (
