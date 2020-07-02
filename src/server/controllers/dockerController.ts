@@ -79,18 +79,18 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
 // Use container names and build paths to create docker compose file
 dockerController.createDockerCompose = (req: Request, res: Response, next: NextFunction): void => {
     console.log("CREATE DOCKER COMPOSE");
+    const projectFolder: string = req.body.projectName;
     const buildPathArray = res.locals.buildPathArray;
     const containerNameArray = res.locals.containerNameArray;
     let directory: string;
     let containerName: string;
-    const composeFilePath = "./myRepos/docker-compose.yaml"
+    const composeFilePath = `./myRepos/${projectFolder}/docker-compose.yaml`
     // making docker compose file
     // indentation is important in yaml files
-
     // checking if compose file already exists. If it does not, it will make one
     if(!fs.existsSync(composeFilePath)){
         // spacing matters so it looks weird on purpose
-        fs.writeFile(composeFilePath, `version: "3"\nservices:\n`, (error) => {
+        fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`, (error) => {
             if(error) return next({
                 log: 'ERROR IN CREATING COMPOSE FILE ',
                 msg: {err: `ERROR: ${error}`}
@@ -104,7 +104,7 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
         containerName = containerNameArray[i];
         portNo++;
         dockerPortNo++;
-        fs.appendFile(composeFilePath,
+        fs.appendFileSync(composeFilePath,
         `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`, (error: Error) => {
             if (error) return next({
                 log: "ERROR IN CREATEDOCKERCOMPOSE",
