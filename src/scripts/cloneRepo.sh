@@ -4,6 +4,7 @@
 # handle incoming arguments, username and repoName
 username=$1
 repoName=$2
+projectName=$3
 
 # get the sock address of our ssh agent so that we can connect to it
 temp_sock=$(cat ./tmpAgent/agentSock)
@@ -15,8 +16,13 @@ if [ ! -d "./myRepos" ]
 then
 mkdir ./myRepos
 fi
-
 cd myRepos
+# create a folder named after the current project if one doesn't exist already
+if [ ! -d "./$projectName" ] 
+mkdir $projectName
+fi
+
+cd $projectName
 
 # clone a git repository from github using ssh connection
 git clone git@github.com:$username/$repoName.git
