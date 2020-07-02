@@ -188,8 +188,8 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
       <button onClick={(): void => Request2()}>DEMO Request2</button>
   <button onClick={(): void => Request3()}>DEMO Request3</button> */}
 
-      <div className="columns">
-        <div className="column is-one-third"  style={{height:'100vh'}}>
+      <div className="columns" style={{position:"relative", top:"10px"}}>
+        <div className="column is-one-third"  style={{height:'100vh', borderTop:"solid 1px"}}>
           <Sidebar
             {...{
               projectList,
@@ -199,7 +199,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
             }}
           />
         </div>
-        <div className="column" style={{height:'100vh', backgroundColor:"white", borderLeft:"solid 1px"}}>
+        <div className="column" style={{height:'100vh', backgroundColor:"white", borderLeft:"solid 1px", borderTop:"solid 1px"}}>
           <ProjectPage
             {...{ activeProject, userInfo, projectList, setProjectList }}
           />
