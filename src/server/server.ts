@@ -12,6 +12,9 @@ const cors = require("cors");
 app.use(cors());
 
 // Bring in routes
+const authRoute = require('../../src/server/routes/auth-route');
+const apiRoute = require('../../src/server/routes/api-route');
+const dockerRoute = require('../../src/server/routes/docker-route');
 const authRoute = require("../../src/server/routes/auth-route");
 const apiRoute = require("../../src/server/routes/api-route");
 const configRoute = require("../../src/server/routes/config-route");
@@ -23,6 +26,9 @@ app.use(passport.initialize());
 app.use(cookieParser());
 
 // Use routes
+app.use('/auth', authRoute);
+app.use('/api', apiRoute);
+app.use('/docker', dockerRoute);
 app.use("/auth", authRoute);
 app.use("/api", apiRoute);
 app.use("/config", configRoute);
