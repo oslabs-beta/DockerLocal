@@ -12,11 +12,11 @@ configController.readJSONFromFile = async (req: Request, res: Response, next: Ne
 
   const filePath = path.join(__dirname, '../../src/server/controllers/user-projects/projects.json');
 
-  await fs.readFile(path.join(filePath, 'utf8',
+  await fs.readFile(filePath, 'utf8',
     (err: ErrorRequestHandler, data: JSON) => {
       (err) ? console.log(err) : res.locals.projects = data;
       return next();
-    }));
+    });
 };
 
 //for POST
