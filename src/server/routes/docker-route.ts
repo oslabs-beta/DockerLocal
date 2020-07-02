@@ -12,7 +12,9 @@ router.post(
     dockerController.createDockerCompose,
      (req: Request, res: Response) => {
          // sends compose file to front end
-         res.status(200).sendFile(path.resolve(__dirname, '../../myRepos/docker-compose.yaml'));
+         const projectFolder = req.body.projectName;
+         // sends compose file to front end
+         res.status(200).sendFile(path.resolve(__dirname, `../../myRepos/${projectFolder}/docker-compose.yaml`));
      }
     )
 
