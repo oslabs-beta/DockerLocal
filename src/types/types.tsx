@@ -59,3 +59,14 @@ export type RepoResponseType = {
   organizations: readonly Repo[];
   collaborations: readonly Repo[];
 };
+
+export type ProjectSideBarProps = {
+  setShowProjectSidebarModal: Dispatch<SetStateAction<boolean>>;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
+};
+
+export type SidebarButtonProps =  Project & {
+  activeProject: string;
+  setActiveProject: Dispatch<SetStateAction<string>>;
+};
