@@ -7,6 +7,8 @@ import ComposeFileModal from "./ComposeFileModal";
 import CloningReposModal from "./CloningReposModal";
 import { findActiveProject } from "../../helpers/projectHelper";
 import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
+import { findActiveProject } from '../../helpers/projectHelper'
+
 
 const ProjectPage: React.FC<ProjectPageProps> = ({
   activeProject,
@@ -16,16 +18,15 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 }) => {
   const [showAddRepos, setShowAddRepos] = useState(false);
   const [projectRepoListItems, setprojectRepoListItems] = useState([]);
-
+  
   const [showCloningReposModal, setShowCloningReposModal] = useState(false);
   const [showComposeModal, setShowComposeModal] = useState(false);
-
+  
   // populate repo list items when active project changes and when request from home.tsx comes back to update project list
   useEffect(() => {
-    const currentProject = projectList.find(
-      (project) => project.projectId === activeProject
-    );
-    if (currentProject) {
+    const currentProject: Project = findActiveProject(projectList, activeProject);
+    
+    if (currentProject && currentProject.projectRepos) {
       const newList = currentProject.projectRepos.map((repo) => {
         return (
           <ProjectRepoListItem

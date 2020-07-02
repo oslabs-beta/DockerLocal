@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Dispatch } from 'react';
 import { RepoSearchListItemProps, Project } from '../../../types/types';
 
+import { findActiveProject } from '../../helpers/projectHelper'
+
 
 const RepoSearchListItem: React.FC<RepoSearchListItemProps> = ({ repo, selectedRepos, setSelectedRepos, projectList, activeProject }) => {
   const [isChecked, setIsChecked] = useState(false)
@@ -9,7 +11,8 @@ const RepoSearchListItem: React.FC<RepoSearchListItemProps> = ({ repo, selectedR
   // needed to account for switching back and forth between filters/tabs
   useEffect(() => {
     if (selectedRepos.includes(repo) && !isChecked) setIsChecked(true);
-    const currentProject: Project = {...projectList.find(project => project.projectId === activeProject)};
+    const currentProject: Project = findActiveProject(projectList, activeProject);
+
     if (currentProject.projectRepos.some(({ repoId }) => repoId === repo.repoId)) setIsDisabled(true);
   }, [isChecked])
 

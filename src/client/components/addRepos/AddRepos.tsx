@@ -43,11 +43,8 @@ const AddRepos: React.FC<AddReposProps> = ({
 
   const handleSubmit = () => {
     // make copy of current project
-    const currentProject: Project = findActiveProject(
-      projectList,
-      activeProject
-    );
-
+    const currentProject: Project = findActiveProject(projectList, activeProject);
+    
     // remove any repos that are already included in the project so user will not have duplicate repos
     const reposToAdd = selectedRepos.filter(
       (newRepo) =>
