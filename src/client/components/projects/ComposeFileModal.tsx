@@ -5,7 +5,7 @@ const ComposeFileModal: React.FC = ({
   activeProject,
   projectList,
 }) => {
-  const Url = "http://localhost:3001/docker/";
+
   //yml data form Docker compose file
   let ymlText = "This is a yml file";
   //expected data in yml
@@ -18,27 +18,6 @@ const ComposeFileModal: React.FC = ({
   };
 
   // make a post request to send ProjectName
-  const handleProjectNameSubmit = () => {
-    const Data = {
-      projectName: `${activeProject}`,
-    };
-    //optional parameters
-    const otheParam = {
-      headers: {
-        "content-type": "application/json; charset=UTF-8",
-      },
-      body: Data,
-      method: "POST",
-    };
-    fetch(Url, otheParam)
-      .then((data) => {
-        return data.json();
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => console.log(error));
-  };
 
   //display: project_name.yml
   //display: File created at users/dockerLocal/project_name
