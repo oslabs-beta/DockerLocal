@@ -199,7 +199,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
             }}
           />
         </div>
-        <div className="column">
+        <div className="column" style={{height:"100vh", backgroundColor: "white", borderLeft: "solid black 1px"}}>
           <ProjectPage
             {...{ activeProject, userInfo, projectList, setProjectList }}
           />
