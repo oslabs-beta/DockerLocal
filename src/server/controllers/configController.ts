@@ -10,11 +10,13 @@ configController.readJSONFromFile = async (req: Request, res: Response, next: Ne
   //Get JSON data from local file
   //save to res.locals.projects
 
-  await fs.readFile(path.join(__dirname, '../../src/server/controllers/user-projects/projects.json'), 'utf8',
+  const filePath = path.join(__dirname, '../../src/server/controllers/user-projects/projects.json');
+
+  await fs.readFile(path.join(filePath, 'utf8',
     (err: ErrorRequestHandler, data: JSON) => {
       (err) ? console.log(err) : res.locals.projects = data;
       return next();
-    });
+    }));
 };
 
 //for POST
