@@ -26,10 +26,9 @@ const createWindow = () => {
     autoHideMenuBar: true,
     useContentSize: true,
     resizable: false,
-  
   });
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-  .then(() => mainWindow.webContents.openDevTools());
+  // .then(() => mainWindow.webContents.openDevTools());
   mainWindow.focus();
 };
 

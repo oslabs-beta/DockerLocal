@@ -241,15 +241,15 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   }, []);
 
   return (
-    <div>
+    <div style={{marginTop:"15px", marginLeft:"10px"}}>
       {/* <LoggedIn/> << logged in component at top with logout button and username*/}
       {`${userInfo.userName}`}
-      <button onClick={(): void => Request1()}>DEMO Request1</button>
+     {/*<button onClick={(): void => Request1()}>DEMO Request1</button>
       <button onClick={(): void => Request2()}>DEMO Request2</button>
-      <button onClick={(): void => Request3()}>DEMO Request3</button>
+  <button onClick={(): void => Request3()}>DEMO Request3</button> */}
 
-      <div className="columns">
-        <div className="column is-one-third">
+      <div className="columns" style={{position:"relative", top:"10px"}}>
+        <div className="column is-one-third"  style={{height:'100vh', borderTop:"solid 1px"}}>
           <Sidebar
             {...{
               projectList,
@@ -259,7 +259,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
             }}
           />
         </div>
-        <div className="column">
+        <div className="column" style={{height:'100vh', backgroundColor:"white", borderLeft:"solid 1px", borderTop:"solid 1px"}}>
           <ProjectPage
             {...{ activeProject, userInfo, projectList, setProjectList }}
           />
