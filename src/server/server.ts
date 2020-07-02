@@ -1,4 +1,3 @@
-//https://medium.com/@muravitskiy.mail/cannot-redeclare-block-scoped-variable-varname-how-to-fix-b1c3d9cc8206
 export {};
 import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 const express = require("express");
@@ -8,10 +7,14 @@ const passport = require("passport");
 require("dotenv/config");
 const app = express();
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
+app.use(cors());
 
 // Bring in routes
 const authRoute = require("../../src/server/routes/auth-route");
 const apiRoute = require("../../src/server/routes/api-route");
+const configRoute = require("../../src/server/routes/config-route");
 
 // Body Parsing Middleware
 app.use(express.json());
@@ -22,6 +25,7 @@ app.use(cookieParser());
 // Use routes
 app.use("/auth", authRoute);
 app.use("/api", apiRoute);
+app.use("/config", configRoute);
 
 // Serve static files
 app.use(express.static("assets"));
