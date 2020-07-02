@@ -4,6 +4,8 @@ import AddRepos from "../addRepos/AddRepos";
 import { Project, User, ProjectPageProps } from "../../../types/types";
 import ProjectRepoListItem from "./ProjectRepoListItem";
 import ComposeFileModal from "./ComposeFileModal";
+import { findActiveProject } from "../../helpers/projectHelper";
+import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
 
 const ProjectPage: React.FC<ProjectPageProps> = ({
   activeProject,
@@ -35,6 +37,30 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     }
   }, [activeProject, projectList]);
 
+  const cloneRepos = async () => {
+    const currentActiveProject = findActiveProject(projectList, activeProject);
+
+    const { username, accessToken } = await getUsernameAndToken();
+
+    const body = JSON.stringify({
+      username: username,
+      accessToken: accessToken,
+      repos: currentActiveProject.projectRepos,
+    });
+
+    // console.log(username, " decrypte", accessToken, body);
+    fetch("http://localhost:3001/api/clonerepos", {
+      method: "POST",
+      body: body,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => console.log("success", res))
+      .catch((err) => console.log("fail", err));
+  };
+
   return (
     <div>
       <div>Select your repositories: </div>
@@ -44,6 +70,13 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       >
         Add Repositories
       </button>
+      <button
+        className="button is-link"
+        onClick={(): Promise<void> => cloneRepos()}
+      >
+        Clone Repos
+      </button>
+
       <button
         className="button is-link"
         onClick={(): void => setShowComposeModal(!showComposeModal)}

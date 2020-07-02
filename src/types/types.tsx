@@ -2,7 +2,7 @@ import { SetStateAction, Dispatch } from "react";
 
 export type Project = {
   projectName: string;
-  projectId: number;
+  projectId: string;
   projectRepos: readonly Repo[];
 };
 
@@ -29,26 +29,26 @@ export type RepoSearchListItemProps = {
   selectedRepos: readonly Repo[];
   setSelectedRepos: Dispatch<SetStateAction<Repo[]>>;
   projectList: readonly Project[];
-  activeProject: number;
+  activeProject: string;
 };
 
 export type AddReposProps = {
   showAddRepos: boolean;
   setShowAddRepos: Dispatch<SetStateAction<boolean>>;
-  activeProject: number;
+  activeProject: string;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;
 };
 
 export type ProjectPageProps = {
-  activeProject: number;
+  activeProject: string;
   userInfo: User;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;
 };
 
 export type ProjectRepoListItemProps = {
-  activeProject: number;
+  activeProject: string;
   repo: Repo;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;

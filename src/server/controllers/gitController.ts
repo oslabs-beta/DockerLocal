@@ -16,12 +16,15 @@ gitController.cloneRepo = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { username, repos } = res.locals;
+  const { repos } = res.locals;
 
   /** Use below line for testing.
    *  Replace repoName with a string that is the name of a private repository on your Github account  */
-  const repoName = "DockerLocal";
-  // const repoName = repos[1].name;
+  // const repoName = "DockerLocal";
+  const currentRepo = repos[0];
+
+  const repoName = currentRepo.repoName;
+  const repoOwner = currentRepo.repoOwner;
 
   // TODO: integrate loop into this middleware to handle an array of objects with repo info
   // all repos indicated in the array should be cloned
@@ -29,7 +32,7 @@ gitController.cloneRepo = async (
   // shell script clones github repo using SSH connection
   const shellCommand = "./src/scripts/cloneRepo.sh";
 
-  const shellResp = await execShellCommand(shellCommand, [username, repoName]);
+  const shellResp = await execShellCommand(shellCommand, [repoOwner, repoName]);
   console.log(shellResp);
   console.log("Finished Cloning Repo");
   return next();
