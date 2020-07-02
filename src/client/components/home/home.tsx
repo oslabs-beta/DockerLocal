@@ -241,7 +241,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   }, []);
 
   return (
-    <div>
+    <div style={{marginTop:"15px", marginLeft:"10px"}}>
       {/* <LoggedIn/> << logged in component at top with logout button and username*/}
       {`${userInfo.userName}`}
      {/*<button onClick={(): void => Request1()}>DEMO Request1</button>
