@@ -67,7 +67,14 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       )}
 
       {showComposeModal && (
-        <ComposeFileModal {...{ showComposeModal, setShowComposeModal }} />
+        <ComposeFileModal
+          {...{
+            showComposeModal,
+            setShowComposeModal,
+            activeProject,
+            projectList,
+          }}
+        />
       )}
     </div>
   );
