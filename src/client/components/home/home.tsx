@@ -16,7 +16,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   // need to set type for projects/projectlist
   const [projectList, setProjectList] = useState<readonly Project[]>([]);
 
-  const [activeProject, setActiveProject] = useState(1);
+  const [activeProject, setActiveProject] = useState("one");
 
   const Request1 = (): void => {
     fetch("http://localhost:3001/")
@@ -51,8 +51,8 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
     // dummy response
     const fetched = [
       {
-        projectName: "DockerLocal(project1)",
-        projectId: 1,
+        projectName: "DockerLocal",
+        projectId: "one",
         projectRepos: [
           {
             repoName: "perrepop1",
@@ -93,8 +93,8 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
         ],
       },
       {
-        projectName: "React Visualizer 2.5(project2)",
-        projectId: 2,
+        projectName: "Swell",
+        projectId: "two",
         projectRepos: [
           {
             repoName: "collab Repo4",
@@ -117,8 +117,8 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
         ],
       },
       {
-        projectName: "React Visualizer 8.5(project3)",
-        projectId: 3,
+        projectName: "Chronos",
+        projectId: "two and a half",
         projectRepos: [
           {
             repoName: "organization Repo5",
@@ -147,8 +147,68 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
         ],
       },
       {
-        projectName: "React Visualizer 77.0(project4)",
-        projectId: 4,
+        projectName: "ReactType",
+        projectId: "four",
+        projectRepos: [
+          {
+            repoName: "organization Repo6",
+            repoOwner: "orglink5",
+            repoId: "n",
+            isIncluded: false,
+          },
+          {
+            repoName: "organization Repo7",
+            repoOwner: "orglink6",
+            repoId: "o",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo1",
+            repoOwner: "collablink1",
+            repoId: "p",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo2",
+            repoOwner: "collablink2",
+            repoId: "q",
+            isIncluded: false,
+          },
+        ],
+      },
+      {
+        projectName: "Recoilize",
+        projectId: "five",
+        projectRepos: [
+          {
+            repoName: "organization Repo6",
+            repoOwner: "orglink5",
+            repoId: "n",
+            isIncluded: false,
+          },
+          {
+            repoName: "organization Repo7",
+            repoOwner: "orglink6",
+            repoId: "o",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo1",
+            repoOwner: "collablink1",
+            repoId: "p",
+            isIncluded: false,
+          },
+          {
+            repoName: "collab Repo2",
+            repoOwner: "collablink2",
+            repoId: "q",
+            isIncluded: false,
+          },
+        ],
+      },
+      {
+        projectName: "Reactime",
+        projectId: "six",
         projectRepos: [
           {
             repoName: "organization Repo6",

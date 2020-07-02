@@ -97,3 +97,6 @@ myRepos/
 # ssh agent directories
 tmpAgent/
 tmpKeys/
+
+# Saved user projects
+user-projects/
