@@ -1,10 +1,23 @@
 import React from "react";
 
-const ComposeFileModal: React.FC = ({ setShowComposeModal }) => {
+const ComposeFileModal: React.FC = ({
+  setShowComposeModal,
+  activeProject,
+  projectList,
+}) => {
+
   //yml data form Docker compose file
-  //parse yml to javascript object
-  // const ymlText = yaml.dump(ymlObject)
-  const ymlText = "This is a yml file";
+  let ymlText = "This is a yml file";
+  //expected data in yml
+  const generateYmal = () => {
+    fetch(Url)
+      .then((data) => {
+        ymlText = `${data}`;
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // make a post request to send ProjectName
 
   //display: project_name.yml
   //display: File created at users/dockerLocal/project_name
