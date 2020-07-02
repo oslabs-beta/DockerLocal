@@ -1,15 +1,62 @@
+import { SetStateAction, Dispatch } from "react";
+import { report } from "process";
+
 export type Project = {
   projectName: string;
   projectId: number;
-  projectRepos: Repo[];
+  projectRepos: readonly Repo[];
 };
 
 export type Repo = {
   repoName: string;
-  repoCloneLink: string;
+  repoId: string;
+  repoOwner: string;
+  isIncluded?: boolean;
 };
 
 export type User = {
   userName: string;
   userId: string;
+};
+
+export type ProjectReposType = {
+  personal: readonly Repo[];
+  organizations: readonly Repo[];
+  collaborations: readonly Repo[];
+};
+
+export type RepoSearchListItemProps = {
+  repo: Repo;
+  selectedRepos: readonly Repo[];
+  setSelectedRepos: Dispatch<SetStateAction<Repo[]>>;
+  projectList: readonly Project[];
+  activeProject: number;
+};
+
+export type AddReposProps = {
+  showAddRepos: boolean;
+  setShowAddRepos: Dispatch<SetStateAction<boolean>>;
+  activeProject: number;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
+};
+
+export type ProjectPageProps = {
+  activeProject: number;
+  userInfo: User;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
+};
+
+export type ProjectRepoListItemProps = {
+  activeProject: number;
+  repo: Repo;
+  projectList: readonly Project[];
+  setProjectList: Dispatch<SetStateAction<Project[]>>;
+}
+
+export type RepoResponseType = { 
+  personal: readonly Repo[]; 
+  organizations: readonly Repo[];
+  collaborations: readonly Repo[]; 
 }
