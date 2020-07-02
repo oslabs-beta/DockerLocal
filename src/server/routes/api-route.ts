@@ -21,7 +21,7 @@ router.get(
   (req: Request, res: Response) => res.status(200).json(res.locals.repos)
 );
 
-//dummy post request (placeholder)
+// dummy post request (placeholder)
 router.post('/', (req: Request, res: Response) => res.send('Hitting api POST endpoint'));
 
 module.exports = router;
