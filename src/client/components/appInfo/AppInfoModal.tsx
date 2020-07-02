@@ -1,5 +1,9 @@
 import React, { Dispatch, SetStateAction } from "react";
 
+import AppInfoList from "./AppInfoList";
+
+// display AppInfoList component
+// constains 2 buttons listen to onClick to close modal
 const AppInfoModal: React.FC<{
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }> = ({ setShowModal }) => {
@@ -8,14 +12,19 @@ const AppInfoModal: React.FC<{
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">Modal title</p>
-          <button className="delete" aria-label="close"></button>
+          <p className="modal-card-title">About DockerLocal</p>
+          <button
+            aria-label="close"
+            className="button"
+            onClick={(): void => setShowModal(false)}
+          >
+            x
+          </button>
         </header>
-        <section className="modal-card-body">This is the appInfo Modal</section>
+        <section className="modal-card-body">{AppInfoList}</section>
         <footer className="modal-card-foot">
-          <button className="button is-success">Save changes</button>
           <button className="button" onClick={(): void => setShowModal(false)}>
-            Cancel
+            Close
           </button>
         </footer>
       </div>
