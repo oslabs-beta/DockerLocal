@@ -5,6 +5,7 @@ import AddRepos from "../addRepos/AddRepos";
 import ProjectPage from "../projects/ProjectPage";
 
 import { Project, Repo, User } from "../../../types/types";
+import { saveProjectList } from "../../helpers/projectHelper";
 
 type HomeProps = {
   userInfo: User;
@@ -20,12 +21,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
 
 
   // placeholder requests for testing
-  const Request1 = (): void => {
-    fetch("http://localhost:3001/")
-      .then((res) => res.json())
-      .then((res) => console.log("success", res))
-      .catch((err) => console.log("fail", err));
-  };
+  const Request1 = (): void => saveProjectList(projectList, activeProject)
 
   // save project list to disk **** -- need to extract to helper function and find places to use it
   const Request2 = (): void => {
@@ -69,16 +65,17 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
       .catch((err) => console.log("fail", err));
   }, []);
 
-  // sets acive project to first element on load
-  // useEffect(() => {
-  //   if(activeProject === '' && projectList[0]) setActiveProject(projectList[0].projectId)
-  // }, [projectList, activeProject])
+
+  // saves project list to disk whenever either are modified
+  useEffect(() => {
+    saveProjectList(projectList, activeProject)
+  }, [projectList, activeProject])
 
   return (
     <div style={{marginTop:"15px", marginLeft:"10px"}}>
       {/* <LoggedIn/> << logged in component at top with logout button and username*/}
       {`${userInfo.userName}`}
-      {/* {<button onClick={(): void => Request1()}>DEMO Request1</button>} */}
+      {<button onClick={(): void => Request1()}>DEMO Request1</button>}
       {<button onClick={(): void => Request2()}>Save Project List to Disk</button>}
       {<button onClick={(): void => Request3()}>DEMO Request3</button> } 
 
