@@ -34,7 +34,10 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
       headers: {
         'Content-Type': 'application/json',
       },    
-      body: JSON.stringify(projectList),
+      body: JSON.stringify({
+        projectList: [...projectList],
+        activeProject
+      }),
     })
       // .then((res) => res.json())
       .then((res) => console.log("success", res))
@@ -57,14 +60,19 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
     // sets state for the project list
     fetch("http://localhost:3001/config")
       .then((res) => res.json())
-      .then((res) => setProjectList(res))
+      .then((res) => {
+        if (res.projectList && res.activeProject){
+          setProjectList(res.projectList)
+          setActiveProject(res.activeProject)
+        }
+      })
       .catch((err) => console.log("fail", err));
   }, []);
 
   // sets acive project to first element on load
-  useEffect(() => {
-    if(activeProject === '' && projectList[0]) setActiveProject(projectList[0].projectId)
-  }, [projectList, activeProject])
+  // useEffect(() => {
+  //   if(activeProject === '' && projectList[0]) setActiveProject(projectList[0].projectId)
+  // }, [projectList, activeProject])
 
   return (
     <div style={{marginTop:"15px", marginLeft:"10px"}}>

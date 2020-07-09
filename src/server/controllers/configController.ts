@@ -22,7 +22,7 @@ configController.readJSONFromFile = async (req: Request, res: Response, next: Ne
         }
       })
       else{
-      res.locals.projects = data || '[]';
+      res.locals.projects = data;
       return next();
     };
   });
