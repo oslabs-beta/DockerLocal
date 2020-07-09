@@ -12,7 +12,7 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 // const viewSettingsMenu = new Menu()
 
 
-
+let mainWindow;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-line global-require
@@ -20,7 +20,7 @@ if (require('electron-squirrel-startup')) app.quit();
 
 const createWindow = () => {
   // // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
     autoHideMenuBar: true,
@@ -34,8 +34,8 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   installExtension(REACT_DEVELOPER_TOOLS)
-      .then((devtool: any) => console.log(`Added Extension:  ${devtool.name}`))
-      .catch((err: any) => console.log('An error occurred: ', err));
+    .then((devtool: any) => console.log(`Added Extension:  ${devtool.name}`))
+    .catch((err: any) => console.log('An error occurred: ', err));
 });
 
 
@@ -63,3 +63,5 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+export default mainWindow;

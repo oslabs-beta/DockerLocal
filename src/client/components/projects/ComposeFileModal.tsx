@@ -1,23 +1,21 @@
 import React from "react";
+import { dialog, shell } from "electron";
+import mainWindow from "../../../index";
 
+
+/**
+ * @ 
+ * @
+ */
 const ComposeFileModal: React.FC = ({
   setShowComposeModal,
   activeProject,
   projectList,
+  composeFileData
 }) => {
 
   //yml data form Docker compose file
-  let ymlText = "This is a yml file";
-  //expected data in yml
-  const generateYmal = () => {
-    fetch(Url)
-      .then((data) => {
-        ymlText = `${data}`;
-      })
-      .catch((error) => console.log(error));
-  };
-
-  // make a post request to send ProjectName
+  const ymlText = composeFileData.text;
 
   //display: project_name.yml
   //display: File created at users/dockerLocal/project_name
@@ -30,9 +28,15 @@ const ComposeFileModal: React.FC = ({
           <p className="modal-card-title">Project_name.yml</p>
           <button className="delete" aria-label="close"></button>
         </header>
-        <section className="modal-card-body">{ymlText}</section>
+        <section className="modal-card-body">
+          <pre>
+            <code>
+              {ymlText}
+            </code>
+          </pre>
+        </section>
         <footer className="modal-card-foot">
-          <button className="button is-success">Open Folder</button>
+          <button className="button is-success" onClick={(): void => dialog.showOpenDialog(mainWindow)}>Open Folder</button>
           <button
             className="button"
             onClick={(): void => setShowComposeModal(false)}
@@ -41,7 +45,7 @@ const ComposeFileModal: React.FC = ({
           </button>
         </footer>
       </div>
-    </div>
+    </div >
   );
 };
 
