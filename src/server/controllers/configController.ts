@@ -14,7 +14,7 @@ configController.readJSONFromFile = async (req: Request, res: Response, next: Ne
 
   await fs.readFile(filePath, 'utf8',
     (err: ErrorRequestHandler, data: JSON) => {
-      (err) ? console.log(err) : res.locals.projects = data;
+      (err) ? next(err) : res.locals.projects = data;
       return next();
     });
 };
@@ -28,7 +28,7 @@ configController.writeJSONToFile = async (req: Request, res: Response, next: Nex
 
   await fs.writeFile(filePath, JSON.stringify(req.body),
     (err: ErrorRequestHandler) => {
-      (err) ? console.log(err) : console.log('Successful write!');
+      (err) ? next(err) : console.log('Successful write!');
       return next();
     });
 };
