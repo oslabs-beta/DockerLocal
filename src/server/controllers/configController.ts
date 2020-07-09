@@ -14,9 +14,18 @@ configController.readJSONFromFile = async (req: Request, res: Response, next: Ne
 
   await fs.readFile(filePath, 'utf8',
     (err: ErrorRequestHandler, data: JSON) => {
-      (err) ? next(err) : res.locals.projects = data;
+      if (err) return next({
+        log: "Error caught in configController- readJSONFromFile",
+        status: 400,
+        msg: {
+          err: err,
+        }
+      })
+      else{
+      res.locals.projects = data || '[]';
       return next();
-    });
+    };
+  });
 };
 
 //for POST
@@ -28,8 +37,17 @@ configController.writeJSONToFile = async (req: Request, res: Response, next: Nex
 
   await fs.writeFile(filePath, JSON.stringify(req.body),
     (err: ErrorRequestHandler) => {
-      (err) ? next(err) : console.log('Successful write!');
+      if (err) return next({
+        log: "Error caught in configController- writeJSONToFile",
+        status: 500,
+        msg: {
+          err: err,
+        }
+      })
+      else{
+      console.log('Successful write!');
       return next();
+      }
     });
 };
 
