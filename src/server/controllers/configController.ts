@@ -45,8 +45,7 @@ configController.writeJSONToFile = async (req: Request, res: Response, next: Nex
         }
       })
       else{
-      console.log('Successful write!');
-      return next();
+        return next();
       }
     });
 };
