@@ -20,6 +20,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 
   const [showCloningReposModal, setShowCloningReposModal] = useState(false);
   const [showComposeModal, setShowComposeModal] = useState(false);
+  const [composeFileData, setComposeFileData] = useState({});
 
   // populate repo list items when active project changes and when request from home.tsx comes back to update project list
   useEffect(() => {
@@ -59,11 +60,14 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     };
     fetch(Url, otheParam)
       .then((data) => {
-        setShowComposeModal(true)
         return data.json();
       })
       .then((res) => {
-        console.log(res);
+        const newYmlData = {}
+        newYmlData.text = res.text; // ********** check what is coming****
+        newYmlData.path = res.path;
+        setComposeFileData(newYmlData);
+        setShowComposeModal(true);
       })
       .catch((error) => console.log(error));
   };
@@ -114,14 +118,14 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       <button
         className="button is-primary"
         onClick={(): void => setShowAddRepos(true)}
-        style={{margin:"10px"}}
+        style={{ margin: "10px" }}
       >
         Add Repositories
       </button>
       <button
         className="button is-primary"
         onClick={(): Promise<void> => cloneRepos()}
-        style={{margin:"10px"}}
+        style={{ margin: "10px" }}
       >
         Clone Repos
       </button>
@@ -129,7 +133,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       <button
         className="button is-primary"
         onClick={(): void => composeFile()}
-        style={{margin:"10px"}}
+        style={{ margin: "10px" }}
       >
         Compose File
       </button>
@@ -161,6 +165,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
             setShowComposeModal,
             activeProject,
             projectList,
+            composeFileData
           }}
         />
       )}
