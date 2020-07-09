@@ -16,27 +16,34 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   // need to set type for projects/projectlist
   const [projectList, setProjectList] = useState<readonly Project[]>([]);
 
-  const [activeProject, setActiveProject] = useState("one");
+  const [activeProject, setActiveProject] = useState('');
 
+
+  // placeholder requests for testing
   const Request1 = (): void => {
     fetch("http://localhost:3001/")
       .then((res) => res.json())
       .then((res) => console.log("success", res))
       .catch((err) => console.log("fail", err));
   };
+
+  // save project list to disk **** -- need to extract to helper function and find places to use it
   const Request2 = (): void => {
-    fetch("/api/repos", {
-      method: "GET",
-      credentials: "include",
+    fetch("http://localhost:3001/config", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },    
+      body: JSON.stringify(projectList),
     })
-      .then((res) => res.json())
+      // .then((res) => res.json())
       .then((res) => console.log("success", res))
       .catch((err) => console.log("fail", err));
   };
   const Request3 = (): void => {
-    fetch("/api/repos", {
+    fetch("http://localhost:3001/config", {
       method: "GET",
-      credentials: "include",
+      // credentials: "include",
     })
       .then((res) => res.json())
       .then((res) => console.log("success", res))
@@ -45,208 +52,27 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
 
   // populate list of projects, happens on render
   useEffect(() => {
-    // fetch projects from local file, prob fs.readfile
-    // .then set state for project list
 
-    // dummy response
-    const fetched = [
-      {
-        projectName: "DockerLocal",
-        projectId: "one",
-        projectRepos: [
-          {
-            repoName: "perrepop1",
-            repoOwner: "personallink1",
-            repoId: "a",
-            isIncluded: true,
-          },
-          {
-            repoName: "abcdefgpersonal2",
-            repoOwner: "personallink2",
-            repoId: "b",
-            isIncluded: false,
-          },
-          {
-            repoName: "abbsddpersonalRepo3",
-            repoOwner: "personallink3",
-            repoId: "c",
-            isIncluded: true,
-          },
-          {
-            repoName: "collab Repo4",
-            repoOwner: "collablink4",
-            repoId: "d",
-            isIncluded: true,
-          },
-          {
-            repoName: "collab Repo5",
-            repoOwner: "collablink5",
-            repoId: "e",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo6",
-            repoOwner: "collablink6",
-            repoId: "f",
-            isIncluded: false,
-          },
-        ],
-      },
-      {
-        projectName: "Swell",
-        projectId: "two",
-        projectRepos: [
-          {
-            repoName: "collab Repo4",
-            repoOwner: "collablink4",
-            repoId: "g",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo5",
-            repoOwner: "collablink5",
-            repoId: "h",
-            isIncluded: true,
-          },
-          {
-            repoName: "collab Repo6",
-            repoOwner: "collablink6",
-            repoId: "i",
-            isIncluded: false,
-          },
-        ],
-      },
-      {
-        projectName: "Chronos",
-        projectId: "two and a half",
-        projectRepos: [
-          {
-            repoName: "organization Repo5",
-            repoOwner: "orglink5",
-            repoId: "j",
-            isIncluded: false,
-          },
-          {
-            repoName: "organization Repo6",
-            repoOwner: "orglink6",
-            repoId: "k",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo1",
-            repoOwner: "collablink1",
-            repoId: "l",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo2",
-            repoOwner: "collablink2",
-            repoId: "m",
-            isIncluded: false,
-          },
-        ],
-      },
-      {
-        projectName: "ReactType",
-        projectId: "four",
-        projectRepos: [
-          {
-            repoName: "organization Repo6",
-            repoOwner: "orglink5",
-            repoId: "n",
-            isIncluded: false,
-          },
-          {
-            repoName: "organization Repo7",
-            repoOwner: "orglink6",
-            repoId: "o",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo1",
-            repoOwner: "collablink1",
-            repoId: "p",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo2",
-            repoOwner: "collablink2",
-            repoId: "q",
-            isIncluded: false,
-          },
-        ],
-      },
-      {
-        projectName: "Recoilize",
-        projectId: "five",
-        projectRepos: [
-          {
-            repoName: "organization Repo6",
-            repoOwner: "orglink5",
-            repoId: "n",
-            isIncluded: false,
-          },
-          {
-            repoName: "organization Repo7",
-            repoOwner: "orglink6",
-            repoId: "o",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo1",
-            repoOwner: "collablink1",
-            repoId: "p",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo2",
-            repoOwner: "collablink2",
-            repoId: "q",
-            isIncluded: false,
-          },
-        ],
-      },
-      {
-        projectName: "Reactime",
-        projectId: "six",
-        projectRepos: [
-          {
-            repoName: "organization Repo6",
-            repoOwner: "orglink5",
-            repoId: "n",
-            isIncluded: false,
-          },
-          {
-            repoName: "organization Repo7",
-            repoOwner: "orglink6",
-            repoId: "o",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo1",
-            repoOwner: "collablink1",
-            repoId: "p",
-            isIncluded: false,
-          },
-          {
-            repoName: "collab Repo2",
-            repoOwner: "collablink2",
-            repoId: "q",
-            isIncluded: false,
-          },
-        ],
-      },
-    ];
-    setProjectList(fetched);
+    // route reads project list from local file
+    // sets state for the project list
+    fetch("http://localhost:3001/config")
+      .then((res) => res.json())
+      .then((res) => setProjectList(res))
+      .catch((err) => console.log("fail", err));
   }, []);
+
+  // sets acive project to first element on load
+  useEffect(() => {
+    if(activeProject === '' && projectList[0]) setActiveProject(projectList[0].projectId)
+  }, [projectList, activeProject])
 
   return (
     <div style={{marginTop:"15px", marginLeft:"10px"}}>
       {/* <LoggedIn/> << logged in component at top with logout button and username*/}
       {`${userInfo.userName}`}
-     {/*<button onClick={(): void => Request1()}>DEMO Request1</button>
-      <button onClick={(): void => Request2()}>DEMO Request2</button>
-  <button onClick={(): void => Request3()}>DEMO Request3</button> */}
+      {/* {<button onClick={(): void => Request1()}>DEMO Request1</button>} */}
+      {<button onClick={(): void => Request2()}>Save Project List to Disk</button>}
+      {<button onClick={(): void => Request3()}>DEMO Request3</button> } 
 
       <div className="columns" style={{position:"relative", top:"10px"}}>
         <div className="column is-one-third"  style={{height:'100vh', borderTop:"solid 1px"}}>
