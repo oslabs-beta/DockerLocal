@@ -54,7 +54,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     );
 
     const body = {
-      projectName: `${activeProject}`,
+      projectName: currentProject.projectName,
       repos: reposToClone
     };
 
