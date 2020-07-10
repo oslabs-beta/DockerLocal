@@ -100,3 +100,4 @@ tmpKeys/
 # Saved user projects
 user-projects/
 src/server/controllers/user-projects/projects.json
+myProjects/
