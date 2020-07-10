@@ -1,5 +1,7 @@
 import { app, BrowserWindow, Menu } from 'electron';
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+} from 'electron-devtools-installer';
 
 const express = require('./server/server.ts');
 const path = require('path');
@@ -10,9 +12,6 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 // console.log(nativeTheme.themeSource = 'light')
 // console.log('menuItems!! ', Menu)
 // const viewSettingsMenu = new Menu()
-
-
-
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-line global-require
@@ -27,17 +26,17 @@ const createWindow = (): void => {
     useContentSize: true,
     resizable: false,
   });
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-  .then(() => mainWindow.webContents.openDevTools());
+  mainWindow
+    .loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+    .then(() => mainWindow.webContents.openDevTools()); // uncomment to display dev tools
   mainWindow.focus();
 };
 
 app.whenReady().then(() => {
   installExtension(REACT_DEVELOPER_TOOLS)
-      .then((devtool: any) => console.log(`Added Extension:  ${devtool.name}`))
-      .catch((err: any) => console.log('An error occurred: ', err));
+    .then((devtool: any) => console.log(`Added Extension:  ${devtool.name}`))
+    .catch((err: any) => console.log('An error occurred: ', err));
 });
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

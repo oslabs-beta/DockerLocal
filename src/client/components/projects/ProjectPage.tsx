@@ -7,7 +7,6 @@ import ComposeFileModal from "./ComposeFileModal";
 import CloningReposModal from "./CloningReposModal";
 import { findActiveProject } from "../../helpers/projectHelper";
 import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
-import { findActiveProject } from "../../helpers/projectHelper";
 
 const ProjectPage: React.FC<ProjectPageProps> = ({
   activeProject,
@@ -40,15 +39,25 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       setprojectRepoListItems(newList);
     }
   }, [activeProject, projectList]);
-
+/////////////////////////////////////////////////////////////////////////////////////////
   const composeFile = () => {
 
     const Url = "http://localhost:3001/docker/";
 
+    const currentProject: Project = findActiveProject(
+      projectList,
+      activeProject
+    );
+
+    const reposToClone = currentProject.projectRepos.filter(
+      ({ isIncluded }) => isIncluded
+    );
 
     const body = {
-      projectName: `${activeProject}`,
+      projectName: currentProject.projectName,
+      repos: reposToClone
     };
+
     //optional parameters
     const otheParam = {
       headers: {

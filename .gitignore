@@ -91,7 +91,8 @@ out/
 # VS Code
  .vscode/
 
-# Repository directories
+# Project directories
+/myProjects
 
 # ssh agent directories
 tmpAgent/
