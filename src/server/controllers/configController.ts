@@ -16,7 +16,7 @@ configController.readJSONFromFile = async (req: Request, res: Response, next: Ne
     (err: ErrorRequestHandler, data: JSON) => {
       if (err) return next({
         log: "Error caught in configController- readJSONFromFile",
-        status: 400,
+        status: 500,
         msg: {
           err: err,
         }
