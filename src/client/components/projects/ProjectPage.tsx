@@ -41,7 +41,13 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       setprojectRepoListItems(newList);
     }
   }, [activeProject, projectList]);
-/////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * @function onClick button Compose File button
+   * @description send 'POST' request 
+   * send: projectName
+   * receive: yml file and pathfile
+   */
   const composeFile = () => {
 
     const Url = "http://localhost:3001/docker/";
@@ -74,7 +80,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       })
       .then((res) => {
         const newYmlData = {}
-        newYmlData.text = res.text; // ********** check what is coming****
+        newYmlData.text = res.file;
         newYmlData.path = res.path;
         setComposeFileData(newYmlData);
         setShowComposeModal(true);
