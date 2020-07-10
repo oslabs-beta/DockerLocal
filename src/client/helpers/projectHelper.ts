@@ -30,8 +30,10 @@ export const checkValidName = (
   const regex = /^[\w-]{1,25}$/;
   const isValid: boolean = regex.test(projectNameValue);
   // Check to make sure we don't have duplicate project names.
-  const nameArray = projectList.map((project) => project.projectName);
-  const isUnique = !nameArray.includes(projectNameValue);
+  const nameArray = projectList.map((project) =>
+    project.projectName.toLowerCase()
+  );
+  const isUnique = !nameArray.includes(projectNameValue.toLowerCase());
 
   return isValid && isUnique;
 };
