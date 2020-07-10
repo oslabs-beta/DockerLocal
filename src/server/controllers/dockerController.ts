@@ -24,7 +24,6 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
     const myShellScript = exec(`sh src/scripts/findDockerfiles.sh ${projectFolder}`);
     myShellScript.stdout.on('data', (data: string) => {
         const output = data;
-        // console.log("data", data);
         // get filepaths from one long data string
         const filePathArray: string[] = output.split('\n').slice(0,-1);
         let buildPath: string;
@@ -54,9 +53,7 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
 // Use build paths to get Container Names
 dockerController.getContainerNames = (req: Request, res: Response, next: NextFunction): void => {
     const containerNameArray: string[] = [];
-    console.log("GET CONTAINER NAMESSSS");
     const buildPathArray = res.locals.buildPathArray;
-    console.log("buildPathArray", buildPathArray);
     let containerName: string;
     // use folder names as the container name
     // "src/server/happy" => "happy"
@@ -65,20 +62,16 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
             if (buildPath[char] === '/'){
                 containerName = buildPath.substring(char + 1);
                 containerNameArray.push(containerName);
-                console.log("CURREN BUILD PATH ARRAY", buildPathArray);
-                console.log("CURREN CONTAI NER ARRAY", containerNameArray);
                 break;
                 }
           }
     }
     res.locals.containerNameArray = containerNameArray;
-    console.log("containerNameArray",containerNameArray);
     return next();
 }
 
 // Use container names and build paths to create docker compose file
 dockerController.createDockerCompose = (req: Request, res: Response, next: NextFunction): void => {
-    console.log("CREATE DOCKER COMPOSE");
     const projectFolder: string = req.body.projectName;
     const buildPathArray = res.locals.buildPathArray;
     const containerNameArray = res.locals.containerNameArray;

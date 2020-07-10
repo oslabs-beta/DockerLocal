@@ -18,7 +18,7 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 // eslint-disable-line global-require
 if (require('electron-squirrel-startup')) app.quit();
 
-const createWindow = () => {
+const createWindow = (): void => {
   // // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1280,
@@ -28,7 +28,7 @@ const createWindow = () => {
     resizable: false,
   });
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-  // .then(() => mainWindow.webContents.openDevTools());
+  .then(() => mainWindow.webContents.openDevTools());
   mainWindow.focus();
 };
 

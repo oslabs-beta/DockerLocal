@@ -27,7 +27,9 @@ router.get(
     failureRedirect: '/fail'
   }),
   authController.saveAccessToken,
-  (req: Request, res: Response) => res.redirect(MAIN_WINDOW_WEBPACK_ENTRY)
+  (req: Request, res: Response) => {
+  res.redirect(MAIN_WINDOW_WEBPACK_ENTRY)
+}
 );
 
 module.exports = router;
