@@ -2,9 +2,9 @@ import { Project } from '../../types/types';
 
 /**
  * @function findActiveProject
- * @description finds the active project
- * @param projectList
- * @param activeProject
+ * @description finds the active project from the list of user's projects
+ * @param projectList contains all info about projects
+ * @param activeProject current active project
  */
 export const findActiveProject = (
   projectList: readonly Project[],
@@ -17,7 +17,7 @@ export const findActiveProject = (
 /**
  * @function checkValidName
  * @description function that updates boolean in state that indicates whether project name entered is valid
- * @param projectNameValue
+ * @param projectNameValue string which will be checked for valid format
  * @returns boolean. True if no invalid characters
  */
 export const checkValidName = (
