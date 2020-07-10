@@ -49,6 +49,7 @@ authController.getNameAndTokenFromCookies = (
   return next();
 };
 
+//USE THIS MIDDLEWARE TO GET CHECKED REPO DATA 
 authController.saveUserInfoAndRepos = (
   req: Request,
   res: Response,
@@ -60,6 +61,7 @@ authController.saveUserInfoAndRepos = (
   res.locals.accessToken = accessToken;
   res.locals.repos = repos;
   res.locals.projectName = projectName;
+  
   return next();
 };
 
