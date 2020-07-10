@@ -15,8 +15,6 @@ app.use(cors());
 const authRoute = require('../../src/server/routes/auth-route');
 const apiRoute = require('../../src/server/routes/api-route');
 const dockerRoute = require('../../src/server/routes/docker-route');
-const authRoute = require("../../src/server/routes/auth-route");
-const apiRoute = require("../../src/server/routes/api-route");
 const configRoute = require("../../src/server/routes/config-route");
 
 // Body Parsing Middleware
