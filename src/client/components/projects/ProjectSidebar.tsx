@@ -81,10 +81,12 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
                 <div className='message-header'>
                   <p>Please choose a name for your project.</p>
                 </div>
+                {/* Display helper text for project name restrictions*/}
                 <div className='message-body'>
                   {newProjectStyle.messageBody}
                 </div>
               </div>
+              {/* Input field for new project name. Change border color based on whether name is valid */}
               <span className='control has-icons-right'>
                 <input
                   autoFocus
@@ -95,6 +97,7 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
                   size={70}
                   onChange={handleChange}
                 />
+                {/* If the project name is not valid, display the error icon in field and error message */}
                 {!newProject.isValid && newProject.name !== '' && errorIcon}
                 {!newProject.isValid && newProject.name !== '' && (
                   <p className='has-text-danger has-text-weight-bold'>
