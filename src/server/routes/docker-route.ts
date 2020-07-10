@@ -19,11 +19,11 @@ router.post(
     // sends compose file to front end
     const composeFilePath = path.resolve(__dirname, `../../myProjects/${projectFolder}/docker-compose.yaml`);
     const fileAsJSON = fs.readFileSync(composeFilePath, "utf8");
+    console.log(fileAsJSON)
     const payload = {
       path: composeFilePath,
       file: fileAsJSON
     }
-
     res.status(200).send(payload);
   }
 )
