@@ -39,7 +39,6 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
       messageBody: isValid ? validBody : invalidBody,
       messageStyle: isValid ? 'is-info' : 'is-danger',
     });
-    console.log(newProject);
   };
 
   const handleSubmit = (): void => {
