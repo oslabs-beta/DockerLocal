@@ -7,7 +7,6 @@ import ComposeFileModal from "./ComposeFileModal";
 import CloningReposModal from "./CloningReposModal";
 import { findActiveProject } from "../../helpers/projectHelper";
 import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
-import { findActiveProject } from "../../helpers/projectHelper";
 
 const ProjectPage: React.FC<ProjectPageProps> = ({
   activeProject,
