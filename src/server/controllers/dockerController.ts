@@ -101,14 +101,14 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
         })
       });
   }
-
-  // appending the file with the configurations for each service
+  //Taking the 'checked' repositories and storing each name into an array
   const { repos } = res.locals;
   const repoArray = [];
   for (let repo of repos) {
     repoArray.push(repo.repoName);
   }
   for (let i = 0; i < buildPathArray.length; i++) {
+    //Checking if the array of names includes the repositories stored locally
     if (!repoArray.includes(containerNameArray[i]) && i !== 0) continue;
     else if (i === 0) {
       directory = buildPathArray[i];
@@ -121,10 +121,10 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
       portNo++;
       dockerPortNo++;
     }
-
+    // appending the file with the configurations for each service
     fs.appendFileSync(composeFilePath,
       `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`,
-      (error: Error) => {
+      (error: Error) => { 
         if (error) return next({
           log: "ERROR IN CREATEDOCKERCOMPOSE",
           msg: { err: `error: ${error}` }
