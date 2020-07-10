@@ -46,6 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             setShowProjectSidebarModal,
             projectList,
             setProjectList,
+            setActiveProject,
           }}
         />
       )}

@@ -64,6 +64,7 @@ export type ProjectSideBarProps = {
   setShowProjectSidebarModal: Dispatch<SetStateAction<boolean>>;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;
+  setActiveProject: Dispatch<SetStateAction<string>>;
 };
 
 export type SidebarButtonProps =  Project & {

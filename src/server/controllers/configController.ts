@@ -10,7 +10,7 @@ configController.readJSONFromFile = async (req: Request, res: Response, next: Ne
   //Get JSON data from local file
   //save to res.locals.projects
 
-  const filePath = path.join(__dirname, '../../src/server/controllers/user-projects/projects.json');
+  const filePath = path.join(__dirname, '../../user-projects/projects.json');
 
   await fs.readFile(filePath, 'utf8',
     (err: ErrorRequestHandler, data: JSON) => {
@@ -33,7 +33,7 @@ configController.writeJSONToFile = async (req: Request, res: Response, next: Nex
   //takes in json from req.body;
   //writes req.body JSON to local file
 
-  const filePath = path.join(__dirname, '../../src/server/controllers/user-projects/projects.json');
+  const filePath = path.join(__dirname, '../../user-projects/projects.json');
 
   await fs.writeFile(filePath, JSON.stringify(req.body),
     (err: ErrorRequestHandler) => {
