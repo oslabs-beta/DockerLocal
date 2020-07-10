@@ -109,27 +109,22 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   }
   for (let i = 0; i < buildPathArray.length; i++) {
     //Checking if the array of names includes the repositories stored locally
-    if (!repoArray.includes(containerNameArray[i]) && i !== 0) continue;
-    else if (i === 0) {
+    if (!repoArray.includes(containerNameArray[i])) continue;
+    else {
       directory = buildPathArray[i];
       containerName = containerNameArray[i];
       portNo++;
       dockerPortNo++;
-    } else if (i > 0) {
-      directory = buildPathArray[i];
-      containerName = containerNameArray[i];
-      portNo++;
-      dockerPortNo++;
-    }
-    // appending the file with the configurations for each service
-    fs.appendFileSync(composeFilePath,
-      `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`,
-      (error: Error) => { 
-        if (error) return next({
-          log: "ERROR IN CREATEDOCKERCOMPOSE",
-          msg: { err: `error: ${error}` }
+      // appending the file with the configurations for each service
+      fs.appendFileSync(composeFilePath,
+        `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`,
+        (error: Error) => {
+          if (error) return next({
+            log: "ERROR IN CREATEDOCKERCOMPOSE",
+            msg: { err: `error: ${error}` }
+          });
         });
-      });
+    }
   } return next();
 }
 
