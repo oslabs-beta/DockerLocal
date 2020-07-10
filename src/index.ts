@@ -1,5 +1,7 @@
 import { app, BrowserWindow, Menu } from 'electron';
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+} from 'electron-devtools-installer';
 
 const express = require('./server/server.ts');
 const path = require('path');
@@ -27,8 +29,9 @@ const createWindow = () => {
     useContentSize: true,
     resizable: false,
   });
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-  // .then(() => mainWindow.webContents.openDevTools());
+  mainWindow
+    .loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+    .then(() => mainWindow.webContents.openDevTools()); // uncomment to display dev tools
   mainWindow.focus();
 };
 
@@ -37,7 +40,6 @@ app.whenReady().then(() => {
     .then((devtool: any) => console.log(`Added Extension:  ${devtool.name}`))
     .catch((err: any) => console.log('An error occurred: ', err));
 });
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -63,5 +65,8 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+<<<<<<< HEAD
 
 export default mainWindow;
+=======
+>>>>>>> master
