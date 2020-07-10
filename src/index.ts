@@ -25,7 +25,7 @@ const createWindow = () => {
     height: 720,
     autoHideMenuBar: true,
     useContentSize: true,
-    resizable: false,
+    resizable: true,
   });
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
   .then(() => mainWindow.webContents.openDevTools());
