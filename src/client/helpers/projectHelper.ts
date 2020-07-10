@@ -4,7 +4,8 @@ import { Project } from '../../types/types';
  * @function findActiveProject
  * @description finds the active project from the list of user's projects
  * @param projectList contains all info about projects
- * @param activeProject current active project
+ * @param activeProject current active project name
+ * @returns project object whose ID matches the current active project's ID
  */
 export const findActiveProject = (
   projectList: readonly Project[],
