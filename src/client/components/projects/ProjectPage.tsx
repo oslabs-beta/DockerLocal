@@ -40,15 +40,25 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       setprojectRepoListItems(newList);
     }
   }, [activeProject, projectList]);
-
+/////////////////////////////////////////////////////////////////////////////////////////
   const composeFile = () => {
 
     const Url = "http://localhost:3001/docker/";
 
+    const currentProject: Project = findActiveProject(
+      projectList,
+      activeProject
+    );
+
+    const reposToClone = currentProject.projectRepos.filter(
+      ({ isIncluded }) => isIncluded
+    );
 
     const body = {
       projectName: `${activeProject}`,
+      repos: reposToClone
     };
+
     //optional parameters
     const otheParam = {
       headers: {

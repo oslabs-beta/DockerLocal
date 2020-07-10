@@ -11,12 +11,12 @@ temp_sock=$(cat ./tmpAgent/agentSock)
 # add the ssh agent sock to the environment variables
 export SSH_AUTH_SOCK=$temp_sock
 
-# create a myRepos folder to store repositories if it doesn't already exist
-if [ ! -d "./myRepos" ] 
+# create a myProjects folder to store repositories if it doesn't already exist
+if [ ! -d "./myProjects" ] 
 then
-  mkdir ./myRepos
+  mkdir ./myProjects
 fi
-cd myRepos
+cd myProjects
 # create a folder named after the current project if one doesn't exist already
 if [ ! -d "./$projectName" ] 
 then
