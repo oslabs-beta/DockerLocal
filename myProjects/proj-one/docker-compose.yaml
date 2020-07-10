@@ -1,0 +1,10 @@
+version: "3"
+services:
+  repo-one:
+    build: "./myProjects/proj-one/repo-one"
+    ports:
+      - 5002:5002
+  repo-two:
+    build: "./myProjects/proj-one/repo-two"
+    ports:
+      - 5003:5003
