@@ -78,3 +78,8 @@ export type SidebarProps = {
   activeProject: string;
   setActiveProject: Dispatch<SetStateAction<string>>;
 };
+
+export type HomeProps = {
+  userInfo: User;
+  setUserInfo: Dispatch<SetStateAction<User>>;
+};
