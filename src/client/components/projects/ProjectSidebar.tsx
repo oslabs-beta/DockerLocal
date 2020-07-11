@@ -8,6 +8,7 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
   setShowProjectSidebarModal,
   projectList,
   setProjectList,
+  setActiveProject,
 }) => {
   // State hook for new project name and boolean whether the name is valid
   const [newProject, setNewProject] = useState({
@@ -44,15 +45,17 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
   const handleSubmit = (): void => {
     //create a new project object
     if (checkValidName(newProject.name, projectList)) {
+      const newProjectId: string = uuidv4();
+
       const newProjectObject: Project = {
-        projectId: uuidv4(),
+        projectId: newProjectId,
         projectName: newProject.name,
         projectRepos: [],
       };
 
       // set copy of a new project
       setProjectList([...projectList, newProjectObject]);
-      //TODO:  write to the file ******
+      setActiveProject(newProjectId);
       //then close the modal
       setShowProjectSidebarModal(false);
     }

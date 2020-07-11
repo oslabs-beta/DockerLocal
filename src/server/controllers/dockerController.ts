@@ -94,21 +94,21 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   if (!fs.existsSync(composeFilePath)) {
     // spacing matters so it looks weird on purpose
     fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`,
-      (error: Error) => {
+     (error: Error) => {
         if (error) return next({
           log: 'ERROR IN CREATING COMPOSE FILE ',
           msg: { err: `ERROR: ${error}` }
         })
       });
   }
-  //Taking the 'checked' repositories and storing each name into an array
+  // Taking the 'checked' repositories and storing each name into an array
   const { repos } = res.locals;
   const repoArray = [];
-  for (let repo of repos) {
+  for (const repo of repos) {
     repoArray.push(repo.repoName);
   }
   for (let i = 0; i < buildPathArray.length; i++) {
-    //Checking if the array of names includes the repositories stored locally
+    // Checking if the array of names includes the repositories stored locally
     if (!repoArray.includes(containerNameArray[i])) continue;
     else {
       directory = buildPathArray[i];
