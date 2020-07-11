@@ -25,13 +25,13 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
           setProjectList(res.projectList)
           setActiveProject(res.activeProject)
         }
-        else alert(`It looks like you haven't added any projects yet. Click Add Project to get started. `)
+        // else alert(`It looks like you haven't added any projects yet. Click Add Project to get started. `) ** this has bugs on windows
       })
       .catch((err) => console.log("fail", err));
   }, []);
 
   // saves project list to disk whenever either are modified
-  useEffect(() => saveProjectList(projectList, activeProject), [projectList, activeProject])
+  useEffect(() => {if (projectList[0]) saveProjectList(projectList, activeProject)}, [projectList, activeProject])
 
 
   return (
