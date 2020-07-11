@@ -1,7 +1,4 @@
 import React from "react";
-import { dialog, shell } from "electron";
-import mainWindow from "../../../index";
-
 
 /**
  * @descriotion ComposeFileModal component
@@ -18,7 +15,8 @@ const ComposeFileModal: React.FC = ({
   const ymlFilePath = composeFileData.path;
 
   /**
-   * RENDER: 1.
+   * RENDER:  1. ymlText or error messgae
+   *          2. file path or error message
    * CONTAINS: 2 buttons 'open folder' and 'close' buttons
    */
   return (
@@ -60,7 +58,9 @@ const ComposeFileModal: React.FC = ({
             )}
           </div>
           <div>
-            {/* TODO: Open File or File Folder */}
+            {/* ============== TODO ================== */}
+            {/* TODO: Open File or File Folder onClick */}
+            {/* ====================================== */}
             <button className="button is-success" onClick={}>Open Folder</button>
             <button
               className="button"
