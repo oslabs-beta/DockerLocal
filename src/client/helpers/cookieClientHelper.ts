@@ -1,5 +1,13 @@
 import CryptoJS from "crypto-js";
 
+/**
+ * @function getUsernameAndToken
+ * @description a helper function that take in a document cookie and parses and decrypts it to seperate the username and token from the cookie
+ * @param username  user's github username
+ * @param accessToken user's github access token
+ * @returns boolean. True if no invalid characters
+ */
+
 export const getUsernameAndToken = async (): Promise<{
   username: string;
   accessToken: string;
