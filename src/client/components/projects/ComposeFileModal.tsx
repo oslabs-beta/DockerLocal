@@ -14,33 +14,53 @@ const ComposeFileModal: React.FC = ({
   composeFileData
 }) => {
 
-  //yml text reponse from onClick Compose File button
   const ymlText = composeFileData.text;
   const ymlFilePath = composeFileData.path;
 
-  //display: project_name.yml
-  //display: File created at users/dockerLocal/project_name
-  //contains 2 buttons 'open folder' and 'close'
+  /**
+   * RENDER: 1.
+   * CONTAINS: 2 buttons 'open folder' and 'close' buttons
+   */
   return (
     <div className="modal is-active">
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">docker_compose.yaml</p>
+          <p className="modal-card-title">docker-compose.yml</p>
           <button className="delete" aria-label="close"></button>
         </header>
         <section className="modal-card-body">
-          <pre>
-            <code>
-              {ymlText}
-            </code>
-          </pre>
+          {/* Display ymlText or error message */}
+          {!ymlText && (
+            <p className='has-text-danger has-text-weight-bold'>
+              ERROR: cannot compose file
+            </p>
+          )}
+          {ymlText && (
+            <pre>
+              <code>
+                {ymlText}
+              </code>
+            </pre>
+          )}
         </section>
         <footer className="modal-card-foot">
           <div className="content" style={{ height: "100px" }}>
-            <strong>File Location:</strong> {ymlFilePath}
+            <strong>File Location:</strong>
+            {/* Display file path or error message */}
+            {!ymlFilePath && (
+              <p className='has-text-danger has-text-weight-bold'>
+                ERROR: file path not found
+              </p>
+            )}
+            {ymlFilePath && (
+              <p>
+                {ymlFilePath}
+              </p>
+            )}
           </div>
           <div>
+            {/* TODO: Open File or File Folder */}
             <button className="button is-success" onClick={}>Open Folder</button>
             <button
               className="button"
