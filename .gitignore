@@ -99,4 +99,5 @@ tmpAgent/
 tmpKeys/
 
 # Saved user projects
-user-projects/
+user-projects/projects.json
+myProjects/
