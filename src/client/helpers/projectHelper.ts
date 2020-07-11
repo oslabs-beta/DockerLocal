@@ -3,8 +3,8 @@ import { Project } from '../../types/types';
 /**
  * @function findActiveProject
  * @description finds the active project from the list of user's projects
- * @param projectList contains all info about projects
- * @param activeProject current active project name
+ * @param projectList contains info about all projects
+ * @param activeProject ID of active project
  * @returns project object whose ID matches the current active project's ID
  */
 export const findActiveProject = (
@@ -15,6 +15,29 @@ export const findActiveProject = (
     ...projectList.find((project) => project.projectId === activeProject),
   };
 };
+
+/**
+ * @function saveProjectList
+ * @description saves project list to disk
+ * @param projectList contains info about all projects
+ * @param activeProject ID of active project
+ * 
+ */
+
+export const saveProjectList = (projectList: readonly Project[], activeProject: string): void => {
+  fetch("http://localhost:3001/config", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },    
+    body: JSON.stringify({
+      projectList: [...projectList],
+      activeProject
+    }),
+  })
+    .catch((err) => console.log("fail", err));
+};
+
 /**
  * @function checkValidName
  * @description function that updates boolean in state that indicates whether project name entered is valid
