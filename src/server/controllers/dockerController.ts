@@ -93,14 +93,15 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   // checking if compose file already exists. If it does not, it will make one
   if (!fs.existsSync(composeFilePath)) {
     // spacing matters so it looks weird on purpose
-    fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`,
-     (error: Error) => {
-        if (error) return next({
+    try {
+      fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`);
+    } catch(error){
+        return next({
           log: 'ERROR IN CREATING COMPOSE FILE ',
           msg: { err: `ERROR: ${error}` }
         })
-      });
-  }
+    }
+
   // Taking the 'checked' repositories and storing each name into an array
   const { repos } = res.locals;
   const repoArray = [];
@@ -116,16 +117,19 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
       portNo++;
       dockerPortNo++;
       // appending the file with the configurations for each service
-      fs.appendFileSync(composeFilePath,
-        `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`,
-        (error: Error) => {
-          if (error) return next({
+      try{
+        fs.appendFileSync(composeFilePath,
+          `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`);
+      } catch (error){
+          return next({
             log: "ERROR IN CREATEDOCKERCOMPOSE",
             msg: { err: `error: ${error}` }
           });
-        });
+      }
+
     }
   } return next();
+ }
 }
 
 module.exports = dockerController;
