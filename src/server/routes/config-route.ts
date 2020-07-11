@@ -11,6 +11,6 @@ configController.readJSONFromFile,
 // /config endpoint to write incoming json object to local file
 router.post('/', 
 configController.writeJSONToFile, 
-(req: Request, res: Response) => res.sendStatus(200));
+(req: Request, res: Response) => res.sendStatus(201));
 
 module.exports = router;
