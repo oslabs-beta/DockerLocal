@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu } from 'electron';
+import { app, BrowserWindow, Menu, session } from 'electron';
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
 } from 'electron-devtools-installer';
@@ -25,14 +25,30 @@ const createWindow = (): void => {
     autoHideMenuBar: true,
     useContentSize: true,
     resizable: true,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      webSecurity: true,
+    }
+    
+  
   });
+
+  // set permission requests to false for all remote content - electron security checklist
+  
+  
   mainWindow
-    .loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-    .then(() => mainWindow.webContents.openDevTools()); // uncomment to display dev tools
+  .loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
+  .then(() => mainWindow.webContents.openDevTools()); // uncomment to display dev tools
   mainWindow.focus();
 };
 
+
+
 app.whenReady().then(() => {
+  session.defaultSession.setPermissionRequestHandler((webcontents, permission, callback) => callback(false))
+
+
   installExtension(REACT_DEVELOPER_TOOLS)
     .then((devtool: any) => console.log(`Added Extension:  ${devtool.name}`))
     .catch((err: any) => console.log('An error occurred: ', err));
