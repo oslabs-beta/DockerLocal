@@ -27,8 +27,6 @@ app.use(cookieParser());
 app.use('/auth', authRoute);
 app.use('/api', apiRoute);
 app.use('/docker', dockerRoute);
-app.use("/auth", authRoute);
-app.use("/api", apiRoute);
 app.use("/config", configRoute);
 
 // Serve static files
