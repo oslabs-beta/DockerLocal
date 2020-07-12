@@ -15,31 +15,34 @@ gitController.cloneRepo = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  console.log("request");
+): Promise<void> => {
 
   const { repos, projectName } = res.locals;
   const shellCommand = "./src/scripts/cloneRepo.sh";
 
   // make an array of promises to clone all selected repos
-  const promises = repos.map(async (currentRepo) => {
+  const promises = repos.map(async (currentRepo: any) => {
     const repoOwner = currentRepo.repoOwner;
     const repoName = currentRepo.repoName;
 
-    //     // shell script clones github repo using SSH connection
+    // shell script clones github repo using SSH connection
     const shellResp = await execShellCommand(shellCommand, [
       repoOwner,
       repoName,
       projectName,
     ]);
-    console.log("Finished Cloning Repo");
     return shellResp;
   });
 
-  const shellResp = await Promise.all(promises);
-  console.log(shellResp);
-
-  console.log("Finished cloning all repos");
+  // execute cloning ALL repos
+  await Promise.all(promises).catch(
+    err => next({
+    log: `Error cloning repos in gitController.cloneRepos`,
+    msg: {
+      err
+    }
+  })
+ )
 
   return next();
 };
