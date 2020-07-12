@@ -3,9 +3,13 @@ import installExtension, {
   REACT_DEVELOPER_TOOLS,
 } from 'electron-devtools-installer';
 
+
 const express = require('./server/server.ts');
 const path = require('path');
-declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
+
+// global variable pointing to main_window under entrypoints in package.json
+// loads index.html and app.tsx
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
 // // use this to disable dark mode
 // const { nativeTheme } = require('electron')
@@ -46,6 +50,7 @@ const createWindow = (): void => {
 
 
 app.whenReady().then(() => {
+  // automatically deny all permission requests from remote content 
   session.defaultSession.setPermissionRequestHandler((webcontents, permission, callback) => callback(false))
 
 
