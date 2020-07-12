@@ -7,6 +7,7 @@ import ComposeFileModal from "./ComposeFileModal";
 import CloningReposModal from "./CloningReposModal";
 import { findActiveProject } from "../../helpers/projectHelper";
 import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
+import { EXPRESS_URL } from "../../helpers/constants";
 
 const ProjectPage: React.FC<ProjectPageProps> = ({
   activeProject,
@@ -42,8 +43,6 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 /////////////////////////////////////////////////////////////////////////////////////////
   const composeFile = () => {
 
-    const Url = "http://localhost:3001/docker/";
-
     const currentProject: Project = findActiveProject(
       projectList,
       activeProject
@@ -58,15 +57,13 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       repos: reposToClone
     };
 
-    //optional parameters
-    const otheParam = {
+    fetch(`${EXPRESS_URL}/docker`, {
       headers: {
         "content-type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(body),
       method: "POST",
-    };
-    fetch(Url, otheParam)
+    })
       .then((data) => {
         setShowComposeModal(true)
         return data.json();
@@ -78,7 +75,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
   };
 
 
-  const cloneRepos = async () => {
+  const cloneRepos = async (): Promise<void> => {
     setShowCloningReposModal(true);
 
     const currentProject: Project = findActiveProject(
@@ -102,7 +99,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     });
 
     console.log(username, " decrypte", accessToken);
-    fetch("http://localhost:3001/api/clonerepos", {
+    fetch(`${EXPRESS_URL}/api/clonerepos`, {
       method: "POST",
       body: body,
       headers: {
