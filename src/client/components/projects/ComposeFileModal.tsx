@@ -56,12 +56,10 @@ const ComposeFileModal: React.FC = ({
                 {ymlFilePath}
               </p>
             )}
-          </div>
-          <div>
             {/* ============== TODO ================== */}
             {/* TODO: Open File or File Folder onClick */}
             {/* ====================================== */}
-            <button className="button is-success" onClick={}>Open Folder</button>
+            <button className="button is-success" >Open Folder</button>
             <button
               className="button"
               onClick={(): void => setShowComposeModal(false)}
