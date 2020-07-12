@@ -84,15 +84,14 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   const projectFolder: string = req.body.projectName;
   const { buildPathArray } = res.locals;
   const { containerNameArray } = res.locals;
-  console.log('CONTAINER NAMESS', containerNameArray);
   let directory: string;
   let containerName: string;
   const composeFilePath = `./myProjects/${projectFolder}/docker-compose.yaml`
   // making docker compose file
   // indentation is important in yaml files
   // checking if compose file already exists. If it does not, it will make one
-  if (!fs.existsSync(composeFilePath)) {
     // spacing matters so it looks weird on purpose
+    // replaces the docker compose file each time so that we can create a docker compose file with 'leave one out'
     fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`,
       (error: Error) => {
         if (error) return next({
@@ -100,7 +99,6 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
           msg: { err: `ERROR: ${error}` }
         })
       });
-  }
   // Taking the 'checked' repositories and storing each name into an array
   const { repos } = res.locals;
   const repoArray = [];
@@ -116,6 +114,7 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     const repoFolder = directory.slice(14 + projectFolder.length, directory.length - containerName.length - 1);
     // goes through each repo folder that has a dockerfile in the Project Folder
     // if the repo folder is in the 'checked' repositories array then add it to the docker compose file
+    // will also ignore docker-sompose file we create that is stored in root project folder
     if (repoArray.includes(repoFolder)) {
       portNo++;
       dockerPortNo++;
