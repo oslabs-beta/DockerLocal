@@ -84,6 +84,7 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   const projectFolder: string = req.body.projectName;
   const { buildPathArray } = res.locals;
   const { containerNameArray } = res.locals;
+  console.log('CONTAINER NAMESS', containerNameArray);
   let directory: string;
   let containerName: string;
   const composeFilePath = `./myProjects/${projectFolder}/docker-compose.yaml`
@@ -98,8 +99,8 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
           log: 'ERROR IN CREATING COMPOSE FILE ',
           msg: { err: `ERROR: ${error}` }
         })
-    }
-
+      });
+  }
   // Taking the 'checked' repositories and storing each name into an array
   const { repos } = res.locals;
   const repoArray = [];
@@ -108,25 +109,28 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   }
   for (let i = 0; i < buildPathArray.length; i++) {
     // Checking if the array of names includes the repositories stored locally
-    if (!repoArray.includes(containerNameArray[i])) {
-      directory = buildPathArray[i];
-      containerName = containerNameArray[i];
+    // get all the repos stored in the project
+    directory = buildPathArray[i];
+    containerName = containerNameArray[i];
+    // for each buildPath of the Dockerfile, get the Repo folder
+    const repoFolder = directory.slice(14 + projectFolder.length, directory.length - containerName.length - 1);
+    // goes through each repo folder that has a dockerfile in the Project Folder
+    // if the repo folder is in the 'checked' repositories array then add it to the docker compose file
+    if (repoArray.includes(repoFolder)) {
       portNo++;
       dockerPortNo++;
       // appending the file with the configurations for each service
-      try{
-        fs.appendFileSync(composeFilePath,
-          `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`);
-      } catch (error){
-          return next({
+      fs.appendFileSync(composeFilePath,
+        `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`,
+        (error: Error) => {
+          if (error) return next({
             log: "ERROR IN CREATEDOCKERCOMPOSE",
             msg: { err: `error: ${error}` }
           });
-      }
-
+        });
     }
-  } return next();
- }
+  }
+  return next();
 }
 
 module.exports = dockerController;
