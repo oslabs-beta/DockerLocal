@@ -1,6 +1,7 @@
 import React from "react";
+import { CloningReposModalProps } from "../../../types/types";
 
-const CloningReposModal: React.FC = ({ showCloningReposModal, setShowCloningReposModal }) => {
+const CloningReposModal: React.FC<CloningReposModalProps>  = ({ showCloningReposModal, setShowCloningReposModal }) => {
 
 
   return (

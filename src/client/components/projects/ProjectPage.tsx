@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import AddRepos from "../addRepos/AddRepos";
-import { Project, User, ProjectPageProps, Repo } from "../../../types/types";
+import { Project, ProjectPageProps, ComposeFile, ComposeFileModalProps } from "../../../types/types";
 import ProjectRepoListItem from "./ProjectRepoListItem";
 import ComposeFileModal from "./ComposeFileModal";
 import CloningReposModal from "./CloningReposModal";
@@ -20,7 +20,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 
   const [showCloningReposModal, setShowCloningReposModal] = useState(false);
   const [showComposeModal, setShowComposeModal] = useState(false);
-  const [composeFileData, setComposeFileData] = useState({});
+  const [composeFileData, setComposeFileData] = useState<null | ComposeFile>(null);
 
   // populate repo list items when active project changes and when request from home.tsx comes back to update project list
   useEffect(() => {
@@ -48,7 +48,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
    * send: projectName
    * receive: yml file and pathfile
    */
-  const composeFile = () => {
+  const composeFile = (): void => {
 
     const currentProject: Project = findActiveProject(
       projectList,
@@ -75,9 +75,10 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
         return data.json();
       })
       .then((res) => {
-        const newYmlData = {}
-        newYmlData.text = res.file;
-        newYmlData.path = res.path;
+        const newYmlData: ComposeFile = {
+          text: res.file,
+          path: res.path,
+        }
         setComposeFileData(newYmlData);
         setShowComposeModal(true);
       })
@@ -108,7 +109,6 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       projectName: currentProject.projectName,
     });
 
-    console.log(username, " decrypte", accessToken);
     fetch(`${EXPRESS_URL}/api/clonerepos`, {
       method: "POST",
       body: body,
