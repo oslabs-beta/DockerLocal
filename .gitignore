@@ -91,11 +91,13 @@ out/
 # VS Code
  .vscode/
 
-# Repository directories
+# Project directories
+/myProjects
 
 # ssh agent directories
 tmpAgent/
 tmpKeys/
 
 # Saved user projects
-user-projects/
+user-projects/projects.json
+myProjects/
