@@ -14,7 +14,6 @@ let dockerPortNo = portNo;
 
 const dockerController: any = {};
 
-
 /**
  * @middlware getFilePaths
  * @description Insert and run (findDockerfile.sh) inside repo root directory to find all dockerfile build paths
