@@ -111,6 +111,7 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     // only gets repos stored in the active Project that have dockerfiles (using buildPath to grab repo folder)
     const repoFolder = directory.slice(14 + projectFolder.length, directory.length - containerName.length - 1);
     // if the repo folder is in the 'checked' repositories array then add it to the docker compose file
+    // will also ignore docker-compose file we create that is stored in root project folder
     if (repoArray.includes(repoFolder)) {
       portNo++;
       dockerPortNo++;
