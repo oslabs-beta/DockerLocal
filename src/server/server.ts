@@ -60,7 +60,7 @@ app.use(
       log: "Error caught in global error handler",
       status: 500,
       msg: {
-        err: err,
+        err,
       },
     };
 
