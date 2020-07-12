@@ -18,7 +18,7 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 // const viewSettingsMenu = new Menu()
 
 
-let mainWindow;
+let mainWindow: BrowserWindow;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 // eslint-disable-line global-require
@@ -54,7 +54,15 @@ const createWindow = (): void => {
 
 app.whenReady().then(() => {
   // automatically deny all permission requests from remote content 
-  session.defaultSession.setPermissionRequestHandler((webcontents, permission, callback) => callback(false))
+  session.defaultSession.setPermissionRequestHandler((webcontents, permission, callback) => callback(false));
+//   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+//   callback({
+//     responseHeaders: {
+//       ...details.responseHeaders,
+//       'Content-Security-Policy': ['default-src \'self\'']
+//     }
+//   })
+// })
 
 
   installExtension(REACT_DEVELOPER_TOOLS)
@@ -86,8 +94,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-<<<<<<< HEAD
-
-export default mainWindow;
-=======
->>>>>>> master
