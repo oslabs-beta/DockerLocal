@@ -92,10 +92,9 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   // checking if compose file already exists. If it does not, it will make one
   if (!fs.existsSync(composeFilePath)) {
     // spacing matters so it looks weird on purpose
-    try {
-      fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`);
-    } catch(error){
-        return next({
+    fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`,
+      (error: Error) => {
+        if (error) return next({
           log: 'ERROR IN CREATING COMPOSE FILE ',
           msg: { err: `ERROR: ${error}` }
         })
@@ -109,8 +108,7 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   }
   for (let i = 0; i < buildPathArray.length; i++) {
     // Checking if the array of names includes the repositories stored locally
-    if (!repoArray.includes(containerNameArray[i])) continue;
-    else {
+    if (!repoArray.includes(containerNameArray[i])) {
       directory = buildPathArray[i];
       containerName = containerNameArray[i];
       portNo++;
