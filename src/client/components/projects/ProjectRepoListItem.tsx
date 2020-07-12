@@ -41,7 +41,7 @@ const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ repo, activeP
   }
 
   return (
-    <div onClick={toggleIsIncluded}>
+    <div onClick={toggleIsIncluded} style={{margin:"10px"}}>
       {/* checkbox is readonly because it rerenders on state change */}
       <input type="checkbox" checked={isChecked} readOnly />
       {repo.repoName}

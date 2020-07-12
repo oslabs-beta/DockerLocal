@@ -7,7 +7,6 @@ import ComposeFileModal from "./ComposeFileModal";
 import CloningReposModal from "./CloningReposModal";
 import { findActiveProject } from "../../helpers/projectHelper";
 import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
-import { findActiveProject } from "../../helpers/projectHelper";
 
 const ProjectPage: React.FC<ProjectPageProps> = ({
   activeProject,
@@ -20,6 +19,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
 
   const [showCloningReposModal, setShowCloningReposModal] = useState(false);
   const [showComposeModal, setShowComposeModal] = useState(false);
+  const [composeFileData, setComposeFileData] = useState({});
 
   // populate repo list items when active project changes and when request from home.tsx comes back to update project list
   useEffect(() => {
@@ -40,6 +40,53 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       setprojectRepoListItems(newList);
     }
   }, [activeProject, projectList]);
+
+  /**
+   * @function onClick button Compose File button
+   * @description send 'POST' request 
+   * send: projectName
+   * receive: yml file and pathfile
+   */
+  const composeFile = () => {
+
+    const Url = "http://localhost:3001/docker/";
+
+    const currentProject: Project = findActiveProject(
+      projectList,
+      activeProject
+    );
+
+    const reposToClone = currentProject.projectRepos.filter(
+      ({ isIncluded }) => isIncluded
+    );
+
+    const body = {
+      projectName: currentProject.projectName,
+      repos: reposToClone
+    };
+
+    //optional parameters
+    const otheParam = {
+      headers: {
+        "content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(body),
+      method: "POST",
+    };
+    fetch(Url, otheParam)
+      .then((data) => {
+        return data.json();
+      })
+      .then((res) => {
+        const newYmlData = {}
+        newYmlData.text = res.file;
+        newYmlData.path = res.path;
+        setComposeFileData(newYmlData);
+        setShowComposeModal(true);
+      })
+      .catch((error) => console.log(error));
+  };
+
 
   const cloneRepos = async () => {
     setShowCloningReposModal(true);
@@ -84,21 +131,24 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     <div>
       <div>Select your repositories: </div>
       <button
-        className="button is-primary is-large"
+        className="button is-primary"
         onClick={(): void => setShowAddRepos(true)}
+        style={{ margin: "10px" }}
       >
         Add Repositories
       </button>
       <button
-        className="button is-link"
+        className="button is-primary"
         onClick={(): Promise<void> => cloneRepos()}
+        style={{ margin: "10px" }}
       >
         Clone Repos
       </button>
 
       <button
-        className="button is-link"
-        onClick={(): void => setShowComposeModal(!showComposeModal)}
+        className="button is-primary"
+        onClick={(): void => composeFile()}
+        style={{ margin: "10px" }}
       >
         Compose File
       </button>
@@ -124,7 +174,15 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
       )}
 
       {showComposeModal && (
-        <ComposeFileModal {...{ showComposeModal, setShowComposeModal }} />
+        <ComposeFileModal
+          {...{
+            showComposeModal,
+            setShowComposeModal,
+            activeProject,
+            projectList,
+            composeFileData
+          }}
+        />
       )}
     </div>
   );

@@ -1,34 +1,75 @@
 import React from "react";
 
-const ComposeFileModal: React.FC = ({ setShowComposeModal }) => {
-  //yml data form Docker compose file
-  //parse yml to javascript object
-  // const ymlText = yaml.dump(ymlObject)
-  const ymlText = "This is a yml file";
+/**
+ * @descriotion ComposeFileModal component
+ * @param props drilling from ProjectPage component
+ */
+const ComposeFileModal: React.FC = ({
+  setShowComposeModal,
+  activeProject,
+  projectList,
+  composeFileData
+}) => {
 
-  //display: project_name.yml
-  //display: File created at users/dockerLocal/project_name
-  //caontains 2 buttons 'open folder' and 'close'
+  const ymlText = composeFileData.text;
+  const ymlFilePath = composeFileData.path;
+
+  /**
+   * RENDER:  1. ymlText or error messgae
+   *          2. file path or error message
+   * CONTAINS: 2 buttons 'open folder' and 'close' buttons
+   */
   return (
     <div className="modal is-active">
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">Project_name.yml</p>
+          <p className="modal-card-title">docker-compose.yml</p>
           <button className="delete" aria-label="close"></button>
         </header>
-        <section className="modal-card-body">{ymlText}</section>
+        <section className="modal-card-body">
+          {/* Display ymlText or error message */}
+          {!ymlText && (
+            <p className='has-text-danger has-text-weight-bold'>
+              ERROR: cannot compose file
+            </p>
+          )}
+          {ymlText && (
+            <pre>
+              <code>
+                {ymlText}
+              </code>
+            </pre>
+          )}
+        </section>
         <footer className="modal-card-foot">
-          <button className="button is-success">Open Folder</button>
-          <button
-            className="button"
-            onClick={(): void => setShowComposeModal(false)}
-          >
-            Close
+          <div className="content" style={{ height: "100px" }}>
+            <strong>File Location:</strong>
+            {/* Display file path or error message */}
+            {!ymlFilePath && (
+              <p className='has-text-danger has-text-weight-bold'>
+                ERROR: file path not found
+              </p>
+            )}
+            {ymlFilePath && (
+              <p>
+                {ymlFilePath}
+              </p>
+            )}
+            {/* ============== TODO ================== */}
+            {/* TODO: Open File or File Folder onClick */}
+            {/* ====================================== */}
+            <button className="button is-success" >Open Folder</button>
+            <button
+              className="button"
+              onClick={(): void => setShowComposeModal(false)}
+            >
+              Close
           </button>
+          </div>
         </footer>
       </div>
-    </div>
+    </div >
   );
 };
 
