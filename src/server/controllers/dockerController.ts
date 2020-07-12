@@ -88,30 +88,30 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   let directory: string;
   let containerName: string;
   const composeFilePath = `./myProjects/${projectFolder}/docker-compose.yaml`
-  // making docker compose file
-  // indentation is important in yaml files
-  // checking if compose file already exists. If it does not, it will make one
-  if (!fs.existsSync(composeFilePath)) {
-    // spacing matters so it looks weird on purpose
-    fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`,
-      (error: Error) => {
-        if (error) return next({
-          log: 'ERROR IN CREATING COMPOSE FILE ',
-          msg: { err: `ERROR: ${error}` }
-        })
-      });
-  }
+  /* writeFile will create a new docker compose file each time the controller is run 
+  so user can have leave-one-out functionality. Indentation is important in yaml files so it looks weird on purpose */
+  fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`,
+    (error: Error) => {
+      if (error) return next({
+        log: 'ERROR IN CREATING COMPOSE FILE ',
+        msg: { err: `ERROR: ${error}` }
+      })
+    })
+
   // Taking the 'checked' repositories and storing each name into an array
   const { repos } = res.locals;
   const repoArray = [];
   for (const repo of repos) {
     repoArray.push(repo.repoName);
   }
+  // adding service information to docker compose file
   for (let i = 0; i < buildPathArray.length; i++) {
-    // Checking if the array of names includes the repositories stored locally
-    if (!repoArray.includes(containerNameArray[i])) {
-      directory = buildPathArray[i];
-      containerName = containerNameArray[i];
+    directory = buildPathArray[i];
+    containerName = containerNameArray[i];
+    // only gets repos stored in the active Project that have dockerfiles (using buildPath to grab repo folder)
+    const repoFolder = directory.slice(14 + projectFolder.length, directory.length - containerName.length - 1);
+    // if the repo folder is in the 'checked' repositories array then add it to the docker compose file
+    if (repoArray.includes(repoFolder)) {
       portNo++;
       dockerPortNo++;
       // appending the file with the configurations for each service
@@ -124,7 +124,8 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
           });
         });
     }
-  } return next();
+  }
+  return next();
 }
 
 module.exports = dockerController;
