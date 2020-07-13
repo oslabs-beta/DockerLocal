@@ -1,6 +1,6 @@
+# DockerLocal
 ![DockerLocal Demo](/demoScreenshot.png)
 
-# DockerLocal
 DockerLocal is a GUI application that allows you to keep an up-to-date version of the docker compose file for interconnected repositories while doing development work on a single repository.
 
 ## Getting Started
