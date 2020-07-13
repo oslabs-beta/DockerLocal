@@ -71,11 +71,11 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Vivian Cermeno** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Kate Chanthakaew** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Tom Lutz** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Katty Polyak** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* **Louis Xavier Sheid III** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Vivian Cermeno** - *Initial work* - [Vcermeno](https://github.com/vcermeno)
+* **Kate Chanthakaew** - *Initial work* - [PurpleBooth](https://github.com/)
+* **Tom Lutz** - *Initial work* - [PurpleBooth](https://github.com/)
+* **Katty Polyak** - *Initial work* - [PurpleBooth](https://github.com/)
+* **Louis Xavier Sheid III** - *Initial work* - [PurpleBooth](https://github.com/)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
