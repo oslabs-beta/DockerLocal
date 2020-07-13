@@ -28,6 +28,14 @@ apiController.getUserRepos = async (req: Request, res: Response, next: NextFunct
     res.locals.repos.push({name: repo.name, url: repo.url});
   }
 
+  // error handling for getUserRepos
+  if (Error){
+    return next({
+      log: 'Error caught in apiContoller.getUserRepos',
+      msg: { err: `Error: ${Error}`}
+    });
+  }
+
   return next();
 };
 
