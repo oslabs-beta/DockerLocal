@@ -66,7 +66,7 @@ authController.getNameAndTokenFromCookies = (
   return next();
 };
 
-// USE THIS MIDDLEWARE TO GET CHECKED REPO DATA 
+// USE THIS MIDDLEWARE TO GET CHECKED REPO DATA
 authController.saveUserInfoAndRepos = (
   req: Request,
   res: Response,
