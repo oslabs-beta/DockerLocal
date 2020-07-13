@@ -9,6 +9,8 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
+// disables 'powered by express' header
+app.disable('x-powered-by')
 
 // only allow CORS from react front end
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
