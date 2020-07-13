@@ -37,12 +37,20 @@ gitController.cloneRepo = async (
   // execute cloning ALL repos
   await Promise.all(promises).catch(
     err => next({
-    log: `Error cloning repos in gitController.cloneRepos`,
+    log: `Error in shell scripts cloning repos in gitController.cloneRepo`,
     msg: {
       err
     }
   })
  )
+
+  // non-shell script error handling
+  if (Error){
+    return next({
+      log: 'Error caught in gitContoller.cloneRepo',
+      msg: { err: `Error: ${Error}`}
+  });
+}
 
   return next();
 };

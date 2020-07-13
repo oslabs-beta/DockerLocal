@@ -23,6 +23,15 @@ authController.saveAccessToken = (
 
   // Save username as cookie
   res.cookie("username", username, { maxAge: 360000 });
+
+  // error handling
+  if (Error){
+    return next({
+      log: 'Error caught in authContoller.saveAccessToken',
+      msg: { err: `Error: ${Error}`}
+    });
+  }
+
   return next();
 };
 
@@ -46,10 +55,18 @@ authController.getNameAndTokenFromCookies = (
   // Store username in locals
   res.locals.username = username;
 
+  // error handling
+  if (Error){
+    return next({
+      log: 'Error caught in authContoller.getNameAndTokenFromCookies',
+      msg: { err: `Error: ${Error}`}
+    });
+  }
+
   return next();
 };
 
-//USE THIS MIDDLEWARE TO GET CHECKED REPO DATA 
+// USE THIS MIDDLEWARE TO GET CHECKED REPO DATA 
 authController.saveUserInfoAndRepos = (
   req: Request,
   res: Response,
@@ -61,7 +78,15 @@ authController.saveUserInfoAndRepos = (
   res.locals.accessToken = accessToken;
   res.locals.repos = repos;
   res.locals.projectName = projectName;
-  
+
+  // error handling
+  if (Error){
+    return next({
+      log: 'Error caught in authController.saveUserInfoAndRepos',
+      msg: { err: `Error: ${Error}`}
+    });
+  }
+
   return next();
 };
 
