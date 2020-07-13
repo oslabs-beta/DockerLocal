@@ -9,7 +9,14 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-app.use(cors());
+// disables 'powered by express' header
+app.disable('x-powered-by')
+
+// only allow CORS from react front end
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
+const reactOrigin = MAIN_WINDOW_WEBPACK_ENTRY.substring(0, MAIN_WINDOW_WEBPACK_ENTRY.lastIndexOf("/"))
+const corsOptions = { origin: reactOrigin}
+app.use(cors(corsOptions));
 
 // Bring in routes
 const authRoute = require('../../src/server/routes/auth-route');
@@ -71,3 +78,4 @@ app.use(
 const PORT = 3001;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+

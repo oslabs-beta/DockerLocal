@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import AppInfoModal from "../appInfo/AppInfoModal";
+import { EXPRESS_URL } from "../../helpers/constants";
 
 const SignIn: React.FC = () => {
   //initailize showModal to false
@@ -12,7 +13,7 @@ const SignIn: React.FC = () => {
       <button
         className="button is-primary"
         onClick={(): void =>
-          window.location.replace("http://localhost:3001/auth/github")
+          window.location.replace(`${EXPRESS_URL}/auth/github`)
         }
       >
         Sign In With Github

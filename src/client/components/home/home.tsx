@@ -7,6 +7,7 @@ import ProjectPage from "../projects/ProjectPage";
 
 import { Project, Repo, User, HomeProps } from "../../../types/types";
 import { saveProjectList } from "../../helpers/projectHelper";
+import { EXPRESS_URL } from '../../helpers/constants';
 
 
 
@@ -19,7 +20,7 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   // run once on render
   // reads project list from local file and sets state
   useEffect(() => {
-    fetch("http://localhost:3001/config")
+    fetch(`${EXPRESS_URL}/config`)
       .then((res) => res.json())
       .then((res) => {
         if (res.projectList && res.activeProject) {
