@@ -44,7 +44,7 @@ export const fetchRepos = async (): Promise<RepoResponseType> => {
   });
 
   // Request options for fetches with appended headers and correct query
-  const requestOptions = {
+  const requestOptions: RequestInit = {
     method: "POST",
     headers: myHeaders,
     body: publicRepoQuery,
@@ -54,8 +54,8 @@ export const fetchRepos = async (): Promise<RepoResponseType> => {
   // Send fetch request to Github GraphQL API with requestOptions object for Public Repos
   await fetch("https://api.github.com/graphql", requestOptions)
     .then((response) => response.text())
-    .then((result) => {
-      result = JSON.parse(result);
+    .then((res) => {
+      const result = JSON.parse(res);
       let currentNode;
       const pubLength = result.data.user.repositories.edges.length;
       const pubRepos = [];
@@ -95,8 +95,8 @@ export const fetchRepos = async (): Promise<RepoResponseType> => {
 
   await fetch("https://api.github.com/graphql", requestOptions)
     .then((response) => response.text())
-    .then((result) => {
-      result = JSON.parse(result);
+    .then((res) => {
+       const result = JSON.parse(res);
       let currentNode;
       const collabChain = result.data.user.repositories.nodes;
       const collabLength = collabChain.length;
@@ -145,8 +145,8 @@ export const fetchRepos = async (): Promise<RepoResponseType> => {
 
   await fetch("https://api.github.com/graphql", requestOptions)
     .then((response) => response.text())
-    .then((result) => {
-      result = JSON.parse(result);
+    .then((res) => {
+      const result = JSON.parse(res);
       let currentNode;
       let reposLength;
       const objChain = result.data.user.organizations.edges;
