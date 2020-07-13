@@ -83,3 +83,20 @@ export type HomeProps = {
   userInfo: User;
   setUserInfo: Dispatch<SetStateAction<User>>;
 };
+
+export type CloningReposModalProps = {
+  showCloningReposModal: boolean;
+  setShowCloningReposModal: Dispatch<SetStateAction<boolean>>;
+}
+
+export type ComposeFileModalProps = {
+  setShowComposeModal: Dispatch<SetStateAction<boolean>>;
+  activeProject: string;
+  projectList: readonly Project[];
+  composeFileData: {text: string; path: string};
+}
+
+export type ComposeFile = {
+  text: string;
+  path: string;
+}

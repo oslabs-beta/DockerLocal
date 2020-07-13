@@ -1,10 +1,11 @@
 import React from "react";
+import { ComposeFileModalProps} from '../../../types/types'
 
 /**
  * @descriotion ComposeFileModal component
  * @param props drilling from ProjectPage component
  */
-const ComposeFileModal: React.FC = ({
+const ComposeFileModal: React.FC<ComposeFileModalProps> = ({
   setShowComposeModal,
   activeProject,
   projectList,

@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta 
+      http-equiv="Content-Security-Policy" 
+      content="
+        default-src 'self'; 
+        script-src-elem 'self' https://use.fontawesome.com/releases/v5.3.1/js/all.js;  
+        style-src 'self' 'unsafe-inline';
+        connect-src 'self' http://localhost:3001/ https://api.github.com/graphql
+      ">
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DockerLocal</title>
