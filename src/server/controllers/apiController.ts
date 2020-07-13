@@ -5,8 +5,8 @@ import { Request, Response, NextFunction } from 'express';
 const apiController: any = {};
 
 // Middleware to get an authenticated user's list of repositories through node-fetch
-apiController.getUserRepos = async (req: Request, res: Response, next: NextFunction) => {
-  // Destructuring the access token from locals 
+apiController.getUserRepos = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  // Destructuring the access token from locals
   // -> stored locally in previous middleware (authController.getNameAndTokenFromCookies)
   const { accessToken } = res.locals;
 
