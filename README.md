@@ -10,14 +10,14 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Give examples
+Example here
 ```
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+Head to our [website](https://google.com/) and click the download button.
 
 ```
 Give the example
@@ -57,9 +57,14 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Typescript](https://www.typescriptlang.org/) - Language used
+* [React.js](https://reactjs.org/) - Front end library used
+* [Node.js](https://nodejs.org/en/) - The web framework used
+* [npm](https://www.npmjs.com/) - Package Manager
+* [Webpack](https://webpack.js.org/) - Dependency Management
+* [Bulma](https://bulma.io/) - CSS Framework
+* [TSlint](https://palantir.github.io/tslint/) - Linter
+
 
 ## Contributing
 
@@ -67,15 +72,15 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
 * **Vivian Cermeno** - *Initial work* - [Vcermeno](https://github.com/vcermeno)
-* **Kate Chanthakaew** - *Initial work* - [PurpleBooth](https://github.com/)
-* **Tom Lutz** - *Initial work* - [PurpleBooth](https://github.com/)
-* **Katty Polyak** - *Initial work* - [PurpleBooth](https://github.com/)
-* **Louis Xavier Sheid III** - *Initial work* - [PurpleBooth](https://github.com/)
+* **Kate Chanthakaew** - *Initial work* - [KateChantha](https://github.com/KateChantha)
+* **Tom Lutz** - *Initial work* - [tlutz888](https://github.com/tlutz888)
+* **Katty Polyak** - *Initial work* - [KattyPolyak](https://github.com/KattyPolyak)
+* **Louis Xavier Sheid III** - *Initial work* - [louisxsheid](https://github.com/louisxsheid)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -85,6 +90,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Thank you to everyone who helped support the project.
