@@ -1,6 +1,7 @@
 export {};
 
 import { Request, Response, NextFunction } from "express";
+import { Repo } from '../../types/types'
 
 // import helper function to execute shell scripts
 const execShellCommand = require("./helpers/shellHelper");
@@ -17,7 +18,7 @@ gitController.cloneRepo = async (
   next: NextFunction
 ): Promise<void> => {
 
-  const { repos, projectName } = res.locals;
+  const { repos, projectName }: {repos: Repo[]; projectName: string} = res.locals;
   const shellCommand = "./src/scripts/cloneRepo.sh";
 
   // make an array of promises to clone all selected repos

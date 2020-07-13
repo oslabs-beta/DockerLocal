@@ -1,4 +1,5 @@
 import { Project } from '../../types/types';
+import { EXPRESS_URL } from './constants';
 
 /**
  * @function findActiveProject
@@ -25,7 +26,7 @@ export const findActiveProject = (
  */
 
 export const saveProjectList = (projectList: readonly Project[], activeProject: string): void => {
-  fetch("http://localhost:3001/config", {
+  fetch(`${EXPRESS_URL}/config`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
