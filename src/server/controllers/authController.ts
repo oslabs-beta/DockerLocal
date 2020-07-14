@@ -1,6 +1,6 @@
 export {};
 import { Request, Response, NextFunction } from "express";
-const CryptoJS = require("crypto-js");
+import CryptoJS = require("crypto-js");
 
 const authController: any = {};
 
@@ -42,7 +42,7 @@ authController.getNameAndTokenFromCookies = (
   next: NextFunction
 ): void => {
   // Destructure username and token from cookies
-  const { username, token }: any = req.cookies;
+  const { username, token }: {username: string; token: string} = req.cookies;
 
   // CryptoJS -> decrypt accessToken and convert back to original
   const decrypted = CryptoJS.AES.decrypt(token, "super_secret").toString(
@@ -73,7 +73,7 @@ authController.saveUserInfoAndRepos = (
   next: NextFunction
 ): void => {
   // save username, access token and repos from request body
-  const { username, accessToken, repos, projectName }: any = req.body;
+  const { username, accessToken, repos, projectName }: {username: string; accessToken: string; repos: string []; projectName: string} = req.body;
   res.locals.username = username;
   res.locals.accessToken = accessToken;
   res.locals.repos = repos;
