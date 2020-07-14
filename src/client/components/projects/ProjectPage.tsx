@@ -103,15 +103,15 @@ const ProjectPage: React.FC<ProjectPageProps> = ({
     const { username, accessToken } = await getUsernameAndToken();
 
     const body = JSON.stringify({
-      username: username,
-      accessToken: accessToken,
+      username,
+      accessToken,
       repos: reposToClone,
       projectName: currentProject.projectName,
     });
 
     fetch(`${EXPRESS_URL}/api/clonerepos`, {
       method: "POST",
-      body: body,
+      body,
       headers: {
         "Content-Type": "application/json",
       },
