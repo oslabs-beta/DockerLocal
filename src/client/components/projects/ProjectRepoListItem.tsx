@@ -45,7 +45,7 @@ const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({
 
     // set new project list
     // setIsChecked(newRepo.isIncluded)
-    setProjectList(newProjectList);
+    dispatch({ type: 'addProject', payload: newProjectList });
   };
 
   return (

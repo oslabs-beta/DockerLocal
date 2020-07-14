@@ -6,11 +6,11 @@ import { Project, SidebarProps } from '../../../types/types';
 
 const Sidebar: React.FC<SidebarProps> = ({
   projectList,
-  setProjectList,
+  dispatch,
   activeProject,
   setActiveProject,
 }) => {
-  console;
+  console.log(Array.isArray(projectList));
   const sidebarButtons = projectList.map((project) => (
     <SidebarButton
       key={`project ${project.projectId}`}
@@ -45,7 +45,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             showProjectSideBarModal,
             setShowProjectSidebarModal,
             projectList,
-            setProjectList,
+            dispatch,
             setActiveProject,
           }}
         />

@@ -7,7 +7,6 @@ import { checkValidName } from '../../helpers/projectHelper';
 const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
   setShowProjectSidebarModal,
   projectList,
-  setProjectList,
   setActiveProject,
   dispatch,
 }) => {
@@ -55,8 +54,10 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
       };
 
       // set copy of a new project
-      setProjectList([...projectList, newProjectObject]);
-      dispatch({ type: 'addProject', payload: newProjectObject });
+      dispatch({
+        type: 'addProject',
+        payload: [...projectList, newProjectObject],
+      });
       setActiveProject(newProjectId);
       //then close the modal
       setShowProjectSidebarModal(false);
