@@ -26,6 +26,14 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
   myShellScript.stdout.on('data', (data: string) => {
     const output = data;
 
+    // checking for shell script error message output caused by lack of dockerfile inside active Project
+    if (output === "missing repository with Dockerfile\n"){
+      return next({
+        log: `ERROR caught in dockerController.getFilePaths SHELL SCRIPT: ${data.slice(0, data.length)} in ${projectFolder}`,
+        msg: { err: 'dockerContoller.getFilePaths: ERROR: Check server logs for details' }
+      });
+    }
+
     // get filepaths from one long data string
     const filePathArray: string[] = output.split('\n').slice(0, -1);
     let buildPath: string;
@@ -47,20 +55,13 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
   });
 
   // shell script errror handling
-  myShellScript.stderr.on('data', (data: Error) => {
+  myShellScript.stderr.on('data', (data: string) => {
     return next({
       log: `ERROR caught in dockerController.getFilePaths SHELL SCRIPT: ${data}`,
-      msg: { err: 'dockerContoller.getFilePaths Shell Script: ERROR: Check server logs for details' }
+      msg: { err: 'dockerContoller.getFilePaths: ERROR: Check server logs for details' }
     });
   })
 
-  // error handing for non-shell script related errors
-  if (!projectFolder){
-    return next({
-      log: 'Error caught in dockerContoller.getFilePaths: Missing projectName in req.body',
-      msg: { err: 'dockerContoller.getFilePaths: ERROR: Check server logs for details'}
-    });
-  }
 }
 
 
