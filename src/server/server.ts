@@ -71,7 +71,8 @@ app.use(
 
     // Update default error message with provided error if there is one
     const output = Object.assign(defaultError, err);
-    res.send(output);
+    console.log(output.log);
+    res.send(output.msg);
   }
 );
 

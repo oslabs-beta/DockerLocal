@@ -49,16 +49,16 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
   // shell script errror handling
   myShellScript.stderr.on('data', (data: Error) => {
     return next({
-      log: "ERROR IN SHELL SCRIPT",
-      msg: { err: `error ${data}` }
+      log: `ERROR caught in dockerController.getFilePaths SHELL SCRIPT: ${data}`,
+      msg: { err: 'dockerContoller.getFilePaths Shell Script: ERROR: Check server logs for details' }
     });
   })
 
   // error handing for non-shell script related errors
-  if (Error){
+  if (!projectFolder){
     return next({
-      log: 'Error caught in dockerContoller.getFilePaths',
-      msg: { err: `Error: ${Error}`}
+      log: 'Error caught in dockerContoller.getFilePaths: Missing projectName in req.body',
+      msg: { err: 'dockerContoller.getFilePaths: ERROR: Check server logs for details'}
     });
   }
 }
@@ -87,10 +87,10 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
   res.locals.containerNameArray = containerNameArray;
 
   // error handling
-  if (Error){
+  if (!(buildPathArray || containerNameArray)){
     return next({
-      log: 'Error caught in dockerContoller.getContainerNames',
-      msg: { err: `Error: ${Error}`}
+      log: `Error caught in dockerContoller.getContainerNames: Missing containerNameArray: ${Boolean(containerNameArray)} or buildPathArray: ${Boolean(buildPathArray)}`,
+      msg: { err: `dockerController.getContainerNames: ERROR: Check server log for details. `}
     });
   }
 
@@ -116,8 +116,8 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
       fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`);
     } catch(error){
         return next({
-          log: 'ERROR in writeFileSync in dockerController.createDockerCompose',
-          msg: { err: `ERROR: ${error}` }
+          log: `ERROR in writeFileSync in dockerController.createDockerCompose: ${error}`,
+          msg: { err: 'dockerController.createDockerCompose: ERROR: Check server log for details' }
         })
       }
 
@@ -147,20 +147,12 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
           `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`);
       } catch (error){
           return next({
-            log: "ERROR in appendFileSync in dockerController.createDockerCompose",
-            msg: { err: `error: ${error}` }
+            log: `ERROR in appendFileSync in dockerController.createDockerCompose: ${error}`,
+            msg: { err: 'dockerController.createDockerCompose appendFile: ERROR: Check server log for details' }
           });
       }
 
     }
-  }
-
-  // error handling for non-fs methods
-  if (Error){
-    return next({
-      log: 'Error caught in dockerContoller.createDockerCompose',
-      msg: { err: `Error: ${Error}`}
-    });
   }
 
   return next();

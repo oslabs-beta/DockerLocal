@@ -26,32 +26,32 @@ gitController.cloneRepo = async (
     const repoOwner = currentRepo.repoOwner;
     const repoName = currentRepo.repoName;
 
+  if (!(repoOwner || repoName)){
+      return next({
+        log: `Error caught in gitContoller.cloneRepo: Missing repoOwner: ${repoOwner} or name ${repoName}`,
+        msg: { err: 'gitContoller.cloneRepo: ERROR: Check server logs for more details'}
+    });
+  }
+
     // shell script clones github repo using SSH connection
     const shellResp = await execShellCommand(shellCommand, [
       repoOwner,
       repoName,
       projectName,
     ]);
+
     return shellResp;
   });
 
   // execute cloning ALL repos
   await Promise.all(promises).catch(
     err => next({
-    log: `Error in shell scripts cloning repos in gitController.cloneRepo`,
+    log: `Error in shell scripts cloning repos in gitController.cloneRepo: ${err}`,
     msg: {
-      err
+      err: 'gitContoller.cloneRepo: ERROR: Check server logs for more details'
     }
   })
  )
-
-  // non-shell script error handling
-  if (Error){
-    return next({
-      log: 'Error caught in gitContoller.cloneRepo',
-      msg: { err: `Error: ${Error}`}
-  });
-}
 
   return next();
 };
