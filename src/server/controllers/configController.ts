@@ -1,5 +1,5 @@
 export { };
-import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import fs = require('fs');
 import path = require('path');
 
@@ -18,10 +18,10 @@ configController.readJSONFromFile = async (req: Request, res: Response, next: Ne
     return next();
   } catch (error) {
       return next({
-        log: "Error caught in configController- readJSONFromFile",
+        log: `Error caught in configController- readJSONFromFile ${error}`,
         status: 500,
         msg: {
-          err: `ERROR:${error}`
+          err: 'configController.readFromJSONFile: ERROR: Check server log for details'
         }
       })
   }
@@ -40,10 +40,10 @@ configController.writeJSONToFile = async (req: Request, res: Response, next: Nex
     return next();
   } catch (error) {
     return next({
-      log: "Error caught in configController- writeJSONToFile",
+      log: `Error caught in configController- writeJSONToFile ${error}`,
       status: 500,
       msg: {
-        err: `ERROR: ${error}`,
+        err: 'configController.writeJSONToFile: ERROR: Check server log for details',
       }
     })
   }

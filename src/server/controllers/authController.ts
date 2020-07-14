@@ -25,11 +25,11 @@ authController.saveAccessToken = (
   res.cookie("username", username, { maxAge: 360000 });
 
   // error handling
-  if (Error){
+  if (!(username || encrypted)){
     return next({
-      log: 'Error caught in authContoller.saveAccessToken',
-      msg: { err: `Error: ${Error}`}
-    });
+      log: `Error caught in authContoller.saveAccessToken: Missing username: ${username} or encrypted: ${Boolean(encrypted)}`,
+      msg: { err: 'authContoller.saveAccessToken: ERROR: Check server logs for details'}
+    })
   }
 
   return next();
@@ -56,10 +56,10 @@ authController.getNameAndTokenFromCookies = (
   res.locals.username = username;
 
   // error handling
-  if (Error){
+  if (!(decrypted || username)){
     return next({
-      log: 'Error caught in authContoller.getNameAndTokenFromCookies',
-      msg: { err: `Error: ${Error}`}
+      log: `Error caught in authContoller.getNameAndTokenFromCookies: Missing ${username}, decrypt: ${Boolean(decrypted)}`,
+      msg: { err: 'authController.getNameAndTokenFromCookies: ERROR: Check server logs for details'}
     });
   }
 
@@ -80,10 +80,10 @@ authController.saveUserInfoAndRepos = (
   res.locals.projectName = projectName;
 
   // error handling
-  if (Error){
+  if (!(username || accessToken || repos || projectName)){
     return next({
-      log: 'Error caught in authController.saveUserInfoAndRepos',
-      msg: { err: `Error: ${Error}`}
+      log: `Error caught in authController.saveUserInfoAndRepos: Missing username: ${username}, accessToken:${Boolean(accessToken)} , repos:${repos}, or projectName ${projectName}`,
+      msg: { err: `authController.saveUserInfoAndRepos: ERROR: Check server logs for details`}
     });
   }
 
