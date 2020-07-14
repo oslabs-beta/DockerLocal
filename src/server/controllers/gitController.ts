@@ -22,7 +22,7 @@ gitController.cloneRepo = async (
   const shellCommand = "./src/scripts/cloneRepo.sh";
 
   // make an array of promises to clone all selected repos
-  const promises = repos.map(async (currentRepo: any) => {
+  const promises = repos.map(async (currentRepo: {repoOwner: string; repoName: string}) => {
     const repoOwner = currentRepo.repoOwner;
     const repoName = currentRepo.repoName;
 
