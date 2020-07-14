@@ -1,6 +1,5 @@
 module.exports = {
   preset: 'ts-jest',
-  snapshotSerializers: ['enzyme-to-json/serializer'],
   testEnvironment: 'node',
   // compile TSX to JavaScript using ts-jest preset
   transform: {
@@ -10,6 +9,6 @@ module.exports = {
   testRegex: '/__tests__/.*\\.test.(ts|tsx)$',
   // Module file extension for importing
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  // Path to setupTest.ts file for testin environment to be run immediately before running the test code.
-  setupFiles: ['<rootDir>/__tests__/setupTests.ts']
+  // Path to setupTest.ts file for testing environment to be run immediately before running the test code.
+  setupFiles: ['<rootDir>/__tests__/setupTest.ts']
 };
