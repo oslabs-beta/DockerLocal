@@ -1,6 +1,8 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  // convert Enzyme wrappers for Jest snapshot matcher
+  snapshotSerializers: ['enzyme-to-json/serializer'],
   // compile TSX to JavaScript using ts-jest preset
   transform: {
     '^.+\\.tsx?$': 'ts-jest'
