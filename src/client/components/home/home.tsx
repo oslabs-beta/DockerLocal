@@ -41,8 +41,6 @@ function projectListReducer(state, action: projectListActions) {
 }
 
 const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
-  // const [projectList, setProjectList] = useState<readonly Project[]>([]);
-
   const [projectList, dispatch] = useReducer(
     projectListReducer,
     initialProjectList
