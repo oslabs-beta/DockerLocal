@@ -11,19 +11,15 @@ import Sidebar from '../sidebar/Sidebar';
 import AddRepos from '../addRepos/AddRepos';
 import ProjectPage from '../projects/ProjectPage';
 
-import { Project, Repo, User, HomeProps } from '../../../types/types';
+import {
+  Project,
+  Repo,
+  User,
+  HomeProps,
+  projectListActions,
+} from '../../../types/types';
 import { saveProjectList } from '../../helpers/projectHelper';
 import { EXPRESS_URL } from '../../helpers/constants';
-
-type projectListActions = {
-  type:
-    | 'addProject'
-    | 'deleteProject'
-    | 'addRepo'
-    | 'deleteRepo'
-    | 'toggleRepo';
-  payload: string;
-};
 
 const initialProjectList: Project[] = [];
 

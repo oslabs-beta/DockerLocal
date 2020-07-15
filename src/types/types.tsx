@@ -1,9 +1,19 @@
-import { SetStateAction, Dispatch } from "react";
+import { SetStateAction, Dispatch } from 'react';
 
 export type Project = {
   projectName: string;
   projectId: string;
   projectRepos: readonly Repo[];
+};
+
+export type projectListActions = {
+  type:
+    | 'addProject'
+    | 'deleteProject'
+    | 'addRepo'
+    | 'deleteRepo'
+    | 'toggleRepo';
+  payload: string;
 };
 
 export type Repo = {
@@ -38,6 +48,7 @@ export type AddReposProps = {
   activeProject: string;
   projectList: readonly Project[];
   setProjectList: Dispatch<SetStateAction<Project[]>>;
+  dispatch: React.Dispatch<projectListActions>;
 };
 
 export type ProjectPageProps = {
@@ -67,7 +78,7 @@ export type ProjectSideBarProps = {
   setActiveProject: Dispatch<SetStateAction<string>>;
 };
 
-export type SidebarButtonProps =  Project & {
+export type SidebarButtonProps = Project & {
   activeProject: string;
   setActiveProject: Dispatch<SetStateAction<string>>;
 };
@@ -87,16 +98,16 @@ export type HomeProps = {
 export type CloningReposModalProps = {
   showCloningReposModal: boolean;
   setShowCloningReposModal: Dispatch<SetStateAction<boolean>>;
-}
+};
 
 export type ComposeFileModalProps = {
   setShowComposeModal: Dispatch<SetStateAction<boolean>>;
   activeProject: string;
   projectList: readonly Project[];
-  composeFileData: {text: string; path: string};
-}
+  composeFileData: { text: string; path: string };
+};
 
 export type ComposeFile = {
   text: string;
   path: string;
-}
+};
