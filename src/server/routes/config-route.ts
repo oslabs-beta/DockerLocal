@@ -1,7 +1,7 @@
 export { };
-const router = require('express').Router();
+import express, { Request, Response } from 'express';
+const router = express.Router();
 const configController = require('../controllers/configController');
-import { Request, Response } from 'express';
 
 // /config endpoint to send back saved project data from local file
 router.get('/',
