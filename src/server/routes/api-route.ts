@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 export {};
 import express, { Request, Response } from "express";
 const router = express.Router();
