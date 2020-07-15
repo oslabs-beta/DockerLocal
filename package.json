@@ -6,7 +6,7 @@
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
-    "test": "jest",
+    "test": "jest --verbose ",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",

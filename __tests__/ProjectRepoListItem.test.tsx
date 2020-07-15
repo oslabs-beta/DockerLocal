@@ -21,13 +21,11 @@ describe('<ProjectRepoListItem/> unit test', () => {
     activeProject: "repostring",
     repo: propsRepo,
     projectList: [propsProject],
-    // setProjectList: jest.fn(),
     dispatch: jest.fn()
   }
 
   const wrapper = shallow(<ProjectRepoListItem {...propsProjectRepoList} />);
 
-  console.log(wrapper.debug());
   it('should render a <div> and a <input>', () => {
     expect(wrapper.find('div')).toHaveLength(1);
     expect(wrapper.find('input')).toHaveLength(1);
@@ -38,9 +36,13 @@ describe('<ProjectRepoListItem/> unit test', () => {
 
   })
 
+  it('should matches the snapshot', () => {
+    expect(wrapper).toMatchSnapshot();
+  })
+
+  // TODO:
   xit('should possible to activate input checkbox', () => {
     // wrapper.find('div').simulate('click');
     // expect(propsRepo.isIncluded).toBe(true);
   })
-
 })

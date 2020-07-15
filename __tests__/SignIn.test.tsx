@@ -16,8 +16,9 @@ describe('<SignIn/> unit testing', () => {
     expect(wrapper.find('button')).toHaveLength(2)
   });
 
+  // TODO:
   xit('should render <AppInfoModal /> element if showModal evaluates to true', () => { });
-
+  // TODO:
   xit('shouldn not render <AppInfoModal /> element if showModale evaluates to flase', () => { });
 })
 
