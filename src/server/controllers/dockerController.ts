@@ -29,7 +29,7 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
     // checking for shell script error message output caused by lack of dockerfile inside active Project
     if (output === "missing repository with Dockerfile\n"){
       return next({
-        log: `ERROR caught in dockerController.getFilePaths SHELL SCRIPT: ${data.slice(0, data.length)} in ${projectFolder}`,
+        log: `ERROR caught in dockerController.getFilePaths SHELL SCRIPT: ${data.slice(0, data.length-1)} in ${projectFolder}`,
         msg: { err: 'dockerContoller.getFilePaths: ERROR: Check server logs for details' }
       });
     }
