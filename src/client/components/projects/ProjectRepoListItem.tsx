@@ -43,7 +43,7 @@ const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({
     );
 
     // set new project list
-    dispatch({ type: 'addProject', payload: newProjectList });
+    dispatch({ type: 'addRepo', payload: newProjectList });
   };
 
   return (
