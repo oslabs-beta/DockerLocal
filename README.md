@@ -1,3 +1,5 @@
+
+![DockerLocal Demo](/phlippy_icon.png)
 # DockerLocal
 
 DockerLocal is a GUI application that allows you to keep an up-to-date version of the docker compose file for interconnected repositories while doing development work on a single repository.
@@ -61,6 +63,7 @@ Add additional notes about how to deploy this on a live system
 ## Built With
 
 * [Typescript](https://www.typescriptlang.org/) - Language used
+* [Electron](https://www.electronjs.org/) - Native Desktop Application Framework
 * [React.js](https://reactjs.org/) - Front end library used
 * [Node.js](https://nodejs.org/en/) - The web framework used
 * [npm](https://www.npmjs.com/) - Package Manager
@@ -79,13 +82,13 @@ For the versions available, see the [tags on this repository](https://github.com
 
 ## Authors
 
-* **Vivian Cermeno** - *Initial work* - [Vcermeno](https://github.com/vcermeno)
-* **Kate Chanthakaew** - *Initial work* - [KateChantha](https://github.com/KateChantha)
-* **Tom Lutz** - *Initial work* - [tlutz888](https://github.com/tlutz888)
-* **Katty Polyak** - *Initial work* - [KattyPolyak](https://github.com/KattyPolyak)
-* **Louis Xavier Sheid III** - *Initial work* - [louisxsheid](https://github.com/louisxsheid)
+* **Vivian Cermeno** - *Co-creator* - [Vcermeno](https://github.com/vcermeno)
+* **Kate Chanthakaew** - *Co-creator* - [KateChantha](https://github.com/KateChantha)
+* **Tom Lutz** - *Co-creator* - [tlutz888](https://github.com/tlutz888)
+* **Katty Polyak** - *Co-creator* - [KattyPolyak](https://github.com/KattyPolyak)
+* **Louis Xavier Sheid III** - *Co-creator* - [louisxsheid](https://github.com/louisxsheid)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/oslabs-beta/DockerLocal/contributors) who participated in this project.
 
 ## License
 
