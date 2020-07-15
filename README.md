@@ -63,6 +63,7 @@ Add additional notes about how to deploy this on a live system
 ## Built With
 
 * [Typescript](https://www.typescriptlang.org/) - Language used
+* [Electron](https://www.electronjs.org/) - Native Desktop Application Framework
 * [React.js](https://reactjs.org/) - Front end library used
 * [Node.js](https://nodejs.org/en/) - The web framework used
 * [npm](https://www.npmjs.com/) - Package Manager
