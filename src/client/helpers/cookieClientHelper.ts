@@ -15,7 +15,12 @@ export const getUsernameAndToken = async (): Promise<{
   // PARSE TOKEN AND USERNAME FROM COOKIES
   let username;
   let token;
-  const nameAndToken = document.cookie.split(";");
+  const cookie = document.cookie;
+    // if there is no cookie yet since user has not signed in, do NOT run the function
+  if (cookie === ''){
+    return {username, accessToken: token};
+  }
+  const nameAndToken = cookie.split(";");
   /* the cookie comes in with either token or username first since we dont know when or why that happens
    this function is supposed to check which one comes first and assign it respectively before parsing */
   if (nameAndToken[0].slice(0,9) === "username"){
