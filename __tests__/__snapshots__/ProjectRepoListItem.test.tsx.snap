@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProjectRepoListItem/> unit test should matches the snapshot 1`] = `
+<div
+  onClick={[Function]}
+  style={
+    Object {
+      "margin": "10px",
+    }
+  }
+>
+  <input
+    checked={false}
+    readOnly={true}
+    type="checkbox"
+  />
+  mockRepoName
+</div>
+`;
