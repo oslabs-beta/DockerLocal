@@ -8,14 +8,15 @@ DockerLocal is a GUI application that allows you to keep an up-to-date version o
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine.
 
 ### Prerequisites
 
 What things you need to install the software and how to install them
 
 ```
-Example here
+Mac/Linux or Windows 10+
+A Github Key
 ```
 
 ### Installing
