@@ -13,7 +13,7 @@ export type projectListActions = {
     | 'addRepo'
     | 'deleteRepo'
     | 'toggleRepo';
-  payload: string;
+  payload: readonly Project[];
 };
 
 export type Repo = {
