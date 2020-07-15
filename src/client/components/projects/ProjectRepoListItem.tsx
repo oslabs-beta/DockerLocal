@@ -7,7 +7,6 @@ const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({
   repo,
   activeProject,
   projectList,
-  setProjectList,
   dispatch,
 }) => {
   const [isChecked, setIsChecked] = useState(repo.isIncluded || false);

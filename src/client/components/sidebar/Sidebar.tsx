@@ -10,7 +10,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   activeProject,
   setActiveProject,
 }) => {
-  console.log(Array.isArray(projectList));
   const sidebarButtons = projectList.map((project) => (
     <SidebarButton
       key={`project ${project.projectId}`}
