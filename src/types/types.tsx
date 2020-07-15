@@ -47,7 +47,6 @@ export type AddReposProps = {
   setShowAddRepos: Dispatch<SetStateAction<boolean>>;
   activeProject: string;
   projectList: readonly Project[];
-  setProjectList: Dispatch<SetStateAction<Project[]>>;
   dispatch: React.Dispatch<projectListActions>;
 };
 
@@ -55,14 +54,14 @@ export type ProjectPageProps = {
   activeProject: string;
   userInfo: User;
   projectList: readonly Project[];
-  setProjectList: Dispatch<SetStateAction<Project[]>>;
+  dispatch: React.Dispatch<projectListActions>;
 };
 
 export type ProjectRepoListItemProps = {
   activeProject: string;
   repo: Repo;
   projectList: readonly Project[];
-  setProjectList: Dispatch<SetStateAction<Project[]>>;
+  dispatch: React.Dispatch<projectListActions>;
 };
 
 export type RepoResponseType = {
@@ -74,7 +73,7 @@ export type RepoResponseType = {
 export type ProjectSideBarProps = {
   setShowProjectSidebarModal: Dispatch<SetStateAction<boolean>>;
   projectList: readonly Project[];
-  setProjectList: Dispatch<SetStateAction<Project[]>>;
+  dispatch: React.Dispatch<projectListActions>;
   setActiveProject: Dispatch<SetStateAction<string>>;
 };
 
@@ -85,7 +84,7 @@ export type SidebarButtonProps = Project & {
 
 export type SidebarProps = {
   projectList: readonly Project[];
-  setProjectList: Dispatch<SetStateAction<Project[]>>;
+  dispatch: React.Dispatch<projectListActions>;
   activeProject: string;
   setActiveProject: Dispatch<SetStateAction<string>>;
 };
