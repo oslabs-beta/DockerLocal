@@ -23,7 +23,7 @@ A Github Key
 
 A step by step series of examples that tell you how to get a development env running
 
-Head to our [website](https://google.com/) and click the download button.
+Head to our [website](dockerlocal.io) and click the download button.
 
 ```
 Give the example
