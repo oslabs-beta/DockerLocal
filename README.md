@@ -23,11 +23,13 @@ A Github Personal Access Token
 
 A step by step series of examples that tell you how to get a development env running
 
-1. Fork and clone our repo
+1. Clone our repo
 2. Get a personal access token from [Github](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
-3. Use the .env.template to add your personal access token
+3. Open the env.ts file in our root directory and paste your github user ID and access token- 
 4. Add a Project
-5. Add Repos to your project and click Compose when you're ready!
+5. Add Repos to your project
+6. Choose which repos you'd like included, click Clone Repos
+7. Click Compose when you're ready!
 
 ## Running the tests
 
