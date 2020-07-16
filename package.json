@@ -1,0 +1,120 @@
+{
+  "name": "dockerlocal",
+  "productName": "DockerLocal",
+  "version": "1.0.0",
+  "description": "a GUI application that will allow you to keep an up-to-date version of docker configurations for interconnected repositories locally while working on a single repository. ",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts ."
+  },
+  "keywords": [],
+  "author": "Vivian Cermeno, Kate Chanthakaew, Thomas Lutz, Katty Polyak, Louis Xavier Sheid III",
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "dockerlocal"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/index.html",
+                  "js": "./src/app.tsx",
+                  "name": "main_window"
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.51",
+    "@electron-forge/maker-deb": "^6.0.0-beta.51",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.51",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.51",
+    "@electron-forge/maker-zip": "^6.0.0-beta.51",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.51",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "css-loader": "^3.6.0",
+    "electron": "9.0.5",
+    "electron-devtools-installer": "^3.0.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.21.2",
+    "fork-ts-checker-webpack-plugin": "^3.1.1",
+    "html-webpack-plugin": "^4.3.0",
+    "node-loader": "^0.6.0",
+    "sass": "^1.26.9",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^6.2.2",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@types/crypto-js": "^3.1.47",
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@types/express": "^4.17.6",
+    "@types/node": "^14.0.13",
+    "@types/node-fetch": "^2.5.7",
+    "@types/oauth": "^0.9.1",
+    "@types/passport": "^1.0.3",
+    "@types/passport-oauth2": "^1.4.9",
+    "@types/react": "^16.9.38",
+    "@types/react-dom": "^16.9.8",
+    "@types/uuid": "^8.0.0",
+    "bulma": "^0.9.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "node-fetch": "^2.6.0",
+    "node-sass": "^4.14.1",
+    "passport": "^0.4.1",
+    "passport-github2": "^0.1.12",
+    "path": "^0.12.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "request": "^2.88.2",
+    "universal-cookie": "^4.0.3",
+    "universal-cookie-express": "^4.0.3",
+    "uuid": "^8.2.0",
+    "whatwg-fetch": "^3.0.0"
+  }
+}
