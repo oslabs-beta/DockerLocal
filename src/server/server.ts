@@ -2,8 +2,8 @@
 export {};
 import express, { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import path = require("path");
-const passportSetup = require("../../src/server/config/passport-setup");
-import passport = require("passport");
+// const passportSetup = require("../../src/server/config/passport-setup");
+// import passport = require("passport");
 require("dotenv/config");
 const app = express();
 const cookieParser = require("cookie-parser");
@@ -27,7 +27,7 @@ const configRoute = require("../../src/server/routes/config-route");
 // Body Parsing Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(passport.initialize());
+// app.use(passport.initialize());
 app.use(cookieParser());
 
 // Use routes

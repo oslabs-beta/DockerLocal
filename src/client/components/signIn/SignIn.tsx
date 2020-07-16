@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import AppInfoModal from "../appInfo/AppInfoModal";
 import { EXPRESS_URL } from "../../helpers/constants";
 
-const SignIn: React.FC = () => {
+const SignIn: React.FC = ({ isLoggedIn, setIsLoggedIn }) => {
   //initailize showModal to false
   const [showModal, setShowModal] = useState(false);
 
@@ -12,9 +12,10 @@ const SignIn: React.FC = () => {
     <div className="buttons is-centered" style={{height:"70vh"}}>
       <button
         className="button is-primary"
-        onClick={(): void =>
-          window.location.replace(`${EXPRESS_URL}/auth/github`)
-        }
+        // onClick={(): void =>
+        //   window.location.replace(`${EXPRESS_URL}/auth/github`)
+        // }
+        onClick={(): void=> setIsLoggedIn(!isLoggedIn)}
       >
         Sign In With Github
       </button>
