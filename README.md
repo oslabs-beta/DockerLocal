@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Mac/Linux or Windows 10+
+Mac/Linux
 A Github Personal Access Token
 ```
 
