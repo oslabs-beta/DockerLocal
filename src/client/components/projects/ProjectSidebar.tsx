@@ -34,7 +34,7 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
     const isValid = checkValidName(e.target.value, projectList);
     setNewProject({
       name: e.target.value,
-      isValid: isValid,
+      isValid,
     });
     setNewProjectStyle({
       messageBody: isValid ? validBody : invalidBody,
@@ -43,7 +43,7 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
   };
 
   const handleSubmit = (): void => {
-    //create a new project object
+    // create a new project object
     if (checkValidName(newProject.name, projectList)) {
       const newProjectId: string = uuidv4();
 
@@ -59,7 +59,7 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
         payload: [...projectList, newProjectObject],
       });
       setActiveProject(newProjectId);
-      //then close the modal
+      // then close the modal
       setShowProjectSidebarModal(false);
     }
   };

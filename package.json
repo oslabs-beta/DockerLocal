@@ -17,7 +17,9 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "build/icon"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
@@ -93,7 +95,8 @@
     "ts-jest": "^26.1.2",
     "ts-loader": "^6.2.2",
     "tslint": "^6.1.2",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "url-loader": "^4.1.0"
   },
   "dependencies": {
     "@types/crypto-js": "^3.1.47",

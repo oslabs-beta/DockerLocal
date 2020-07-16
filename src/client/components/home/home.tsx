@@ -20,6 +20,7 @@ import {
 } from '../../../types/types';
 import { saveProjectList } from '../../helpers/projectHelper';
 import { EXPRESS_URL } from '../../helpers/constants';
+import logo from '../../../../phlippy_icon.png'
 
 const initialProjectList: Project[] = [];
 
@@ -69,9 +70,9 @@ const Home: React.FC<HomeProps> = ({ userInfo, setUserInfo }) => {
   }, [projectList, activeProject]);
 
   return (
-    <div style={{ marginTop: '15px', marginLeft: '10px' }}>
-      {`${userInfo.userName}`}
-
+    <div style={{ marginTop: '10px', marginLeft: '10px' }}>
+      <p style={{float:"right", paddingRight:"30px", marginTop:"10px"}}>{`${userInfo.userName}`}</p>
+      <img src={logo} style={{width:"40px"}}></img>
       <div className='columns' style={{ position: 'relative', top: '10px' }}>
         <div
           className='column is-one-third'
