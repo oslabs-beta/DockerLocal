@@ -73,6 +73,7 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
   const containerNameArray: string[] = [];
   const { buildPathArray } = res.locals;
   let containerName: string;
+
   // use folder names as the container name
   // "src/server/happy" => "happy"
   for (const buildPath of buildPathArray) {
@@ -127,12 +128,14 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   for (const repo of repos) {
     repoArray.push(repo.repoName);
   }
+
   // adding service information to docker compose file
   for (let i = 0; i < buildPathArray.length; i++) {
     directory = buildPathArray[i];
     containerName = containerNameArray[i];
     // only gets repos stored in the active Project that have dockerfiles (using buildPath to grab repo folder)
     const repoFolder = directory.slice(14 + projectFolder.length, directory.length - containerName.length - 1);
+
     // if the repo folder is in the 'checked' repositories array then add it to the docker compose file
     // will also ignore docker-compose file we create that is stored in root project folder
     if (repoArray.includes(repoFolder)) {
