@@ -26,10 +26,26 @@ A step by step series of examples that tell you how to get a development env run
 1. Clone our repo
 2. Get a personal access token from [Github](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 3. Open the env.ts file in our root directory and paste your github user ID and access token
-4. Add a Project
-5. Add Repos to your project
-6. Choose which repos you'd like included, click Clone Repos
-7. Click Compose when you're ready!
+
+![DockerLocal Demo](images/Env_File_Sreenshot.png)
+
+4. npm install and npm start
+5. Add a Project
+
+![DockerLocal Demo](images/add-project.png)
+
+6. Add Repos to your project
+
+![DockerLocal Demo](images/add-repos.png)
+
+7. Choose which repos you'd like included, click Clone Repos
+
+![DockerLocal Demo](images/clone-repos.png)
+
+8. Click Compose when you're ready!
+
+![DockerLocal Demo](images/success.png)
+
 
 ## Running the tests
 
