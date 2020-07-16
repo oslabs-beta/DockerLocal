@@ -33,6 +33,10 @@ A step by step series of examples that tell you how to get a development env run
 
 Run npm test in the terminal. 
 
+```
+$ npm test
+```
+
 Currently, Jest CLI has set up to run all test suites and display individual test results with the test suite hierarchy.
 
 Testing React Components
