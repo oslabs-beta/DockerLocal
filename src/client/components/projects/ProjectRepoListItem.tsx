@@ -5,13 +5,13 @@ import { findActiveProject } from '../../helpers/projectHelper'
 
 
 const ProjectRepoListItem: React.FC<ProjectRepoListItemProps> = ({ repo, activeProject, projectList, setProjectList }) => {
-  
+
   const [isChecked, setIsChecked] = useState(repo.isIncluded || false)
-  
+
   useEffect(() => {
     setIsChecked(repo.isIncluded || false)
   })
-  
+
   const toggleIsIncluded = (): void => {
     // define current repo
     const currentProject: Project = findActiveProject(projectList, activeProject);

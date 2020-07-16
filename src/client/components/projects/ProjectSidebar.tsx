@@ -34,7 +34,7 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
     const isValid = checkValidName(e.target.value, projectList);
     setNewProject({
       name: e.target.value,
-      isValid: isValid,
+      isValid,
     });
     setNewProjectStyle({
       messageBody: isValid ? validBody : invalidBody,
