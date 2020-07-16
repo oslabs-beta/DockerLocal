@@ -48,7 +48,7 @@ const createWindow = (): void => {
   
   mainWindow
   .loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-  .then(() => mainWindow.webContents.openDevTools()); // uncomment to display dev tools
+  // .then(() => mainWindow.webContents.openDevTools()); // uncomment to display dev tools
   mainWindow.focus();
 };
 
