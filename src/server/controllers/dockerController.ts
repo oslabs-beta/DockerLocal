@@ -14,7 +14,6 @@ let dockerPortNo = portNo;
 
 const dockerController: any = {};
 
-
 /**
  * @middlware getFilePaths
  * @description Insert and run (findDockerfile.sh) inside repo root directory to find all dockerfile build paths
@@ -26,9 +25,19 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
   const myShellScript = exec(`sh src/scripts/findDockerfiles.sh ${projectFolder}`);
   myShellScript.stdout.on('data', (data: string) => {
     const output = data;
+
+    // checking for shell script error message output caused by lack of dockerfile inside active Project
+    if (output === "missing repository with Dockerfile\n"){
+      return next({
+        log: `ERROR caught in dockerController.getFilePaths SHELL SCRIPT: ${data.slice(0, data.length-1)} in ${projectFolder}`,
+        msg: { err: 'dockerContoller.getFilePaths: ERROR: Check server logs for details' }
+      });
+    }
+
     // get filepaths from one long data string
     const filePathArray: string[] = output.split('\n').slice(0, -1);
     let buildPath: string;
+
     // make filepaths into buildpaths by removing the name of the file from the path
     // "src/server/happy/dockerfile" => "src/server/happy"
     for (const filePath of filePathArray) {
@@ -41,15 +50,18 @@ dockerController.getFilePaths = (req: Request, res: Response, next: NextFunction
       }
     }
     res.locals.buildPathArray = buildPathArray;
+
     return next();
   });
+
   // shell script errror handling
-  myShellScript.stderr.on('data', (data: Error) => {
+  myShellScript.stderr.on('data', (data: string) => {
     return next({
-      log: "ERROR IN SHELL SCRIPT",
-      msg: { err: `error ${data}` }
+      log: `ERROR caught in dockerController.getFilePaths SHELL SCRIPT: ${data}`,
+      msg: { err: 'dockerContoller.getFilePaths: ERROR: Check server logs for details' }
     });
   })
+
 }
 
 
@@ -73,6 +85,15 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
     }
   }
   res.locals.containerNameArray = containerNameArray;
+
+  // error handling
+  if (!(buildPathArray || containerNameArray)){
+    return next({
+      log: `Error caught in dockerContoller.getContainerNames: Missing containerNameArray: ${Boolean(containerNameArray)} or buildPathArray: ${Boolean(buildPathArray)}`,
+      msg: { err: `dockerController.getContainerNames: ERROR: Check server log for details. `}
+    });
+  }
+
   return next();
 }
 
@@ -88,15 +109,17 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
   let directory: string;
   let containerName: string;
   const composeFilePath = `./myProjects/${projectFolder}/docker-compose.yaml`
-  /* writeFile will create a new docker compose file each time the controller is run 
+
+  /* writeFile will create a new docker compose file each time the controller is run
   so user can have leave-one-out functionality. Indentation is important in yaml files so it looks weird on purpose */
-  fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`,
-    (error: Error) => {
-      if (error) return next({
-        log: 'ERROR IN CREATING COMPOSE FILE ',
-        msg: { err: `ERROR: ${error}` }
-      })
-    })
+    try {
+      fs.writeFileSync(composeFilePath, `version: "3"\nservices:\n`);
+    } catch(error){
+        return next({
+          log: `ERROR in writeFileSync in dockerController.createDockerCompose: ${error}`,
+          msg: { err: 'dockerController.createDockerCompose: ERROR: Check server log for details' }
+        })
+      }
 
   // Taking the 'checked' repositories and storing each name into an array
   const { repos } = res.locals;
@@ -115,18 +138,22 @@ dockerController.createDockerCompose = (req: Request, res: Response, next: NextF
     if (repoArray.includes(repoFolder)) {
       portNo++;
       dockerPortNo++;
-      // appending the file with the configurations for each service
-      fs.appendFileSync(composeFilePath,
-        `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`,
-        (error: Error) => {
-          if (error) return next({
-            log: "ERROR IN CREATEDOCKERCOMPOSE",
-            msg: { err: `error: ${error}` }
+
+      // appending the file with the configurations for each service and error handling
+      try{
+        fs.appendFileSync(composeFilePath,
+          `  ${containerName}:\n    build: "${directory}"\n    ports:\n      - ${portNo}:${dockerPortNo}\n`);
+      } catch (error){
+          return next({
+            log: `ERROR in appendFileSync in dockerController.createDockerCompose: ${error}`,
+            msg: { err: 'dockerController.createDockerCompose appendFile: ERROR: Check server log for details' }
           });
-        });
+      }
+
     }
   }
+
   return next();
-}
+ }
 
 module.exports = dockerController;

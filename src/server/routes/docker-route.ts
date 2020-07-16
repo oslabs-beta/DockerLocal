@@ -14,12 +14,12 @@ router.post(
   dockerController.getContainerNames,
   dockerController.createDockerCompose,
   (req: Request, res: Response) => {
-    // sends compose file to front end
+    // gets project folder name to provide docker compose correct file path to front end
+    // so end user knows where to find their docker compose file in their system
     const projectFolder = req.body.projectName;
-    // sends compose file to front end
+    // send docker compose filepath and yaml file to front end
     const composeFilePath = path.resolve(__dirname, `../../myProjects/${projectFolder}/docker-compose.yaml`);
     const fileAsJSON = fs.readFileSync(composeFilePath, "utf8");
-    console.log(fileAsJSON)
     const payload = {
       path: composeFilePath,
       file: fileAsJSON

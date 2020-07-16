@@ -1,6 +1,6 @@
 export {};
 import { Request, Response, NextFunction } from "express";
-const CryptoJS = require("crypto-js");
+import CryptoJS = require("crypto-js");
 
 const authController: any = {};
 
@@ -23,6 +23,15 @@ authController.saveAccessToken = (
 
   // Save username as cookie
   res.cookie("username", username, { maxAge: 360000 });
+
+  // error handling
+  if (!(username || encrypted)){
+    return next({
+      log: `Error caught in authContoller.saveAccessToken: Missing username: ${username} or encrypted: ${Boolean(encrypted)}`,
+      msg: { err: 'authContoller.saveAccessToken: ERROR: Check server logs for details'}
+    })
+  }
+
   return next();
 };
 
@@ -33,7 +42,7 @@ authController.getNameAndTokenFromCookies = (
   next: NextFunction
 ): void => {
   // Destructure username and token from cookies
-  const { username, token }: any = req.cookies;
+  const { username, token }: {username: string; token: string} = req.cookies;
 
   // CryptoJS -> decrypt accessToken and convert back to original
   const decrypted = CryptoJS.AES.decrypt(token, "super_secret").toString(
@@ -46,22 +55,38 @@ authController.getNameAndTokenFromCookies = (
   // Store username in locals
   res.locals.username = username;
 
+  // error handling
+  if (!(decrypted || username)){
+    return next({
+      log: `Error caught in authContoller.getNameAndTokenFromCookies: Missing ${username}, decrypt: ${Boolean(decrypted)}`,
+      msg: { err: 'authController.getNameAndTokenFromCookies: ERROR: Check server logs for details'}
+    });
+  }
+
   return next();
 };
 
-//USE THIS MIDDLEWARE TO GET CHECKED REPO DATA 
+// USE THIS MIDDLEWARE TO GET CHECKED REPO DATA
 authController.saveUserInfoAndRepos = (
   req: Request,
   res: Response,
   next: NextFunction
 ): void => {
   // save username, access token and repos from request body
-  const { username, accessToken, repos, projectName }: any = req.body;
+  const { username, accessToken, repos, projectName }: {username: string; accessToken: string; repos: string []; projectName: string} = req.body;
   res.locals.username = username;
   res.locals.accessToken = accessToken;
   res.locals.repos = repos;
   res.locals.projectName = projectName;
-  
+
+  // error handling
+  if (!(username || accessToken || repos || projectName)){
+    return next({
+      log: `Error caught in authController.saveUserInfoAndRepos: Missing username: ${username}, accessToken:${Boolean(accessToken)} , repos:${repos}, or projectName ${projectName}`,
+      msg: { err: `authController.saveUserInfoAndRepos: ERROR: Check server logs for details`}
+    });
+  }
+
   return next();
 };
 
