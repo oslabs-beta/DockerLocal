@@ -24,7 +24,7 @@ import logo from '../../../../phlippy_icon.png'
 
 const initialProjectList: Project[] = [];
 
-function projectListReducer(state: readonly Project[], action: projectListActions): readonly Project[] {
+function projectListReducer(state, action: projectListActions) {
   switch (action.type) {
     case 'addProject':
       return action.payload;
