@@ -110,3 +110,9 @@ export type ComposeFile = {
   text: string;
   path: string;
 };
+
+export type SignInProps = {
+  isLoggedIn: boolean;
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  setUserInfo: Dispatch<SetStateAction<User>>;
+}

@@ -23,7 +23,7 @@ import { EXPRESS_URL } from '../../helpers/constants';
 
 const initialProjectList: Project[] = [];
 
-function projectListReducer(state, action: projectListActions) {
+function projectListReducer(state: readonly Project[], action: projectListActions): readonly Project[] {
   switch (action.type) {
     case 'addProject':
       return action.payload;

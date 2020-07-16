@@ -22,6 +22,9 @@ const AppInfoModal: React.FC<{
           </button>
         </header>
         <section className="modal-card-body">{AppInfoList}</section>
+        <section className="modal-card-body">
+          To get started, please create a personal access token from on your github account. Instructions are on our readme.
+        </section>
         <footer className="modal-card-foot">
           <button className="button" onClick={(): void => setShowModal(false)}>
             Close
