@@ -25,7 +25,7 @@ export const fetchRepos = async (): Promise<RepoResponseType> => {
   const publicRepoQuery = JSON.stringify({
     query: `{
         user(login: "${username}") {
-          repositories(first: 100, privacy: PUBLIC) {
+          repositories(first: 100) {
             edges {
               node {
                 id
