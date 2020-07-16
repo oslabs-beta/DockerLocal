@@ -10,12 +10,12 @@ import { GITHUB_USERID } from "../../../../env"
 const Routes: React.FC = (props) => {
   // hooks to define state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [rendered, setRendered] = useState(<SignIn />);
+  const [userInfo, setUserInfo] = useState<User>({userName: GITHUB_USERID, userId: 'abc'});
+  const [rendered, setRendered] = useState(<SignIn { ...{isLoggedIn, setIsLoggedIn, setUserInfo }} />);
 
 
   // need to add type for userInfo if not null
   // const [userInfo, setUserInfo] = useState<user[] | null>(null);
-  const [userInfo, setUserInfo] = useState<User>({userName: GITHUB_USERID, userId: 'abc'});
 
   // runs on render and checks 'isloggedin' display correct page depending on whether user is logged in
   // could add logic for 'hasprojects'
@@ -36,7 +36,7 @@ const Routes: React.FC = (props) => {
                       setUserInfo={setUserInfo}
                     />
                     )
-    } else setRendered(<SignIn { ...{isLoggedIn, setIsLoggedIn }} />)
+    } else setRendered(<SignIn { ...{isLoggedIn, setIsLoggedIn, setUserInfo }} />)
   }, [isLoggedIn])
   return (
     <div>

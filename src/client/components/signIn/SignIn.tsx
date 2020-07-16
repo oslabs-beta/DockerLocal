@@ -2,8 +2,10 @@ import React, { useState } from "react";
 
 import AppInfoModal from "../appInfo/AppInfoModal";
 import { EXPRESS_URL } from "../../helpers/constants";
+import { getUsernameAndToken } from "../../helpers/cookieClientHelper";
+import { SignInProps } from "../../../types/types"
 
-const SignIn: React.FC = ({ isLoggedIn, setIsLoggedIn }) => {
+const SignIn: React.FC<SignInProps> = ({ isLoggedIn, setIsLoggedIn, setUserInfo }) => {
   //initailize showModal to false
   const [showModal, setShowModal] = useState(false);
 
@@ -15,7 +17,18 @@ const SignIn: React.FC = ({ isLoggedIn, setIsLoggedIn }) => {
         // onClick={(): void =>
         //   window.location.replace(`${EXPRESS_URL}/auth/github`)
         // }
-        onClick={(): void=> setIsLoggedIn(!isLoggedIn)}
+        onClick={(): void=> {
+          const checkIfLoggedIn = async (): Promise<void> => {
+            const { username , accessToken } = await getUsernameAndToken();
+            if (username && accessToken){
+              setUserInfo({userName: username, userId: 'abc'})
+              setIsLoggedIn(true);
+            } else {
+              setShowModal(true)
+            }
+          }
+          checkIfLoggedIn();
+        }}
       >
         Sign In With Github
       </button>
