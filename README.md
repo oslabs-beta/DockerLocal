@@ -31,23 +31,18 @@ A step by step series of examples that tell you how to get a development env run
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Run npm test in the terminal. 
 
-### Break down into end to end tests
+Currently, Jest CLI has set up to run all test suites and display individual test results with the test suite hierarchy.
 
-Explain what these tests test and why
+Testing React Components
+We're using: 
+- Jest, a test runner
+- Enzyme, a testing utility for React
 
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+In jest.config.js file:
+- ts-jest preset to compile Typescript to JavaScript 
+- enzyme-to-json to convert Enzyme wrappers for Jest snappshot matcher.
 
 ## Deployment
 
