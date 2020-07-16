@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Mac/Linux or Windows 10+
+Mac/Linux
 A Github Personal Access Token
 ```
 
@@ -23,7 +23,7 @@ A Github Personal Access Token
 
 A step by step series of examples that tell you how to get a development env running
 
-1. Head to our [website](dockerlocal.io) and click the download button.
+1. Fork and clone our repo
 2. Get a personal access token from [Github](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 3. Use the .env.template to add your personal access token
 4. Add a Project
@@ -31,23 +31,22 @@ A step by step series of examples that tell you how to get a development env run
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Run npm test in the terminal. 
 
 ```
-Give an example
+$ npm test
 ```
 
-### And coding style tests
+Currently, Jest CLI has set up to run all test suites and display individual test results with the test suite hierarchy.
 
-Explain what these tests test and why
+### Testing React Components
+We're using: 
+- Jest, a test runner
+- Enzyme, a testing utility for React
 
-```
-Give an example
-```
+In jest.config.js file:
+- ts-jest preset to compile Typescript to JavaScript 
+- enzyme-to-json to convert Enzyme wrappers for Jest snappshot matcher.
 
 ## Deployment
 
