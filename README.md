@@ -16,26 +16,18 @@ What things you need to install the software and how to install them
 
 ```
 Mac/Linux or Windows 10+
-A Github Key
+A Github Personal Access Token
 ```
 
-### Installing
+### Instructions
 
 A step by step series of examples that tell you how to get a development env running
 
-Head to our [website](dockerlocal.io) and click the download button.
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+1. Head to our [website](dockerlocal.io) and click the download button.
+2. Get a personal access token from [Github](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
+3. Use the .env.template to add your personal access token
+4. Add a Project
+5. Add Repos to your project and click Compose when you're ready!
 
 ## Running the tests
 
