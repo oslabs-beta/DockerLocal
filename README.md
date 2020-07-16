@@ -39,8 +39,7 @@ $ npm test
 
 Currently, Jest CLI has set up to run all test suites and display individual test results with the test suite hierarchy.
 
-Testing React Components
-
+# Testing React Components
 We're using: 
 - Jest, a test runner
 - Enzyme, a testing utility for React
