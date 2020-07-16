@@ -16,12 +16,12 @@ const CloningReposModal: React.FC<CloningReposModalProps>  = ({ showCloningRepos
           Cloning your selected repos. This may take a while. This modal will close when finished. Please be patient.
         </section>
         <footer className="modal-card-foot">
-          <button
+          {/* <button
             className="button is-danger"
             onClick={(): void => setShowCloningReposModal(false)}
           >
             Close
-          </button>
+          </button> */}
         </footer>
       </div>
     </div>
