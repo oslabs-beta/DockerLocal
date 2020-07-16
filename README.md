@@ -23,7 +23,7 @@ A Github Personal Access Token
 
 A step by step series of examples that tell you how to get a development env running
 
-1. Head to our [website](dockerlocal.io) and click the download button.
+1. Fork and clone our repo
 2. Get a personal access token from [Github](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 3. Use the .env.template to add your personal access token
 4. Add a Project
