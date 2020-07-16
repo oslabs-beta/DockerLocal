@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 export {};
-import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
-const express = require("express");
-const path = require("path");
+import express, { Request, Response, NextFunction, ErrorRequestHandler } from "express";
+import path = require("path");
 const passportSetup = require("../../src/server/config/passport-setup");
-const passport = require("passport");
+import passport = require("passport");
 require("dotenv/config");
 const app = express();
 const cookieParser = require("cookie-parser");
@@ -65,13 +65,14 @@ app.use(
       log: "Error caught in global error handler",
       status: 500,
       msg: {
-        err: err,
+        err,
       },
     };
 
     // Update default error message with provided error if there is one
     const output = Object.assign(defaultError, err);
-    res.send(output);
+    console.log(output.log);
+    res.send(output.msg);
   }
 );
 

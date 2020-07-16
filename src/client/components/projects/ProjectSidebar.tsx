@@ -7,8 +7,8 @@ import { checkValidName } from '../../helpers/projectHelper';
 const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
   setShowProjectSidebarModal,
   projectList,
-  setProjectList,
   setActiveProject,
+  dispatch,
 }) => {
   // State hook for new project name and boolean whether the name is valid
   const [newProject, setNewProject] = useState({
@@ -43,7 +43,7 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
   };
 
   const handleSubmit = (): void => {
-    //create a new project object
+    // create a new project object
     if (checkValidName(newProject.name, projectList)) {
       const newProjectId: string = uuidv4();
 
@@ -54,9 +54,12 @@ const ProjectSideBar: React.FC<ProjectSideBarProps> = ({
       };
 
       // set copy of a new project
-      setProjectList([...projectList, newProjectObject]);
+      dispatch({
+        type: 'addProject',
+        payload: [...projectList, newProjectObject],
+      });
       setActiveProject(newProjectId);
-      //then close the modal
+      // then close the modal
       setShowProjectSidebarModal(false);
     }
   };

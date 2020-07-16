@@ -1,8 +1,8 @@
 export { };
-const router = require('express').Router();
+import express, { Request, Response } from 'express';
+const router = express.Router();
 const passport = require('passport');
 const authController = require('../controllers/authController');
-import { Request, Response } from 'express';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 
@@ -15,12 +15,12 @@ router.get(
     'X-Accepted-OAuth-Scopes': ['repo','user']
   }));
 
-//Github callback function (authentication)
-//if successful
-//save username/accessToken to cookies
-//redirect to /api/repos
-//if unsuccessful
-//redirect to /fail 
+// Github callback function (authentication)
+// if successful
+// save username/accessToken to cookies
+// redirect to /api/repos
+// if unsuccessful
+// redirect to /fail
 router.get(
   '/github/callback',
   passport.authenticate('github', {
