@@ -1,2 +1,2 @@
-export const GITHUB_USERID = '';
-export const GITHUB_ACCESS_TOKEN = '';
+export const GITHUB_USERID: string = '';
+export const GITHUB_ACCESS_TOKEN: string = '';
