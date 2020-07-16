@@ -25,7 +25,7 @@ A step by step series of examples that tell you how to get a development env run
 
 1. Clone our repo
 2. Get a personal access token from [Github](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
-3. Open the env.ts file in our root directory and paste your github user ID and access token- 
+3. Open the env.ts file in our root directory and paste your github user ID and access token
 4. Add a Project
 5. Add Repos to your project
 6. Choose which repos you'd like included, click Clone Repos
