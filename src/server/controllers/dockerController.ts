@@ -73,7 +73,6 @@ dockerController.getContainerNames = (req: Request, res: Response, next: NextFun
   const containerNameArray: string[] = [];
   const { buildPathArray } = res.locals;
   let containerName: string;
-
   // use folder names as the container name
   // "src/server/happy" => "happy"
   for (const buildPath of buildPathArray) {

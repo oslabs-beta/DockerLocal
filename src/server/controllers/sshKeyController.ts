@@ -72,7 +72,6 @@ sshKeyController.addSSHkeyToGithub = async (
   // save the key id from the response. this will be used to delete the key from Github after we are done using it
   const { id } = jsonResponse;
   res.locals.keyId = id;
-
   return next();
 };
 
